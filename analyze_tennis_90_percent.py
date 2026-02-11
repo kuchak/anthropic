@@ -275,10 +275,30 @@ def main():
         ]
         accuracy = len(correct_predictions) / len(markets_crossed_90) * 100
 
+        # Breakdown by crossing type
+        markets_with_permanent = [m for m in markets_crossed_90 if m.get('permanent_crossing')]
+        markets_touch_only = [m for m in markets_crossed_90 if not m.get('permanent_crossing')]
+
+        permanent_correct = len([m for m in markets_with_permanent if m.get('settled_99_100')])
+        touch_only_correct = len([m for m in markets_touch_only if m.get('settled_99_100')])
+
+        permanent_accuracy = (permanent_correct / len(markets_with_permanent) * 100) if markets_with_permanent else 0
+        touch_only_accuracy = (touch_only_correct / len(markets_touch_only) * 100) if markets_touch_only else 0
+
         print(f"\n📈 Markets analyzed: {len(results)}")
         print(f"📈 Markets that crossed 90%: {len(markets_crossed_90)}/{len(results)}")
-        print(f"🎯 Settled at 99-100¢: {len(correct_predictions)}/{len(markets_crossed_90)}")
-        print(f"📊 Accuracy: {accuracy:.1f}%")
+
+        print(f"\n🔍 CROSSING TYPE BREAKDOWN:")
+        print(f"   Permanent crossing (stayed ≥90%): {len(markets_with_permanent)}")
+        print(f"   Touch-only (came back down): {len(markets_touch_only)}")
+
+        print(f"\n🎯 ACCURACY BY CROSSING TYPE:")
+        if markets_with_permanent:
+            print(f"   Permanent crossing: {permanent_correct}/{len(markets_with_permanent)} = {permanent_accuracy:.1f}% ✅")
+        if markets_touch_only:
+            print(f"   Touch-only: {touch_only_correct}/{len(markets_touch_only)} = {touch_only_accuracy:.1f}%")
+
+        print(f"\n📊 Overall accuracy: {accuracy:.1f}%")
 
         # Betting window analysis
         betting_windows = [
@@ -301,7 +321,8 @@ def main():
             print(f"\n⚠️  False positives (crossed 90% but didn't settle 99-100):")
             for r in markets_crossed_90:
                 if not r.get('settled_99_100'):
-                    print(f"   - {r['ticker']}: Settled at {r['settlement_value']}¢")
+                    had_permanent = "had permanent crossing" if r.get('permanent_crossing') else "touch-only, NO permanent crossing"
+                    print(f"   - {r['ticker']}: Settled at {r['settlement_value']}¢ ({had_permanent})")
     else:
         print(f"\n⚪ None of the {len(results)} analyzed markets crossed 90%")
 
