@@ -1,8 +1,8 @@
 {
-  "analysis_date": "2026-02-11T08:41:24.889285",
-  "total_analyzed": 50,
-  "crossed_90_count": 24,
-  "accuracy": 95.83333333333334,
+  "analysis_date": "2026-02-11T08:47:25.371993",
+  "total_analyzed": 100,
+  "crossed_90_count": 50,
+  "accuracy": 94.0,
   "markets": [
     {
       "ticker": "KXATPMATCH-26FEB10SHAJOD-SHA",
@@ -1029,6 +1029,1045 @@
       "settled_99_100": false,
       "betting_window_seconds": null,
       "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09PELETC-PEL",
+      "title": "Will Andrea Pellegrino win the Pellegrino vs Etcheverry : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T23:22:31Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09PELETC-ETC",
+      "title": "Will Tomas Martin Etcheverry win the Pellegrino vs Etcheverry : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T23:22:31Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T21:57:28.420615Z",
+        "price": 92,
+        "index": 0
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T23:07:15.822986Z",
+        "price": 90,
+        "index": 820,
+        "last_below_90": {
+          "timestamp": "2026-02-09T23:07:03.654415Z",
+          "price": 88
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 915,
+      "betting_window_minutes": 15.2
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08BUDMUN-MUN",
+      "title": "Will Jaume Munar win the Budkov Kjaer vs Munar : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T21:57:34Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T21:09:23.130121Z",
+        "price": 90,
+        "index": 113
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T21:36:32.751795Z",
+        "price": 91,
+        "index": 731,
+        "last_below_90": {
+          "timestamp": "2026-02-09T21:36:28.921223Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 1261,
+      "betting_window_minutes": 21.0
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08BUDMUN-BUD",
+      "title": "Will Nicolai Budkov Kjaer win the Budkov Kjaer vs Munar : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T21:57:34Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09SVADAV-SVA",
+      "title": "Will Zachary Svajda win the Svajda vs Davidovich Fokina : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T21:16:31Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09SVADAV-DAV",
+      "title": "Will Alejandro Davidovich Fokina win the Svajda vs Davidovich Fokina : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T21:16:31Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T21:07:31.343046Z",
+        "price": 90,
+        "index": 536
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T21:08:01.983127Z",
+        "price": 90,
+        "index": 580,
+        "last_below_90": {
+          "timestamp": "2026-02-09T21:07:58.45961Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 509,
+      "betting_window_minutes": 8.5
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09PAVVAN-VAN",
+      "title": "Will Botic Van de Zandschulp win the Pavlovic vs Van de Zandschulp : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T20:21:53Z",
+      "trades_count": 932,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T18:54:24.840057Z",
+        "price": 90,
+        "index": 117
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T19:56:47.876551Z",
+        "price": 93,
+        "index": 711,
+        "last_below_90": {
+          "timestamp": "2026-02-09T19:56:47.872009Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 1505,
+      "betting_window_minutes": 25.1
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09PAVVAN-PAV",
+      "title": "Will Luka Pavlovic win the Pavlovic vs Van de Zandschulp : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T20:21:53Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09MIDMAR-MID",
+      "title": "Will Lautaro Midon win the Midon vs Martinez : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T19:21:55Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09MIDMAR-MAR",
+      "title": "Will Pedro Martinez win the Midon vs Martinez : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T19:21:55Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T18:48:46.431712Z",
+        "price": 90,
+        "index": 446
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T19:00:33.935109Z",
+        "price": 93,
+        "index": 624,
+        "last_below_90": {
+          "timestamp": "2026-02-09T19:00:23.398432Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 1281,
+      "betting_window_minutes": 21.4
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09NAKBEL-NAK",
+      "title": "Will Brandon Nakashima win the Nakashima vs Bellucci : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T19:21:43Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T18:28:33.54911Z",
+        "price": 90,
+        "index": 495
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T19:14:31.212291Z",
+        "price": 90,
+        "index": 855,
+        "last_below_90": {
+          "timestamp": "2026-02-09T19:14:27.716413Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 431,
+      "betting_window_minutes": 7.2
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09NAKBEL-BEL",
+      "title": "Will Mattia Bellucci win the Nakashima vs Bellucci : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T19:21:43Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09ROYOCO-ROY",
+      "title": "Will Valentin Royer win the Royer vs O'Connell : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T19:11:42Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09ROYOCO-OCO",
+      "title": "Will Christopher O'Connell win the Royer vs O'Connell : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T19:11:42Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T19:07:47.619388Z",
+        "price": 90,
+        "index": 664
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T19:08:15.860971Z",
+        "price": 93,
+        "index": 765,
+        "last_below_90": {
+          "timestamp": "2026-02-09T19:08:15.042026Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 206,
+      "betting_window_minutes": 3.4
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09DZUDEL-DZU",
+      "title": "Will Damir Dzumhur win the Dzumhur vs Dellien : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T17:52:29Z",
+      "trades_count": 715,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T00:10:10.127928Z",
+        "price": 93,
+        "index": 1
+      },
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB09DZUDEL-DEL",
+      "title": "Will Hugo Dellien win the Dzumhur vs Dellien : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T17:52:29Z",
+      "trades_count": 574,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T17:05:37.444471Z",
+        "price": 90,
+        "index": 454
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T17:07:54.242126Z",
+        "price": 93,
+        "index": 480,
+        "last_below_90": {
+          "timestamp": "2026-02-09T17:07:50.355639Z",
+          "price": 85
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 2674,
+      "betting_window_minutes": 44.6
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08MEDHUM-MED",
+      "title": "Will Daniil Medvedev win the Medvedev vs Humbert : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T17:03:33Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08MEDHUM-HUM",
+      "title": "Will Ugo Humbert win the Medvedev vs Humbert : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T17:03:33Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T16:42:07.276586Z",
+        "price": 90,
+        "index": 353
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T16:48:12.110577Z",
+        "price": 91,
+        "index": 764,
+        "last_below_90": {
+          "timestamp": "2026-02-09T16:48:12.055832Z",
+          "price": 84
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 920,
+      "betting_window_minutes": 15.3
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08BAUNOR-NOR",
+      "title": "Will Cameron Norrie win the Bautista Agut vs Norrie : Round Of 32 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-09T14:12:45Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-09T12:58:16.982679Z",
+        "price": 90,
+        "index": 73
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-09T13:46:16.67741Z",
+        "price": 93,
+        "index": 767,
+        "last_below_90": {
+          "timestamp": "2026-02-09T13:46:04.474713Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 1588,
+      "betting_window_minutes": 26.5
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08BAUNOR-BAU",
+      "title": "Will Roberto Bautista Agut win the Bautista Agut vs Norrie : Round Of 32 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-09T14:12:45Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08JODCAS-JOD",
+      "title": "Will Rafael Jodar win the Jodar vs Cassone : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T22:32:20Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T20:53:29.429618Z",
+        "price": 91,
+        "index": 0
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T22:26:45.456943Z",
+        "price": 90,
+        "index": 919,
+        "last_below_90": {
+          "timestamp": "2026-02-08T22:26:43.175147Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 334,
+      "betting_window_minutes": 5.6
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08JODCAS-CAS",
+      "title": "Will Murphy Cassone win the Jodar vs Cassone : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T22:32:20Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08SHITOM-TOM",
+      "title": "Will Bernard Tomic win the Shimabukuro vs Tomic : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T22:22:15Z",
+      "trades_count": 680,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08SHITOM-SHI",
+      "title": "Will Sho Shimabukuro win the Shimabukuro vs Tomic : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T22:22:15Z",
+      "trades_count": 588,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T21:52:17.203839Z",
+        "price": 90,
+        "index": 357
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T22:11:39.084906Z",
+        "price": 91,
+        "index": 491,
+        "last_below_90": {
+          "timestamp": "2026-02-08T22:11:29.786007Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 635,
+      "betting_window_minutes": 10.6
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08BARGAR-GAR",
+      "title": "Will Cristian Garin win the Barrios Vera vs Garin : Round Of 32 match?",
+      "result": "scalar",
+      "settlement_value": 52,
+      "close_time": "2026-02-08T21:23:12Z",
+      "trades_count": 4,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08BARGAR-BAR",
+      "title": "Will Marcelo Tomas Barrios Vera win the Barrios Vera vs Garin : Round Of 32 match?",
+      "result": "scalar",
+      "settlement_value": 48,
+      "close_time": "2026-02-08T21:23:12Z",
+      "error": "No trade data available"
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08KYPPIN-PIN",
+      "title": "Will Jack Pinnington Jones win the Kypson vs Pinnington Jones : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T21:07:05Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T21:00:59.589808Z",
+        "price": 91,
+        "index": 827
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T21:00:59.589808Z",
+        "price": 91,
+        "index": 827,
+        "last_below_90": {
+          "timestamp": "2026-02-08T21:00:57.434171Z",
+          "price": 87
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 365,
+      "betting_window_minutes": 6.1
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08KYPPIN-KYP",
+      "title": "Will Patrick Kypson win the Kypson vs Pinnington Jones : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T21:07:05Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08PELSEY-SEY",
+      "title": "Will Thiago Seyboth Wild win the Pellegrino vs Seyboth Wild : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T20:52:30Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08PELSEY-PEL",
+      "title": "Will Andrea Pellegrino win the Pellegrino vs Seyboth Wild : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T20:52:30Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T20:32:22.274154Z",
+        "price": 90,
+        "index": 654
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T20:36:52.490481Z",
+        "price": 90,
+        "index": 713,
+        "last_below_90": {
+          "timestamp": "2026-02-08T20:36:29.240785Z",
+          "price": 88
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 937,
+      "betting_window_minutes": 15.6
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08SVABOY-SVA",
+      "title": "Will Zachary Svajda win the Svajda vs Boyer : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T20:32:34Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T19:14:52.344104Z",
+        "price": 96,
+        "index": 0
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T20:26:19.883468Z",
+        "price": 90,
+        "index": 916,
+        "last_below_90": {
+          "timestamp": "2026-02-08T20:26:19.802225Z",
+          "price": 88
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 374,
+      "betting_window_minutes": 6.2
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08SVABOY-BOY",
+      "title": "Will Tristan Boyer win the Svajda vs Boyer : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T20:32:34Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08DELMON-MON",
+      "title": "Will Thiago Monteiro win the Dellien vs Monteiro : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T20:16:55Z",
+      "trades_count": 501,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08DELMON-DEL",
+      "title": "Will Hugo Dellien win the Dellien vs Monteiro : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T20:16:55Z",
+      "trades_count": 393,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T19:35:17.847157Z",
+        "price": 90,
+        "index": 198
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T20:03:36.081009Z",
+        "price": 91,
+        "index": 339,
+        "last_below_90": {
+          "timestamp": "2026-02-08T20:03:35.997048Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 798,
+      "betting_window_minutes": 13.3
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08GALMID-MID",
+      "title": "Will Lautaro Midon win the Galan vs Midon : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T18:42:38Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T17:17:20.503967Z",
+        "price": 90,
+        "index": 70
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T18:34:05.863924Z",
+        "price": 94,
+        "index": 903,
+        "last_below_90": {
+          "timestamp": "2026-02-08T18:34:05.241387Z",
+          "price": 81
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 512,
+      "betting_window_minutes": 8.5
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08GALMID-GAL",
+      "title": "Will Daniel Elahi Galan win the Galan vs Midon : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T18:42:38Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08PASCEC-PAS",
+      "title": "Will Francesco Passaro win the Passaro vs Cecchinato : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T18:37:06Z",
+      "trades_count": 991,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T16:29:23.191623Z",
+        "price": 90,
+        "index": 112
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T18:22:09.407499Z",
+        "price": 92,
+        "index": 892,
+        "last_below_90": {
+          "timestamp": "2026-02-08T18:22:09.004101Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 896,
+      "betting_window_minutes": 14.9
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08PASCEC-CEC",
+      "title": "Will Marco Cecchinato win the Passaro vs Cecchinato : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T18:37:06Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08AUGMAN-MAN",
+      "title": "Will Adrian Mannarino win the Auger-Aliassime vs Mannarino : Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T15:46:46Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08AUGMAN-AUG",
+      "title": "Will Felix Auger-Aliassime win the Auger-Aliassime vs Mannarino : Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T15:46:46Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T14:11:32.139483Z",
+        "price": 90,
+        "index": 233
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T15:43:00.923057Z",
+        "price": 90,
+        "index": 912,
+        "last_below_90": {
+          "timestamp": "2026-02-08T15:42:47.960806Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 225,
+      "betting_window_minutes": 3.8
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08MEDPAV-PAV",
+      "title": "Will Luka Pavlovic win the Medjedovic vs Pavlovic : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T15:42:26Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T15:24:45.288976Z",
+        "price": 90,
+        "index": 261
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T15:33:25.660891Z",
+        "price": 99,
+        "index": 876,
+        "last_below_90": {
+          "timestamp": "2026-02-08T15:33:25.635842Z",
+          "price": 74
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 540,
+      "betting_window_minutes": 9.0
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08MEDPAV-MED",
+      "title": "Will Hamad Medjedovic win the Medjedovic vs Pavlovic : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T15:42:26Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08CARROT-ROT",
+      "title": "Will Mees Rottgering win the Carballes Baena vs Rottgering : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T14:57:02Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T14:49:17.579063Z",
+        "price": 90,
+        "index": 836
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T14:50:47.003437Z",
+        "price": 90,
+        "index": 888,
+        "last_below_90": {
+          "timestamp": "2026-02-08T14:50:46.473676Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 374,
+      "betting_window_minutes": 6.2
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08CARROT-CAR",
+      "title": "Will Roberto Carballes Baena win the Carballes Baena vs Rottgering : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T14:57:02Z",
+      "trades_count": 1000,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08BOOGRE-GRE",
+      "title": "Will Hugo Grenier win the Boogaard vs Grenier : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T12:52:47Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T12:26:22.674209Z",
+        "price": 90,
+        "index": 693
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T12:46:32.233245Z",
+        "price": 90,
+        "index": 944,
+        "last_below_90": {
+          "timestamp": "2026-02-08T12:46:07.453493Z",
+          "price": 76
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 374,
+      "betting_window_minutes": 6.2
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08BOOGRE-BOO",
+      "title": "Will Thijs Boogaard win the Boogaard vs Grenier : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T12:52:47Z",
+      "trades_count": 1000,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T11:41:37.39451Z",
+        "price": 90,
+        "index": 490
+      },
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08GASOCO-OCO",
+      "title": "Will Christopher O'Connell win the Gaston vs O'Connell : Qualification Final match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-08T11:32:36Z",
+      "trades_count": 415,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-08T10:48:03.559383Z",
+        "price": 90,
+        "index": 220
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-08T11:23:34.568362Z",
+        "price": 94,
+        "index": 376,
+        "last_below_90": {
+          "timestamp": "2026-02-08T11:22:38.832089Z",
+          "price": 89
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 541,
+      "betting_window_minutes": 9.0
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB08GASOCO-GAS",
+      "title": "Will Hugo Gaston win the Gaston vs O'Connell : Qualification Final match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-08T11:32:36Z",
+      "trades_count": 757,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB07DELOLI-OLI",
+      "title": "Will Genaro Alberto Olivieri win the Dellien vs Olivieri : Round Of 16 match?",
+      "result": "no",
+      "settlement_value": 0,
+      "close_time": "2026-02-07T23:17:15Z",
+      "trades_count": 388,
+      "crossed_90": false,
+      "first_touch": null,
+      "permanent_crossing": null,
+      "stayed_above_90": false,
+      "settled_99_100": false,
+      "betting_window_seconds": null,
+      "betting_window_minutes": null
+    },
+    {
+      "ticker": "KXATPMATCH-26FEB07DELOLI-DEL",
+      "title": "Will Hugo Dellien win the Dellien vs Olivieri : Round Of 16 match?",
+      "result": "yes",
+      "settlement_value": 100,
+      "close_time": "2026-02-07T23:17:15Z",
+      "trades_count": 712,
+      "crossed_90": true,
+      "first_touch": {
+        "timestamp": "2026-02-07T22:26:13.873002Z",
+        "price": 90,
+        "index": 287
+      },
+      "permanent_crossing": {
+        "timestamp": "2026-02-07T23:08:24.958749Z",
+        "price": 91,
+        "index": 613,
+        "last_below_90": {
+          "timestamp": "2026-02-07T23:08:12.383777Z",
+          "price": 88
+        }
+      },
+      "stayed_above_90": true,
+      "settled_99_100": true,
+      "betting_window_seconds": 530,
+      "betting_window_minutes": 8.8
     }
   ]
 }

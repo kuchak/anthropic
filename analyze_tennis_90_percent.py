@@ -251,8 +251,8 @@ def main():
         print("❌ No markets found")
         return
 
-    # Analyze the 50 most recent
-    num_to_analyze = 50
+    # Analyze the 100 most recent
+    num_to_analyze = 100
     results = []
     for i, market in enumerate(markets[:num_to_analyze]):
         print(f"\n[{i+1}/{num_to_analyze}]", end=" ")
@@ -346,6 +346,82 @@ def main():
         json.dump(output, f, indent=2, default=str)
 
     print(f"\n💾 Detailed results saved to: tennis_90_accuracy_analysis.json")
+
+    # Create detailed CSV for verification
+    print(f"\n📊 Creating detailed CSV table...")
+    import csv
+
+    csv_file = 'tennis_90_crossing_detailed.csv'
+    with open(csv_file, 'w', newline='') as f:
+        writer = csv.writer(f)
+
+        # Header
+        writer.writerow([
+            'Ticker',
+            'Title',
+            'Result',
+            'Settlement (¢)',
+            'Crossed 90%',
+            'First Touch Time',
+            'First Touch Price (¢)',
+            'Permanent Cross Time',
+            'Permanent Cross Price (¢)',
+            'Market Close Time',
+            'Betting Window (min)',
+            'Betting Window (sec)',
+            'Prediction Correct',
+            'Trades Count'
+        ])
+
+        # Data rows
+        for r in results:
+            ticker = r.get('ticker', '')
+            title = r.get('title', '')
+            result = r.get('result', '')
+            settlement = r.get('settlement_value', '')
+            crossed_90 = 'YES' if r.get('crossed_90') else 'NO'
+
+            first_touch_time = ''
+            first_touch_price = ''
+            perm_cross_time = ''
+            perm_cross_price = ''
+
+            if r.get('first_touch'):
+                first_touch_time = r['first_touch']['timestamp']
+                first_touch_price = r['first_touch']['price']
+
+            if r.get('permanent_crossing'):
+                perm_cross_time = r['permanent_crossing']['timestamp']
+                perm_cross_price = r['permanent_crossing']['price']
+
+            market_close = r.get('close_time', '')
+            betting_window_min = r.get('betting_window_minutes', '')
+            betting_window_sec = r.get('betting_window_seconds', '')
+
+            prediction_correct = ''
+            if r.get('crossed_90'):
+                prediction_correct = 'CORRECT' if r.get('settled_99_100') else 'WRONG'
+
+            trades_count = r.get('trades_count', '')
+
+            writer.writerow([
+                ticker,
+                title,
+                result,
+                settlement,
+                crossed_90,
+                first_touch_time,
+                first_touch_price,
+                perm_cross_time,
+                perm_cross_price,
+                market_close,
+                betting_window_min,
+                betting_window_sec,
+                prediction_correct,
+                trades_count
+            ])
+
+    print(f"✅ CSV saved to: {csv_file}")
     print("="*70)
 
 
