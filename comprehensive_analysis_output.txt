@@ -1,0 +1,669 @@
+🔍 Discovering all series on Kalshi...
+✅ Found 8450 total series
+
+📊 Series by category:
+                                :   43 series
+  Climate and Weather           :  249 series
+  Companies                     :  285 series
+  Crypto                        :  207 series
+  Economics                     :  390 series
+  Education                     :    2 series
+  Elections                     :  431 series
+  Entertainment                 : 2114 series
+  Financials                    :  174 series
+  Health                        :  111 series
+  Mentions                      :  258 series
+  Politics                      : 2436 series
+  Science and Technology        :  182 series
+  Social                        :   72 series
+  Sports                        : 1305 series
+  Transportation                :   40 series
+  World                         :  151 series
+
+======================================================================
+🔍 ANALYZING ALL SERIES
+======================================================================
+
+🔍 Pre-filtering series with sufficient markets...
+  Checked: 100/8450 series...
+  Checked: 200/8450 series...
+  Checked: 300/8450 series...
+  Checked: 400/8450 series...
+  Checked: 500/8450 series...
+  Checked: 600/8450 series...
+  Checked: 700/8450 series...
+  Checked: 800/8450 series...
+  Checked: 900/8450 series...
+  Checked: 1000/8450 series...
+  Checked: 1100/8450 series...
+  Checked: 1200/8450 series...
+  Checked: 1300/8450 series...
+  Checked: 1400/8450 series...
+  Checked: 1500/8450 series...
+  Checked: 1600/8450 series...
+  Checked: 1700/8450 series...
+  Checked: 1800/8450 series...
+  Checked: 1900/8450 series...
+  Checked: 2000/8450 series...
+  Checked: 2100/8450 series...
+  Checked: 2200/8450 series...
+  Checked: 2300/8450 series...
+  Checked: 2400/8450 series...
+  Checked: 2500/8450 series...
+  Checked: 2600/8450 series...
+  Checked: 2700/8450 series...
+  Checked: 2800/8450 series...
+  Checked: 2900/8450 series...
+  Checked: 3000/8450 series...
+  Checked: 3100/8450 series...
+  Checked: 3200/8450 series...
+  Checked: 3300/8450 series...
+  Checked: 3400/8450 series...
+  Checked: 3500/8450 series...
+  Checked: 3600/8450 series...
+  Checked: 3700/8450 series...
+  Checked: 3800/8450 series...
+  Checked: 3900/8450 series...
+  Checked: 4000/8450 series...
+  Checked: 4100/8450 series...
+  Checked: 4200/8450 series...
+  Checked: 4300/8450 series...
+  Checked: 4400/8450 series...
+  Checked: 4500/8450 series...
+  Checked: 4600/8450 series...
+  Checked: 4700/8450 series...
+  Checked: 4800/8450 series...
+  Checked: 4900/8450 series...
+  Checked: 5000/8450 series...
+  Checked: 5100/8450 series...
+  Checked: 5200/8450 series...
+  Checked: 5300/8450 series...
+  Checked: 5400/8450 series...
+  Checked: 5500/8450 series...
+  Checked: 5600/8450 series...
+  Checked: 5700/8450 series...
+  Checked: 5800/8450 series...
+  Checked: 5900/8450 series...
+  Checked: 6000/8450 series...
+  Checked: 6100/8450 series...
+  Checked: 6200/8450 series...
+  Checked: 6300/8450 series...
+  Checked: 6400/8450 series...
+  Checked: 6500/8450 series...
+  Checked: 6600/8450 series...
+  Checked: 6700/8450 series...
+  Checked: 6800/8450 series...
+  Checked: 6900/8450 series...
+  Checked: 7000/8450 series...
+  Checked: 7100/8450 series...
+  Checked: 7200/8450 series...
+  Checked: 7300/8450 series...
+  Checked: 7400/8450 series...
+  Checked: 7500/8450 series...
+  Checked: 7600/8450 series...
+  Checked: 7700/8450 series...
+  Checked: 7800/8450 series...
+  Checked: 7900/8450 series...
+  Checked: 8000/8450 series...
+  Checked: 8100/8450 series...
+  Checked: 8200/8450 series...
+  Checked: 8300/8450 series...
+  Checked: 8400/8450 series...
+
+✅ Found 475 series with 50+ settled markets
+
+======================================================================
+🔍 ANALYZING VIABLE SERIES (500 events each)
+======================================================================
+
+[1/475] KXTOPMONTHLY (Entertainment)
+
+[2/475] KXMSUNIVERSETOPTHREE (Entertainment)
+
+[3/475] KXNETFLIXRANKSHOWGLOBAL2 (Entertainment)
+
+[4/475] KXNETFLIXRANKSHOWRUNNERUP (Entertainment)
+  ✅ Events:  11 | Crossed:  36.4% | Accuracy: 100.0%
+
+[5/475] KXOSCARPIC (Entertainment)
+
+[6/475] KXOSCARNOMPIC (Entertainment)
+
+[7/475] KXSPOTIFYARTISTD (Entertainment)
+
+[8/475] KXTOPALBUM (Entertainment)
+  ✅ Events:  64 | Crossed:  21.9% | Accuracy: 100.0%
+
+[9/475] KXTOPPOPRANK (Entertainment)
+
+[10/475] KXSPOTIFY100MILLION (Entertainment)
+
+[11/475] KXSPOTIFYVIRALD (Entertainment)
+
+[12/475] KXBILLBOARDRUNNERUPALBUM (Entertainment)
+  ✅ Events:  39 | Crossed:   2.6% | Accuracy: 100.0%
+
+[13/475] KXMISSUSA (Entertainment)
+
+[14/475] KXSPOTIFYUKD (Entertainment)
+
+[15/475] KXOSCARNOMINEESPIC (Entertainment)
+
+[16/475] KXVENICEFILMFESTIVALACTOR (Entertainment)
+
+[17/475] KXSPOTIFYSONGSMANCHILD (Entertainment)
+
+[18/475] KXGRAMSOTY (Entertainment)
+
+[19/475] KXNETFLIXTOPVIEWSTV (Entertainment)
+
+[20/475] KXTIME (Entertainment)
+
+[21/475] KXMMMENTION (Entertainment)
+
+[22/475] KXSURVIVORELIMINATION (Entertainment)
+
+[23/475] KXALBUMSALESSWIFT (Entertainment)
+
+[24/475] KXMSUNIVERSE (Entertainment)
+
+[25/475] KXTOP10BILLBOARDSPOTSTS (Entertainment)
+
+[26/475] KXRANKLISTSONGTOP10 (Entertainment)
+  ✅ Events:  11 | Crossed:  27.3% | Accuracy: 100.0%
+
+[27/475] KXPERFORMSUPERBOWLB (Entertainment)
+
+[28/475] KXNETFLIXRANKMOVIEGLOBAL2 (Entertainment)
+
+[29/475] KXAPPRANKFREE2 (Entertainment)
+  ✅ Events: 196 | Crossed:  26.5% | Accuracy:  92.3%
+
+[30/475] KXSPOTIFYARTISTW (Entertainment)
+
+[31/475] KXSPOTIFYCANADAD (Entertainment)
+
+[32/475] KXAPPRANKFREE (Entertainment)
+  ✅ Events: 198 | Crossed:   5.1% | Accuracy: 100.0%
+
+[33/475] KXNETFLIXRANKMOVIE (Entertainment)
+  ✅ Events:  57 | Crossed:  22.8% | Accuracy: 100.0%
+
+[34/475] KXSPOTIFY2D (Entertainment)
+  ✅ Events:  66 | Crossed:   1.5% | Accuracy: 100.0%
+
+[35/475] KXDGAAWARDS (Entertainment)
+  ✅ Events:  12 | Crossed:   8.3% | Accuracy: 100.0%
+
+[36/475] KXSPOTIFYAUSTRALIAD (Entertainment)
+
+[37/475] KXGRAMROTY (Entertainment)
+
+[38/475] KXSPOTIFYW (Entertainment)
+  ✅ Events:  52 | Crossed:   3.8% | Accuracy: 100.0%
+
+[39/475] KXGRAMBNA (Entertainment)
+
+[40/475] KXRT (Entertainment)
+
+[41/475] KXBILLBOARDRUNNERUPSONG (Entertainment)
+  ✅ Events:  39 | Crossed:   5.1% | Accuracy: 100.0%
+
+[42/475] KXNETFLIXRANKMOVIEGLOBAL (Entertainment)
+
+[43/475] KXRANKLISTTIMEMAG (Entertainment)
+
+[44/475] KXSPOTIFYD (Entertainment)
+  ✅ Events:  66 | Crossed:   9.1% | Accuracy: 100.0%
+
+[45/475] KXOSCARWINNERS (Entertainment)
+  ✅ Events: 454 | Crossed:   0.9% | Accuracy:   0.0%
+
+[46/475] KXDWTSELIMINATION (Entertainment)
+
+[47/475] KXSPOTIFYALBUMW (Entertainment)
+  ✅ Events:  41 | Crossed:   2.4% | Accuracy: 100.0%
+
+[48/475] KXNETFLIXRANKSHOWGLOBAL (Entertainment)
+
+[49/475] KXSPOTIFYGLOBALD (Entertainment)
+  ✅ Events:  66 | Crossed:  21.2% | Accuracy:  85.7%
+
+[50/475] KXNETFLIXRANKSHOW (Entertainment)
+  ✅ Events:  57 | Crossed:  22.8% | Accuracy:  92.3%
+
+[51/475] KXRANKLISTSONGBBH100 (Entertainment)
+
+[52/475] KXSPOTIFYSONGSTFOO (Entertainment)
+
+[53/475] KXSPOTIFYCOSTARICAD (Entertainment)
+
+[54/475] KXELONTWEETS (Entertainment)
+
+[55/475] KXGRAMAOTY (Entertainment)
+
+[56/475] KXNETFLIXRANKMOVIERUNNERUP (Entertainment)
+  ✅ Events:  11 | Crossed:  18.2% | Accuracy: 100.0%
+
+[57/475] KXPOTUSTWEETS (Entertainment)
+
+[58/475] KXGRAMMYWINNERS (Entertainment)
+
+[59/475] KXNETFLIXTOPVIEWSMOVIE (Entertainment)
+
+[60/475] KXTOPSONG (Entertainment)
+  ✅ Events: 112 | Crossed:  15.2% | Accuracy:  94.1%
+
+[61/475] KXSPOTIFYBRAZILD (Entertainment)
+
+[62/475] KXKXRANKLISTPITCHFORKALBUM (Entertainment)
+
+[63/475] KXSUPERBOWLHEADLINE (Entertainment)
+
+[64/475] KXSPACEXSTARSHIP (Companies)
+  ✅ Events:  10 | Crossed:  40.0% | Accuracy: 100.0%
+
+[65/475] KXTESLAPROD (Companies)
+
+[66/475] KXTESLA (Companies)
+
+[67/475] KXFEDMENTION (Mentions)
+
+[68/475] KXMVEMENTIONSSINGLE (Mentions)
+
+[69/475] KXTRUMPSAYMONTH (Mentions)
+
+[70/475] KXGOVERNORMENTION (Mentions)
+
+[71/475] KXVANCEMENTION (Mentions)
+  ✅ Events:  17 | Crossed:  35.3% | Accuracy: 100.0%
+
+[72/475] KXNYCMAYORDEBATEMENTION (Mentions)
+
+[73/475] KXEARNINGSMENTIONNVDA (Mentions)
+
+[74/475] KXEARNINGSMENTIONAMZN (Mentions)
+
+[75/475] KXJPOWMENTION (Mentions)
+
+[76/475] KXEARNINGSMENTIONMSFT (Mentions)
+
+[77/475] KXPOWELLMENTION (Mentions)
+
+[78/475] KXNCAABMENTION (Mentions)
+  ✅ Events:  15 | Crossed:  73.3% | Accuracy:  81.8%
+
+[79/475] KXBILATERALMENTION (Mentions)
+
+[80/475] KXLATENIGHTMENTION (Mentions)
+  ✅ Events:  15 | Crossed:  40.0% | Accuracy: 100.0%
+
+[81/475] KXSWIFTMENTION (Mentions)
+
+[82/475] KXLEAVITTMENTIONDURATION (Mentions)
+  ✅ Events:  10 | Crossed:  10.0% | Accuracy: 100.0%
+
+[83/475] KXKAMALAMENTION (Mentions)
+
+[84/475] KXSOUTHPARKMENTION (Mentions)
+
+[85/475] KXSTARMERMENTION (Mentions)
+  ✅ Events:  11 | Crossed:  36.4% | Accuracy:  75.0%
+
+[86/475] KXNFLMENTION (Mentions)
+  ✅ Events:  48 | Crossed:  66.7% | Accuracy:  93.8%
+
+[87/475] KXEARNINGSMENTIONMETA (Mentions)
+
+[88/475] KXTRUMPMENTION (Mentions)
+  ✅ Events:  47 | Crossed:  40.4% | Accuracy:  94.7%
+
+[89/475] KXEARNINGSMENTIONTSLA (Mentions)
+
+[90/475] KXEARNINGSMENTIONDIS (Mentions)
+
+[91/475] KXTRUMPMENTIONDURATION (Mentions)
+
+[92/475] KXCOLBERTMENTION (Mentions)
+  ✅ Events:  12 | Crossed:  41.7% | Accuracy: 100.0%
+
+[93/475] KXLASTWORDMENTION (Mentions)
+
+[94/475] KXZAKARIAMENTION (Mentions)
+
+[95/475] KXTHEWEEKNIGHTMENTION (Mentions)
+
+[96/475] KXKIMMELMENTION (Mentions)
+  ✅ Events:  14 | Crossed:  28.6% | Accuracy: 100.0%
+
+[97/475] KXSECPRESSMENTION (Mentions)
+  ✅ Events:  45 | Crossed:  55.6% | Accuracy:  88.0%
+
+[98/475] KXTRUMPMENTIONB (Mentions)
+  ✅ Events:  46 | Crossed:  52.2% | Accuracy:  75.0%
+
+[99/475] KXMAMDANIMENTION (Mentions)
+  ✅ Events:  49 | Crossed:  42.9% | Accuracy:  95.2%
+
+[100/475] KXMRBEASTMENTION (Mentions)
+  ✅ Events:  14 | Crossed:  35.7% | Accuracy: 100.0%
+
+[101/475] KXHEGSETHMENTION (Mentions)
+
+[102/475] KXALTMANMENTION (Mentions)
+
+[103/475] KXACOOPERMENTION (Mentions)
+
+[104/475] KXNEWSOMMENTION (Mentions)
+
+[105/475] KXFOXNEWSMENTION (Mentions)
+
+[106/475] KXCOOPERMENTION (Mentions)
+
+[107/475] KXEARNINGSMENTIONGOOGL (Mentions)
+
+[108/475] KXSURVIVORMENTION (Mentions)
+  ✅ Events:  12 | Crossed:  16.7% | Accuracy: 100.0%
+
+[109/475] KXCONGRESSMENTION (Mentions)
+  ✅ Events:  10 | Crossed:  50.0% | Accuracy: 100.0%
+
+[110/475] KXLEAVITTLATE (Mentions)
+  ✅ Events:  10 | Crossed:  40.0% | Accuracy:  75.0%
+
+[111/475] KXEARNINGSMENTIONAAPL (Mentions)
+
+[112/475] KXBIDENMENTION (Mentions)
+
+[113/475] KXTNFMENTION (Mentions)
+  ✅ Events:  11 | Crossed:  45.5% | Accuracy: 100.0%
+
+[114/475] KXEARNINGSMENTIONUBER (Mentions)
+
+[115/475] KXWALZMENTION (Mentions)
+
+[116/475] KXHOCHULMENTION (Mentions)
+  ✅ Events:  10 | Crossed:  80.0% | Accuracy: 100.0%
+
+[117/475] KXTRUMPSAY (Mentions)
+  ✅ Events:  22 | Crossed:  22.7% | Accuracy:  80.0%
+
+[118/475] KXEARNINGSMENTIONPLTR (Mentions)
+
+[119/475] KXBERNIEMENTION (Mentions)
+
+[120/475] KXNYCMDEBMENTION (Mentions)
+
+[121/475] KXBESSENTMTPMENTION (Mentions)
+
+[122/475] KXFTNMENTION (Mentions)
+
+[123/475] KXFIGHTMENTION (Mentions)
+
+[124/475] KXNCAAMENTION (Mentions)
+  ✅ Events:  32 | Crossed:  87.5% | Accuracy:  92.9%
+
+[125/475] KXSNLMENTION (Mentions)
+  ✅ Events:  11 | Crossed:  27.3% | Accuracy: 100.0%
+
+[126/475] KXSNFMENTION (Mentions)
+  ✅ Events:  12 | Crossed:  58.3% | Accuracy: 100.0%
+
+[127/475] KXMLBMENTION (Mentions)
+
+[128/475] KXEARNINGSMENTIONNFLX (Mentions)
+
+[129/475] KXPERSONMENTION (Mentions)
+
+[130/475] KXNBAMENTION (Mentions)
+  ✅ Events:  65 | Crossed:  90.8% | Accuracy: 100.0%
+
+[131/475] KXJENSENMENTION (Mentions)
+
+[132/475] KXJOHNSONMENTION (Mentions)
+
+[133/475] KXMELANIAMENTION (Mentions)
+
+[134/475] KXFLIGHTJFK (World)
+  ✅ Events:  53 | Crossed:   7.5% | Accuracy: 100.0%
+
+[135/475] KXFLIGHTORD (World)
+  ✅ Events:  53 | Crossed:   7.5% | Accuracy: 100.0%
+
+[136/475] KXFLIGHTLAX (World)
+
+[137/475] KXLOWTDEN (Climate and Weather)
+  ✅ Events:  60 | Crossed:  35.0% | Accuracy:  95.2%
+
+[138/475] KXLOWTAUS (Climate and Weather)
+  ✅ Events:  59 | Crossed:  28.8% | Accuracy:  94.1%
+
+[139/475] KXRAINNYC (Climate and Weather)
+  ✅ Events: 500 | Crossed:  29.2% | Accuracy:  96.6%
+
+[140/475] KXHIGHTSEA (Climate and Weather)
+  ✅ Events:  27 | Crossed:   3.7% | Accuracy:   0.0%
+
+[141/475] KXHURCAT (Climate and Weather)
+  ✅ Events:  69 | Crossed:   7.2% | Accuracy: 100.0%
+
+[142/475] KXLOWTNYC (Climate and Weather)
+  ✅ Events:  59 | Crossed:  27.1% | Accuracy: 100.0%
+
+[143/475] KXCITIESWEATHER (Climate and Weather)
+
+[144/475] KXHIGHNY (Climate and Weather)
+  ✅ Events: 167 | Crossed:   3.0% | Accuracy:  80.0%
+
+[145/475] KXHMONTHRANGE (Climate and Weather)
+  ✅ Events:  19 | Crossed:  10.5% | Accuracy: 100.0%
+
+[146/475] KXLOWTPHIL (Climate and Weather)
+  ✅ Events:  67 | Crossed:  32.8% | Accuracy: 100.0%
+
+[147/475] KXRAINSEA (Climate and Weather)
+  ✅ Events: 339 | Crossed:  26.0% | Accuracy:  95.5%
+
+[148/475] KXHIGHCHI (Climate and Weather)
+  ✅ Events: 167 | Crossed:  10.2% | Accuracy:  94.1%
+
+[149/475] KXSNOWNYM (Climate and Weather)
+  ✅ Events:  18 | Crossed:   5.6% | Accuracy: 100.0%
+
+[150/475] KXTORNADO (Climate and Weather)
+  ✅ Events:  32 | Crossed:  12.5% | Accuracy: 100.0%
+
+[151/475] KXLOWTLAX (Climate and Weather)
+  ✅ Events:  59 | Crossed:  15.3% | Accuracy:  88.9%
+
+[152/475] KXHIGHTDC (Climate and Weather)
+  ✅ Events:  24 | Crossed:   4.2% | Accuracy: 100.0%
+
+[153/475] KXHIGHLAX (Climate and Weather)
+  ✅ Events: 167 | Crossed:  19.8% | Accuracy: 100.0%
+
+[154/475] KXHIGHDEN (Climate and Weather)
+  ✅ Events: 167 | Crossed:  23.4% | Accuracy: 100.0%
+
+[155/475] KXHIGHPHIL (Climate and Weather)
+  ✅ Events: 167 | Crossed:  12.6% | Accuracy: 100.0%
+
+[156/475] KXHIGHAUS (Climate and Weather)
+  ✅ Events: 167 | Crossed:  10.2% | Accuracy: 100.0%
+
+[157/475] KXHIGHTSFO (Climate and Weather)
+  ✅ Events:  27 | Crossed:  18.5% | Accuracy: 100.0%
+
+[158/475] KXHIGHTLV (Climate and Weather)
+  ✅ Events:  27 | Crossed:   7.4% | Accuracy: 100.0%
+
+[159/475] KXHIGHUS (Climate and Weather)
+
+[160/475] KXLOWTCHI (Climate and Weather)
+  ✅ Events:  79 | Crossed:  24.1% | Accuracy:  94.7%
+
+[161/475] KXLOWTMIA (Climate and Weather)
+  ✅ Events:  59 | Crossed:   6.8% | Accuracy: 100.0%
+
+[162/475] KXHIGHHOU (Climate and Weather)
+  ✅ Events:  70 | Crossed:  51.4% | Accuracy:  97.2%
+
+[163/475] KXHIGHTNOLA (Climate and Weather)
+  ✅ Events:  27 | Crossed:  18.5% | Accuracy: 100.0%
+
+[164/475] KXHIGHMIA (Climate and Weather)
+  ✅ Events: 167 | Crossed:   6.6% | Accuracy: 100.0%
+
+[165/475] KXRAINNYCM (Climate and Weather)
+  ✅ Events:  24 | Crossed:  25.0% | Accuracy:  83.3%
+
+[166/475] KXTRUMPMEET (Politics)
+
+[167/475] KXLAGODAYS (Politics)
+  ✅ Events:  11 | Crossed:  27.3% | Accuracy: 100.0%
+
+[168/475] KXVOTESHUTDOWNS (Politics)
+
+[169/475] KXTRUMPPARDON (Politics)
+
+[170/475] KXDJTCONF (Politics)
+
+[171/475] KX538APPROVEMIN (Politics)
+
+[172/475] KXWHVISIT (Politics)
+
+[173/475] KXGOVSHUTLENGTH (Politics)
+
+[174/475] KX538APPROVE (Politics)
+  ✅ Events: 113 | Crossed:   2.7% | Accuracy: 100.0%
+
+[175/475] KXVOTESHUTDOWNH (Politics)
+
+[176/475] KX538APPROVEMAX (Politics)
+
+[177/475] KXAPRPOTUS (Politics)
+  ✅ Events: 124 | Crossed:   6.5% | Accuracy:  75.0%
+
+[178/475] KXASYLUMCASES (Politics)
+
+[179/475] KXWOSBOARD (Sports)
+  ✅ Events:  12 | Crossed:  16.7% | Accuracy:  50.0%
+
+[180/475] KXLALIGATOTAL (Sports)
+  ✅ Events: 108 | Crossed:  62.0% | Accuracy:  74.6%
+
+[181/475] KXNCAAFTOTAL (Sports)
+  ✅ Events: 111 | Crossed:  36.0% | Accuracy:  90.0%
+
+[182/475] KXPICKLEBALLGAMES (Sports)
+  ✅ Events:  30 | Crossed:  23.3% | Accuracy:  85.7%
+
+[183/475] KXNHLGOAL (Sports)
+  ✅ Events:  59 | Crossed:  33.9% | Accuracy:  85.0%
+
+[184/475] KXFACUPADVANCE (Sports)
+  ✅ Events:  32 | Crossed:  68.8% | Accuracy:  86.4%
+
+[185/475] KXEUROLEAGUEGAME (Sports)
+  ✅ Events: 171 | Crossed:  99.4% | Accuracy:  90.0%
+
+[186/475] KXNFLGAME (Sports)
+  ✅ Events: 331 | Crossed:  99.7% | Accuracy:  97.0%
+
+[187/475] KXTABLETENNIS (Sports)
+  ✅ Events: 500 | Crossed:   2.6% | Accuracy:  76.9%
+
+[188/475] KXMVENFLMULTIGAME (Sports)
+
+[189/475] KXFIFAGAME (Sports)
+  ✅ Events: 121 | Crossed:  62.8% | Accuracy:  93.4%
+
+[190/475] KXLALIGAGAME (Sports)
+  ✅ Events: 230 | Crossed:  61.7% | Accuracy:  88.7%
+
+[191/475] KXLOLGAME (Sports)
+  ✅ Events: 260 | Crossed: 100.0% | Accuracy:  87.7%
+
+[192/475] KXLIGUE1SPREAD (Sports)
+  ✅ Events:  81 | Crossed:  19.8% | Accuracy:  81.2%
+
+[193/475] KXLIGUE1TOTAL (Sports)
+  ✅ Events:  81 | Crossed:  71.6% | Accuracy:  62.1%
+
+[194/475] KXNEXTTEAMMLB (Sports)
+
+[195/475] KXPGATOUR (Sports)
+
+[196/475] KXDPWORLDTOUR (Sports)
+
+[197/475] KXBUNDESLIGAGAME (Sports)
+  ✅ Events: 191 | Crossed:  61.3% | Accuracy:  84.6%
+
+[198/475] KXBUNDESLIGATOTAL (Sports)
+  ✅ Events: 101 | Crossed:  73.3% | Accuracy:  75.7%
+
+[199/475] KXATPIT (Sports)
+  ✅ Events:  46 | Crossed:  97.8% | Accuracy:  97.8%
+
+[200/475] KXLPGATOUR (Sports)
+
+[201/475] KXPGAMAKECUT (Sports)
+
+[202/475] KXNFLDPOTY (Sports)
+
+[203/475] KXNFLTOTAL (Sports)
+  ✅ Events: 111 | Crossed:  31.5% | Accuracy:  82.9%
+
+[204/475] KXNHLAST (Sports)
+  ✅ Events: 500 | Crossed:   3.6% | Accuracy: 100.0%
+
+[205/475] KXNBAREB (Sports)
+  ✅ Events: 201 | Crossed:  36.3% | Accuracy:  67.1%
+
+[206/475] KXAHLGAME (Sports)
+  ✅ Events: 159 | Crossed:  99.4% | Accuracy:  88.0%
+
+[207/475] KXWTAMAD (Sports)
+  ✅ Events:  31 | Crossed:  74.2% | Accuracy:  91.3%
+
+[208/475] KXJLEAGUEGAME (Sports)
+  ✅ Events:  40 | Crossed:  55.0% | Accuracy:  68.2%
+
+[209/475] KXATPTOTALSETS (Sports)
+  ✅ Events:  82 | Crossed:  22.0% | Accuracy:  55.6%
+
+[210/475] KXNHLTOTAL (Sports)
+  ✅ Events: 200 | Crossed:  59.0% | Accuracy:  83.1%
+
+[211/475] KXCSGOGAME (Sports)
+  ✅ Events: 143 | Crossed:  97.2% | Accuracy:  91.4%
+
+[212/475] KXNCAAHOCKEYGAME (Sports)
+  ✅ Events: 196 | Crossed:  70.9% | Accuracy:  82.7%
+
+[213/475] KXSUPERLIGGAME (Sports)
+  ✅ Events:  99 | Crossed:  66.7% | Accuracy:  87.9%
+
+[214/475] KXMASTERS (Sports)
+
+[215/475] KXMARMAD (Sports)
+  ✅ Events:  67 | Crossed:  64.2% | Accuracy: 100.0%
+
+[216/475] KXNCAABBIG12 (Sports)
+
+[217/475] KXUFCFIGHT (Sports)
+  ✅ Events: 256 | Crossed:  91.0% | Accuracy:  85.0%
+
+[218/475] KXFANATICSGAMESTHIRDPLACE (Sports)
+
+[219/475] KXBUNDESLIGASPREAD (Sports)
+  ✅ Events: 101 | Crossed:  22.8% | Accuracy:  65.2%
+
+[220/475] KXF1RACEPODIUM (Sports)
+  ✅ Events:  22 | Crossed:   9.1% | Accuracy: 100.0%
+
+[221/475] KXNFLOPOTY (Sports)
+
+[222/475] KXDAYTONA24H (Sports)
+
+[223/475] KXNHLSPREAD (Sports)

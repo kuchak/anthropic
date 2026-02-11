@@ -1,0 +1,498 @@
+🔍 Discovering all series on Kalshi...
+✅ Found 8450 total series
+
+📊 Series by category:
+                                :   43 series
+  Climate and Weather           :  249 series
+  Companies                     :  285 series
+  Crypto                        :  207 series
+  Economics                     :  390 series
+  Education                     :    2 series
+  Elections                     :  431 series
+  Entertainment                 : 2114 series
+  Financials                    :  174 series
+  Health                        :  111 series
+  Mentions                      :  258 series
+  Politics                      : 2436 series
+  Science and Technology        :  182 series
+  Social                        :   72 series
+  Sports                        : 1305 series
+  Transportation                :   40 series
+  World                         :  151 series
+
+======================================================================
+🔍 ANALYZING ALL SERIES
+======================================================================
+
+🔍 Pre-filtering series with sufficient markets...
+  Checked: 100/8450 series...
+  Checked: 200/8450 series...
+  Checked: 300/8450 series...
+  Checked: 400/8450 series...
+  Checked: 500/8450 series...
+  Checked: 600/8450 series...
+  Checked: 700/8450 series...
+  Checked: 800/8450 series...
+  Checked: 900/8450 series...
+  Checked: 1000/8450 series...
+  Checked: 1100/8450 series...
+  Checked: 1200/8450 series...
+  Checked: 1300/8450 series...
+  Checked: 1400/8450 series...
+  Checked: 1500/8450 series...
+  Checked: 1600/8450 series...
+  Checked: 1700/8450 series...
+  Checked: 1800/8450 series...
+  Checked: 1900/8450 series...
+  Checked: 2000/8450 series...
+  Checked: 2100/8450 series...
+  Checked: 2200/8450 series...
+  Checked: 2300/8450 series...
+  Checked: 2400/8450 series...
+  Checked: 2500/8450 series...
+  Checked: 2600/8450 series...
+  Checked: 2700/8450 series...
+  Checked: 2800/8450 series...
+  Checked: 2900/8450 series...
+  Checked: 3000/8450 series...
+  Checked: 3100/8450 series...
+  Checked: 3200/8450 series...
+  Checked: 3300/8450 series...
+  Checked: 3400/8450 series...
+  Checked: 3500/8450 series...
+  Checked: 3600/8450 series...
+  Checked: 3700/8450 series...
+  Checked: 3800/8450 series...
+  Checked: 3900/8450 series...
+  Checked: 4000/8450 series...
+  Checked: 4100/8450 series...
+  Checked: 4200/8450 series...
+  Checked: 4300/8450 series...
+  Checked: 4400/8450 series...
+  Checked: 4500/8450 series...
+  Checked: 4600/8450 series...
+  Checked: 4700/8450 series...
+  Checked: 4800/8450 series...
+  Checked: 4900/8450 series...
+  Checked: 5000/8450 series...
+  Checked: 5100/8450 series...
+  Checked: 5200/8450 series...
+  Checked: 5300/8450 series...
+  Checked: 5400/8450 series...
+  Checked: 5500/8450 series...
+  Checked: 5600/8450 series...
+  Checked: 5700/8450 series...
+  Checked: 5800/8450 series...
+  Checked: 5900/8450 series...
+  Checked: 6000/8450 series...
+  Checked: 6100/8450 series...
+  Checked: 6200/8450 series...
+  Checked: 6300/8450 series...
+  Checked: 6400/8450 series...
+  Checked: 6500/8450 series...
+  Checked: 6600/8450 series...
+  Checked: 6700/8450 series...
+  Checked: 6800/8450 series...
+  Checked: 6900/8450 series...
+  Checked: 7000/8450 series...
+  Checked: 7100/8450 series...
+  Checked: 7200/8450 series...
+  Checked: 7300/8450 series...
+  Checked: 7400/8450 series...
+  Checked: 7500/8450 series...
+  Checked: 7600/8450 series...
+  Checked: 7700/8450 series...
+  Checked: 7800/8450 series...
+  Checked: 7900/8450 series...
+  Checked: 8000/8450 series...
+  Checked: 8100/8450 series...
+  Checked: 8200/8450 series...
+  Checked: 8300/8450 series...
+  Checked: 8400/8450 series...
+
+✅ Found 681 series with 50+ settled markets
+
+======================================================================
+🔍 ANALYZING VIABLE SERIES (100 events each for speed)
+======================================================================
+  ✅ Events:  12 | Crossed:   8.3% | Accuracy: 100.0%
+  ✅ Events:  14 | Crossed:   7.1% | Accuracy:   0.0%
+  ✅ Events:  40 | Crossed:  10.0% | Accuracy: 100.0%
+
+📊 Progress: 25/681 series analyzed...
+  ✅ Events:  11 | Crossed:  27.3% | Accuracy: 100.0%
+  ✅ Events:  19 | Crossed:  21.1% | Accuracy: 100.0%
+  ✅ Events:  19 | Crossed:  26.3% | Accuracy: 100.0%
+  ✅ Events:  18 | Crossed:   5.6% | Accuracy: 100.0%
+
+📊 Progress: 50/681 series analyzed...
+  ✅ Events:  40 | Crossed:  12.5% | Accuracy: 100.0%
+  ✅ Events:  13 | Crossed:  15.4% | Accuracy: 100.0%
+
+📊 Progress: 75/681 series analyzed...
+  ✅ Events:  16 | Crossed:  50.0% | Accuracy: 100.0%
+  ✅ Events:  11 | Crossed:  18.2% | Accuracy: 100.0%
+  ✅ Events:  13 | Crossed:   7.7% | Accuracy: 100.0%
+
+📊 Progress: 100/681 series analyzed...
+  ✅ Events:  15 | Crossed:  40.0% | Accuracy: 100.0%
+  ✅ Events:  11 | Crossed:  36.4% | Accuracy: 100.0%
+  ✅ Events:  11 | Crossed:  27.3% | Accuracy: 100.0%
+
+📊 Progress: 125/681 series analyzed...
+  ✅ Events:  24 | Crossed:   8.3% | Accuracy: 100.0%
+  ✅ Events:  27 | Crossed:  14.8% | Accuracy:  75.0%
+  ✅ Events: 100 | Crossed:  90.0% | Accuracy:  93.3%
+
+📊 Progress: 150/681 series analyzed...
+  ✅ Events: 100 | Crossed:  56.0% | Accuracy:  83.9%
+  ✅ Events: 100 | Crossed: 100.0% | Accuracy:  86.0%
+  ✅ Events: 100 | Crossed:  97.0% | Accuracy:  90.7%
+  ✅ Events:  15 | Crossed: 100.0% | Accuracy:  86.7%
+  ✅ Events: 100 | Crossed:  99.0% | Accuracy:  81.8%
+  ✅ Events:  13 | Crossed:  30.8% | Accuracy:  75.0%
+  ✅ Events:  51 | Crossed:  17.6% | Accuracy:  55.6%
+  ✅ Events:  51 | Crossed:  23.5% | Accuracy:  58.3%
+  ✅ Events:  67 | Crossed:  74.6% | Accuracy:  76.0%
+  ✅ Events:  46 | Crossed:  97.8% | Accuracy:  97.8%
+  ✅ Events: 100 | Crossed:  84.0% | Accuracy:  81.0%
+  ✅ Events:  67 | Crossed:  61.2% | Accuracy:  92.7%
+
+📊 Progress: 175/681 series analyzed...
+  ✅ Events: 100 | Crossed:  98.0% | Accuracy: 100.0%
+  ✅ Events:  60 | Crossed:  81.7% | Accuracy:  87.8%
+  ✅ Events:  50 | Crossed:  20.0% | Accuracy:  60.0%
+  ✅ Events:  10 | Crossed:  50.0% | Accuracy: 100.0%
+  ✅ Events:  50 | Crossed:  42.0% | Accuracy:  81.0%
+  ✅ Events:  15 | Crossed:  13.3% | Accuracy: 100.0%
+  ✅ Events:  55 | Crossed: 100.0% | Accuracy:  80.0%
+  ✅ Events: 100 | Crossed: 100.0% | Accuracy:  91.0%
+  ✅ Events:  29 | Crossed:  89.7% | Accuracy:  73.1%
+  ✅ Events: 100 | Crossed: 100.0% | Accuracy:  88.0%
+  ✅ Events:  18 | Crossed:  61.1% | Accuracy:  54.5%
+  ✅ Events:  20 | Crossed:  85.0% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  32.4% | Accuracy:  54.5%
+  ✅ Events:  67 | Crossed:  68.7% | Accuracy:  87.0%
+  ✅ Events: 100 | Crossed: 100.0% | Accuracy:  87.0%
+
+📊 Progress: 200/681 series analyzed...
+  ✅ Events:  67 | Crossed:   1.5% | Accuracy:   0.0%
+  ✅ Events:  15 | Crossed: 100.0% | Accuracy:  73.3%
+  ✅ Events:  67 | Crossed:  65.7% | Accuracy:  88.6%
+  ✅ Events:  26 | Crossed:  92.3% | Accuracy:  87.5%
+  ✅ Events:  45 | Crossed:  55.6% | Accuracy:  48.0%
+  ✅ Events:  67 | Crossed:  17.9% | Accuracy:  66.7%
+  ✅ Events:  16 | Crossed: 100.0% | Accuracy:  87.5%
+  ✅ Events:  17 | Crossed:  11.8% | Accuracy:  50.0%
+  ✅ Events:  38 | Crossed: 100.0% | Accuracy:  81.6%
+  ✅ Events:  56 | Crossed:  53.6% | Accuracy:  56.7%
+  ✅ Events:  12 | Crossed:  33.3% | Accuracy: 100.0%
+  ✅ Events: 100 | Crossed:  91.0% | Accuracy:  90.1%
+  ✅ Events:  12 | Crossed:  66.7% | Accuracy: 100.0%
+  ✅ Events:  11 | Crossed:  72.7% | Accuracy:  87.5%
+  ✅ Events: 100 | Crossed:  96.0% | Accuracy:  96.9%
+
+📊 Progress: 225/681 series analyzed...
+  ✅ Events:  67 | Crossed:  59.7% | Accuracy:  92.5%
+  ✅ Events:  21 | Crossed:  38.1% | Accuracy:  75.0%
+  ✅ Events:  67 | Crossed:  71.6% | Accuracy:  97.9%
+  ✅ Events:  67 | Crossed:  59.7% | Accuracy:  85.0%
+  ✅ Events:  22 | Crossed: 100.0% | Accuracy:  90.9%
+  ✅ Events:  32 | Crossed:  68.8% | Accuracy:  86.4%
+  ✅ Events:  97 | Crossed:  96.9% | Accuracy:  80.9%
+  ✅ Events:  64 | Crossed:  65.6% | Accuracy:  81.0%
+  ✅ Events:  40 | Crossed:  30.0% | Accuracy:  75.0%
+  ✅ Events: 100 | Crossed:  99.0% | Accuracy:  89.9%
+  ✅ Events:  23 | Crossed:  95.7% | Accuracy:  90.9%
+  ✅ Events:  44 | Crossed:  65.9% | Accuracy:  82.8%
+  ✅ Events:  64 | Crossed:  70.3% | Accuracy:  62.2%
+
+📊 Progress: 250/681 series analyzed...
+  ✅ Events:  51 | Crossed:  68.6% | Accuracy:  94.3%
+  ✅ Events:  22 | Crossed:  90.9% | Accuracy:  10.0%
+  ✅ Events:  19 | Crossed:  31.6% | Accuracy:  50.0%
+  ✅ Events:  50 | Crossed:  40.0% | Accuracy:  60.0%
+  ✅ Events: 100 | Crossed:  99.0% | Accuracy:  93.9%
+  ✅ Events: 100 | Crossed:  23.0% | Accuracy:  26.1%
+  ✅ Events:  29 | Crossed:  82.8% | Accuracy:  83.3%
+  ✅ Events:  67 | Crossed:  68.7% | Accuracy:  89.1%
+  ✅ Events:  41 | Crossed:  39.0% | Accuracy:  81.2%
+  ✅ Events:  22 | Crossed:  40.9% | Accuracy: 100.0%
+
+📊 Progress: 275/681 series analyzed...
+  ✅ Events:  56 | Crossed: 100.0% | Accuracy:  91.1%
+  ✅ Events:  17 | Crossed:  17.6% | Accuracy: 100.0%
+  ✅ Events:  62 | Crossed:  53.2% | Accuracy:  75.8%
+  ✅ Events:  67 | Crossed:  70.1% | Accuracy:  66.0%
+  ✅ Events:  15 | Crossed:  93.3% | Accuracy:  85.7%
+  ✅ Events:  19 | Crossed:  36.8% | Accuracy:  71.4%
+  ✅ Events:  67 | Crossed:  65.7% | Accuracy: 100.0%
+  ✅ Events:  67 | Crossed:  52.2% | Accuracy:  91.4%
+  ✅ Events:  21 | Crossed:  52.4% | Accuracy: 100.0%
+  ✅ Events:  90 | Crossed:   1.1% | Accuracy: 100.0%
+  ✅ Events:  64 | Crossed:  57.8% | Accuracy:  94.6%
+  ✅ Events: 100 | Crossed: 100.0% | Accuracy:  93.0%
+  ✅ Events:  39 | Crossed:  94.9% | Accuracy:  97.3%
+  ✅ Events:  10 | Crossed:  10.0% | Accuracy: 100.0%
+
+📊 Progress: 300/681 series analyzed...
+  ✅ Events: 100 | Crossed:  96.0% | Accuracy:  93.8%
+  ✅ Events:  53 | Crossed: 100.0% | Accuracy:  92.5%
+  ✅ Events:  50 | Crossed:  22.0% | Accuracy:  72.7%
+  ✅ Events:  41 | Crossed:  36.6% | Accuracy:  66.7%
+  ✅ Events:  67 | Crossed:  64.2% | Accuracy:  88.4%
+  ✅ Events:  67 | Crossed:  85.1% | Accuracy:  73.7%
+  ✅ Events:  28 | Crossed:  60.7% | Accuracy:  70.6%
+  ✅ Events: 100 | Crossed:  94.0% | Accuracy:  98.9%
+  ✅ Events:  20 | Crossed:  40.0% | Accuracy:  37.5%
+  ✅ Events:  79 | Crossed: 100.0% | Accuracy:  84.8%
+  ✅ Events:  34 | Crossed:  67.6% | Accuracy:  95.7%
+  ✅ Events: 100 | Crossed:  87.0% | Accuracy:  90.8%
+  ✅ Events:  64 | Crossed:  65.6% | Accuracy:  73.8%
+  ✅ Events:  15 | Crossed:  26.7% | Accuracy: 100.0%
+  ✅ Events:  11 | Crossed:  27.3% | Accuracy:  66.7%
+  ✅ Events: 100 | Crossed:  96.0% | Accuracy:  90.6%
+  ✅ Events:  35 | Crossed:  54.3% | Accuracy:  84.2%
+
+📊 Progress: 325/681 series analyzed...
+  ✅ Events:  16 | Crossed:  62.5% | Accuracy: 100.0%
+  ✅ Events:  67 | Crossed:  53.7% | Accuracy:  91.7%
+  ✅ Events:  13 | Crossed:  76.9% | Accuracy:  70.0%
+  ✅ Events:  23 | Crossed:  34.8% | Accuracy:  50.0%
+  ✅ Events:  67 | Crossed:  59.7% | Accuracy:  92.5%
+  ✅ Events:  12 | Crossed:  41.7% | Accuracy:  60.0%
+  ✅ Events:  21 | Crossed:  81.0% | Accuracy:  82.4%
+  ✅ Events:  40 | Crossed:  55.0% | Accuracy:  68.2%
+  ✅ Events: 100 | Crossed:  99.0% | Accuracy:  98.0%
+  ✅ Events:  67 | Crossed:  67.2% | Accuracy:  88.9%
+  ✅ Events:  12 | Crossed:  16.7% | Accuracy: 100.0%
+
+📊 Progress: 350/681 series analyzed...
+  ✅ Events: 100 | Crossed:   1.0% | Accuracy:   0.0%
+  ✅ Events: 100 | Crossed:  99.0% | Accuracy:  89.9%
+  ✅ Events:  50 | Crossed:  22.0% | Accuracy:  72.7%
+  ✅ Events:  68 | Crossed:  67.6% | Accuracy:  89.1%
+  ✅ Events:  65 | Crossed:  70.8% | Accuracy:  84.8%
+  ✅ Events: 100 | Crossed:  77.0% | Accuracy:  81.8%
+  ✅ Events: 100 | Crossed:  95.0% | Accuracy:  92.6%
+  ✅ Events:  50 | Crossed:  24.0% | Accuracy:  91.7%
+  ✅ Events:  19 | Crossed: 100.0% | Accuracy:  94.7%
+  ✅ Events:  85 | Crossed:   2.4% | Accuracy:   0.0%
+  ✅ Events: 100 | Crossed: 100.0% | Accuracy:  99.0%
+  ✅ Events: 100 | Crossed:   1.0% | Accuracy: 100.0%
+  ✅ Events: 100 | Crossed:   3.0% | Accuracy:  66.7%
+  ✅ Events: 100 | Crossed: 100.0% | Accuracy:  75.0%
+  ✅ Events:  50 | Crossed:  32.0% | Accuracy:  68.8%
+
+📊 Progress: 375/681 series analyzed...
+  ✅ Events:  67 | Crossed:  70.1% | Accuracy:  80.9%
+  ✅ Events:  75 | Crossed:  96.0% | Accuracy:  94.4%
+  ✅ Events:  16 | Crossed: 100.0% | Accuracy:  87.5%
+  ✅ Events:  52 | Crossed:  92.3% | Accuracy:  89.6%
+  ✅ Events:  34 | Crossed:  32.4% | Accuracy:  90.9%
+  ✅ Events:  21 | Crossed:  81.0% | Accuracy: 100.0%
+  ✅ Events:  67 | Crossed:  70.1% | Accuracy:  83.0%
+  ✅ Events:  67 | Crossed:  74.6% | Accuracy:  86.0%
+  ✅ Events:  30 | Crossed: 100.0% | Accuracy:  80.0%
+  ✅ Events:  67 | Crossed:  62.7% | Accuracy:  88.1%
+  ✅ Events:  67 | Crossed:  62.7% | Accuracy:  95.2%
+  ✅ Events:  24 | Crossed:  83.3% | Accuracy:  65.0%
+  ✅ Events:  32 | Crossed:  59.4% | Accuracy:  94.7%
+  ✅ Events:  11 | Crossed:  45.5% | Accuracy:  60.0%
+  ✅ Events:  67 | Crossed:  59.7% | Accuracy:  87.5%
+  ✅ Events:  17 | Crossed:  23.5% | Accuracy: 100.0%
+  ✅ Events:  50 | Crossed:  62.0% | Accuracy:  87.1%
+
+📊 Progress: 400/681 series analyzed...
+  ✅ Events:  27 | Crossed:  85.2% | Accuracy:  91.3%
+  ✅ Events:  81 | Crossed:  98.8% | Accuracy:  86.2%
+  ✅ Events:  40 | Crossed:  17.5% | Accuracy:  85.7%
+  ✅ Events: 100 | Crossed: 100.0% | Accuracy:  85.0%
+  ✅ Events:  21 | Crossed:  33.3% | Accuracy:  85.7%
+  ✅ Events:  83 | Crossed:  97.6% | Accuracy:  82.7%
+  ✅ Events:  12 | Crossed:  33.3% | Accuracy:   0.0%
+  ✅ Events:  82 | Crossed:  22.0% | Accuracy:  55.6%
+  ✅ Events:  86 | Crossed:  96.5% | Accuracy:  88.0%
+  ✅ Events:  67 | Crossed:  35.8% | Accuracy:  75.0%
+  ✅ Events:  19 | Crossed:  42.1% | Accuracy:  87.5%
+  ✅ Events:  30 | Crossed:  23.3% | Accuracy:  85.7%
+
+📊 Progress: 425/681 series analyzed...
+  ✅ Events:  43 | Crossed:  97.7% | Accuracy:  88.1%
+  ✅ Events:  16 | Crossed:  56.2% | Accuracy:  77.8%
+  ✅ Events:  19 | Crossed:  26.3% | Accuracy:  80.0%
+  ✅ Events:  32 | Crossed:   9.4% | Accuracy:  66.7%
+  ✅ Events: 100 | Crossed:  99.0% | Accuracy:  84.8%
+  ✅ Events:  44 | Crossed:  63.6% | Accuracy:  32.1%
+  ✅ Events: 100 | Crossed:   1.0% | Accuracy: 100.0%
+  ✅ Events:  18 | Crossed: 100.0% | Accuracy:  88.9%
+  ✅ Events:  40 | Crossed:  57.5% | Accuracy:  91.3%
+  ✅ Events: 100 | Crossed:  97.0% | Accuracy:  99.0%
+  ✅ Events: 100 | Crossed:  43.0% | Accuracy:  83.7%
+  ✅ Events:  61 | Crossed:  98.4% | Accuracy:  85.0%
+  ✅ Events:  67 | Crossed:  61.2% | Accuracy:  80.5%
+  ✅ Events:  31 | Crossed:  74.2% | Accuracy:  91.3%
+  ✅ Events:  12 | Crossed:  75.0% | Accuracy: 100.0%
+  ✅ Events:  21 | Crossed:  19.0% | Accuracy: 100.0%
+
+📊 Progress: 450/681 series analyzed...
+  ✅ Events:  13 | Crossed:  15.4% | Accuracy:   0.0%
+  ✅ Events:  10 | Crossed:  90.0% | Accuracy:  22.2%
+  ✅ Events:  16 | Crossed:  37.5% | Accuracy:  50.0%
+  ✅ Events:  16 | Crossed:   6.2% | Accuracy: 100.0%
+  ✅ Events:  18 | Crossed:  27.8% | Accuracy: 100.0%
+  ✅ Events:  21 | Crossed:  47.6% | Accuracy: 100.0%
+  ✅ Events:  14 | Crossed:   7.1% | Accuracy:   0.0%
+  ✅ Events: 100 | Crossed:  31.0% | Accuracy:  96.8%
+  ✅ Events:  19 | Crossed:  26.3% | Accuracy:  80.0%
+  ✅ Events:  14 | Crossed:   7.1% | Accuracy: 100.0%
+  ✅ Events:  14 | Crossed:  14.3% | Accuracy:   0.0%
+  ✅ Events:  18 | Crossed:  44.4% | Accuracy: 100.0%
+
+📊 Progress: 475/681 series analyzed...
+  ✅ Events:  14 | Crossed:   7.1% | Accuracy: 100.0%
+  ✅ Events:  23 | Crossed:  52.2% | Accuracy: 100.0%
+  ✅ Events: 100 | Crossed:  46.0% | Accuracy:  89.1%
+  ✅ Events:  10 | Crossed:  40.0% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  14.7% | Accuracy: 100.0%
+  ✅ Events:  24 | Crossed:  25.0% | Accuracy:  83.3%
+  ✅ Events:  28 | Crossed:  17.9% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  11.8% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:   2.9% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  35.3% | Accuracy: 100.0%
+  ✅ Events:  28 | Crossed:  17.9% | Accuracy: 100.0%
+  ✅ Events: 100 | Crossed:  43.0% | Accuracy:  97.7%
+  ✅ Events:  42 | Crossed:  38.1% | Accuracy: 100.0%
+  ✅ Events:  35 | Crossed:  42.9% | Accuracy:  93.3%
+
+📊 Progress: 500/681 series analyzed...
+  ✅ Events:  22 | Crossed:  13.6% | Accuracy: 100.0%
+  ✅ Events:  48 | Crossed:  25.0% | Accuracy:  91.7%
+  ✅ Events:  18 | Crossed:   5.6% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  26.5% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  26.5% | Accuracy:  88.9%
+  ✅ Events:  28 | Crossed:  10.7% | Accuracy: 100.0%
+  ✅ Events:  28 | Crossed:   3.6% | Accuracy:   0.0%
+  ✅ Events:  34 | Crossed:  47.1% | Accuracy:  93.8%
+  ✅ Events:  24 | Crossed:   4.2% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  17.6% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  14.7% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  17.6% | Accuracy: 100.0%
+  ✅ Events: 100 | Crossed:  22.0% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:   8.8% | Accuracy: 100.0%
+  ✅ Events:  40 | Crossed:  10.0% | Accuracy: 100.0%
+  ✅ Events:  19 | Crossed:  10.5% | Accuracy: 100.0%
+  ✅ Events:  34 | Crossed:  11.8% | Accuracy: 100.0%
+  ✅ Events: 100 | Crossed:  53.0% | Accuracy:  84.9%
+
+📊 Progress: 525/681 series analyzed...
+  ✅ Events: 100 | Crossed:  57.0% | Accuracy:  86.0%
+  ✅ Events: 100 | Crossed:  52.0% | Accuracy:  94.2%
+  ✅ Events:  20 | Crossed:   5.0% | Accuracy: 100.0%
+  ✅ Events:  29 | Crossed:   6.9% | Accuracy: 100.0%
+  ✅ Events: 100 | Crossed:  17.0% | Accuracy: 100.0%
+  ✅ Events:  21 | Crossed:  19.0% | Accuracy:  50.0%
+  ✅ Events:  55 | Crossed:   9.1% | Accuracy:  80.0%
+  ✅ Events:  20 | Crossed:  10.0% | Accuracy: 100.0%
+  ✅ Events:  16 | Crossed:   6.2% | Accuracy: 100.0%
+
+📊 Progress: 550/681 series analyzed...
+  ✅ Events:  23 | Crossed:   4.3% | Accuracy: 100.0%
+  ✅ Events:  21 | Crossed:  14.3% | Accuracy: 100.0%
+  ✅ Events:  26 | Crossed:   7.7% | Accuracy:   0.0%
+  ✅ Events:  40 | Crossed:  10.0% | Accuracy: 100.0%
+  ✅ Events:  23 | Crossed:  17.4% | Accuracy: 100.0%
+  ✅ Events:  40 | Crossed:   7.5% | Accuracy: 100.0%
+  ✅ Events:  19 | Crossed:   5.3% | Accuracy: 100.0%
+  ✅ Events:  69 | Crossed:   1.4% | Accuracy: 100.0%
+  ✅ Events:  49 | Crossed:  22.4% | Accuracy:  90.9%
+  ✅ Events:  34 | Crossed:   2.9% | Accuracy: 100.0%
+  ✅ Events:  24 | Crossed:   8.3% | Accuracy: 100.0%
+  ✅ Events:  16 | Crossed:   6.2% | Accuracy: 100.0%
+  ✅ Events:  29 | Crossed:  20.7% | Accuracy: 100.0%
+  ✅ Events:  53 | Crossed:   7.5% | Accuracy: 100.0%
+  ✅ Events:  53 | Crossed:   7.5% | Accuracy: 100.0%
+
+📊 Progress: 575/681 series analyzed...
+  ✅ Events:  14 | Crossed:  28.6% | Accuracy: 100.0%
+  ✅ Events:  10 | Crossed:  30.0% | Accuracy: 100.0%
+  ✅ Events:  10 | Crossed:  60.0% | Accuracy: 100.0%
+  ✅ Events:  10 | Crossed:  30.0% | Accuracy:  66.7%
+  ✅ Events:  12 | Crossed: 100.0% | Accuracy: 100.0%
+
+📊 Progress: 600/681 series analyzed...
+  ✅ Events:  10 | Crossed:  10.0% | Accuracy: 100.0%
+  ✅ Events:  11 | Crossed:  27.3% | Accuracy: 100.0%
+
+📊 Progress: 625/681 series analyzed...
+  ✅ Events:  13 | Crossed:  76.9% | Accuracy:  80.0%
+  ✅ Events:  11 | Crossed:  27.3% | Accuracy: 100.0%
+  ✅ Events:  10 | Crossed:  40.0% | Accuracy:  75.0%
+  ✅ Events:  12 | Crossed:  41.7% | Accuracy: 100.0%
+  ✅ Events:  10 | Crossed:  80.0% | Accuracy: 100.0%
+  ✅ Events:  10 | Crossed:  50.0% | Accuracy: 100.0%
+  ✅ Events:  15 | Crossed:  40.0% | Accuracy: 100.0%
+
+📊 Progress: 650/681 series analyzed...
+  ✅ Events:  11 | Crossed:  36.4% | Accuracy:  75.0%
+  ✅ Events:  12 | Crossed:  33.3% | Accuracy: 100.0%
+  ✅ Events:  11 | Crossed:  90.9% | Accuracy: 100.0%
+  ✅ Events:  12 | Crossed:  16.7% | Accuracy: 100.0%
+  ✅ Events:  14 | Crossed:  64.3% | Accuracy:  88.9%
+
+📊 Progress: 675/681 series analyzed...
+  ✅ Events:  79 | Crossed:   7.6% | Accuracy: 100.0%
+  ✅ Events:  47 | Crossed:  19.1% | Accuracy: 100.0%
+  ✅ Events:  46 | Crossed:   6.5% | Accuracy:  66.7%
+  ✅ Events: 100 | Crossed:  25.0% | Accuracy: 100.0%
+  ✅ Events:  29 | Crossed:  10.3% | Accuracy: 100.0%
+  ✅ Events:  40 | Crossed:  10.0% | Accuracy: 100.0%
+
+======================================================================
+📊 TOP PERFORMING SERIES BY ACCURACY
+======================================================================
+
+Series                         Category             Crossed    Accuracy   Window
+------------------------------------------------------------------------------------------
+KXNBAGAME                      Sports               98/100     100.0%     44.6m
+KXNFLGAME                      Sports               100/100    99.0%      37.6m
+KXNCAAFGAME                    Sports               97/100     99.0%      69.4m
+KXWTAMATCH                     Sports               94/100     98.9%      39.7m
+KXNCAAMBGAME                   Sports               99/100     98.0%      90.3m
+KXMLBGAME                      Sports               96/100     96.9%      67.5m
+KXWTACHALLENGERMATCH           Sports               72/75      94.4%      70.9m
+KXBTC15M                       Crypto               52/100     94.2%      6.0m
+KXNHLGAME                      Sports               99/100     93.9%      66.3m
+KXATPMATCH                     Sports               96/100     93.8%      47.5m
+KXFOMEN                        Sports               90/100     93.3%      177.3m
+KXEUROLEAGUEGAME               Sports               100/100    93.0%      50.9m
+KXATPCHALLENGERMATCH           Sports               95/100     92.6%      43.9m
+KXKBLGAME                      Sports               53/53      92.5%      69.1m
+KXSHLGAME                      Sports               56/56      91.1%      49.0m
+KXCSGOGAME                     Sports               100/100    91.0%      101.2m
+KXUFCFIGHT                     Sports               87/100     90.8%      28.0m
+KXCS2GAME                      Sports               97/100     90.7%      80.8m
+KXCS2MAP                       Sports               96/100     90.6%      21.8m
+KXFOWOMEN                      Sports               91/100     90.1%      157.0m
+KXNCAAWBGAME                   Sports               99/100     89.9%      123.5m
+KXAHLGAME                      Sports               99/100     89.9%      53.0m
+KXWNBAGAME                     Sports               100/100    88.0%      94.2m
+KXR6MAP                        Sports               83/86      88.0%      19.5m
+KXCBAGAME                      Sports               100/100    87.0%      89.1m
+KXNBLGAME                      Sports               80/81      86.2%      63.2m
+KXLOLGAME                      Sports               100/100    86.0%      87.5m
+KXEREDIVISIEGAME               Sports               50/67      86.0%      32.8m
+KXETH15M                       Crypto               57/100     86.0%      6.0m
+KXVALORANTGAME                 Sports               100/100    85.0%      100.8m
+
+======================================================================
+📊 TOP PERFORMING CATEGORIES
+======================================================================
+
+Category                       Series   Total Crossed   Accuracy     Avg Window
+------------------------------------------------------------------------------------------
+Sports                         41       3518            89.0%        69.6m
+Crypto                         3        162             88.3%        6.3m
+
+💾 Detailed results saved to: comprehensive_kalshi_analysis.json
+======================================================================
