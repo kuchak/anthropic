@@ -168,11 +168,26 @@ class TennisMarketAnalyzer:
                 'title': title,
                 'result': result,
                 'settlement_value': settlement_value,
+                'close_time': close_time,
                 'error': 'No trade data available'
             }
 
         # Analyze 90% crossing
         crossing = self.analyze_90_crossing(trades)
+
+        # Calculate time window for betting
+        time_window_seconds = None
+        time_window_minutes = None
+
+        if crossing['ever_crossed'] and crossing['permanent_crossing']:
+            try:
+                perm_cross_time = datetime.fromisoformat(crossing['permanent_crossing']['timestamp'].replace('Z', '+00:00'))
+                market_close_time = datetime.fromisoformat(close_time.replace('Z', '+00:00'))
+                time_diff = market_close_time - perm_cross_time
+                time_window_seconds = int(time_diff.total_seconds())
+                time_window_minutes = round(time_window_seconds / 60, 1)
+            except Exception as e:
+                print(f"   ⚠️  Could not calculate time window: {e}")
 
         # Report findings
         if crossing['ever_crossed']:
@@ -184,6 +199,11 @@ class TennisMarketAnalyzer:
 
             if perm_cross:
                 print(f"      Permanent:   {perm_cross['timestamp']} at {perm_cross['price']}¢")
+                print(f"      Market close: {close_time}")
+
+                if time_window_minutes is not None:
+                    print(f"      ⏱️  Betting window: {time_window_minutes} minutes ({time_window_seconds}s)")
+
                 if crossing['stayed_above']:
                     print(f"      ✓ Stayed above 90% after permanent crossing")
                 else:
@@ -211,7 +231,9 @@ class TennisMarketAnalyzer:
             'first_touch': crossing['first_touch'],
             'permanent_crossing': crossing['permanent_crossing'],
             'stayed_above_90': crossing['stayed_above'],
-            'settled_99_100': settlement_value in [99, 100] if settlement_value else False
+            'settled_99_100': settlement_value in [99, 100] if settlement_value else False,
+            'betting_window_seconds': time_window_seconds,
+            'betting_window_minutes': time_window_minutes
         }
 
 
@@ -229,10 +251,11 @@ def main():
         print("❌ No markets found")
         return
 
-    # Analyze the 10 most recent
+    # Analyze the 50 most recent
+    num_to_analyze = 50
     results = []
-    for i, market in enumerate(markets[:10]):
-        print(f"\n[{i+1}/10]", end=" ")
+    for i, market in enumerate(markets[:num_to_analyze]):
+        print(f"\n[{i+1}/{num_to_analyze}]", end=" ")
         result = analyzer.analyze_market(market)
         results.append(result)
 
@@ -252,9 +275,27 @@ def main():
         ]
         accuracy = len(correct_predictions) / len(markets_crossed_90) * 100
 
-        print(f"\n📈 Markets that crossed 90%: {len(markets_crossed_90)}/10")
+        print(f"\n📈 Markets analyzed: {len(results)}")
+        print(f"📈 Markets that crossed 90%: {len(markets_crossed_90)}/{len(results)}")
         print(f"🎯 Settled at 99-100¢: {len(correct_predictions)}/{len(markets_crossed_90)}")
         print(f"📊 Accuracy: {accuracy:.1f}%")
+
+        # Betting window analysis
+        betting_windows = [
+            r.get('betting_window_minutes')
+            for r in correct_predictions
+            if r.get('betting_window_minutes') is not None
+        ]
+
+        if betting_windows:
+            avg_window = sum(betting_windows) / len(betting_windows)
+            min_window = min(betting_windows)
+            max_window = max(betting_windows)
+
+            print(f"\n⏱️  BETTING WINDOW ANALYSIS (time from 90% → market close):")
+            print(f"   Average: {avg_window:.1f} minutes")
+            print(f"   Minimum: {min_window:.1f} minutes")
+            print(f"   Maximum: {max_window:.1f} minutes")
 
         if correct_predictions != markets_crossed_90:
             print(f"\n⚠️  False positives (crossed 90% but didn't settle 99-100):")
@@ -262,29 +303,35 @@ def main():
                 if not r.get('settled_99_100'):
                     print(f"   - {r['ticker']}: Settled at {r['settlement_value']}¢")
     else:
-        print("\n⚪ None of the analyzed markets crossed 90%")
+        print(f"\n⚪ None of the {len(results)} analyzed markets crossed 90%")
 
     # Detailed results table
     print("\n" + "="*70)
-    print("📋 DETAILED RESULTS")
+    print("📋 DETAILED RESULTS (Markets that crossed 90%)")
     print("="*70)
 
-    for i, r in enumerate(results, 1):
-        print(f"\n{i}. {r['ticker']}")
-        print(f"   Settlement: {r['settlement_value']}¢ | Result: {r['result']}")
+    crossed_markets = [r for r in results if r.get('crossed_90')]
 
-        if r.get('crossed_90'):
+    if crossed_markets:
+        for i, r in enumerate(crossed_markets, 1):
+            print(f"\n{i}. {r['ticker']}")
+            print(f"   Settlement: {r['settlement_value']}¢ | Result: {r['result']}")
+
             ft = r['first_touch']
             pc = r['permanent_crossing']
 
             print(f"   First 90%:  {ft['timestamp']} ({ft['price']}¢)")
             if pc:
                 print(f"   Permanent:  {pc['timestamp']} ({pc['price']}¢)")
+                print(f"   Market end: {r['close_time']}")
+
+                if r.get('betting_window_minutes') is not None:
+                    print(f"   🕐 Bet window: {r['betting_window_minutes']} min ({r['betting_window_seconds']}s)")
 
             status = "✅ CORRECT" if r.get('settled_99_100') else "❌ WRONG"
             print(f"   Prediction: {status}")
-        else:
-            print(f"   90% cross:  Never crossed")
+    else:
+        print("\nNo markets crossed 90%")
 
     # Save results
     output = {
