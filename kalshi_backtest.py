@@ -87,8 +87,20 @@ class KalshiBacktester:
 
         return None
 
-    def get_settled_markets(self, limit: int = 1000, cursor: Optional[str] = None) -> Optional[Dict]:
-        """Fetch settled markets from Kalshi API"""
+    def get_settled_markets(self, limit: int = 1000, cursor: Optional[str] = None,
+                           category: Optional[str] = None,
+                           min_close_ts: Optional[int] = None,
+                           max_close_ts: Optional[int] = None) -> Optional[Dict]:
+        """
+        Fetch settled markets from Kalshi API
+
+        Args:
+            limit: Max number of markets to fetch
+            cursor: Pagination cursor
+            category: Filter by category (e.g., 'Tennis', 'Sports')
+            min_close_ts: Minimum close timestamp (Unix timestamp)
+            max_close_ts: Maximum close timestamp (Unix timestamp)
+        """
         url = f"{self.base_url}/markets"
         params = {
             'status': 'settled',
@@ -96,6 +108,12 @@ class KalshiBacktester:
         }
         if cursor:
             params['cursor'] = cursor
+        if category:
+            params['category'] = category
+        if min_close_ts:
+            params['min_close_ts'] = min_close_ts
+        if max_close_ts:
+            params['max_close_ts'] = max_close_ts
 
         return self._make_request(url, params)
 
@@ -173,6 +191,42 @@ class KalshiBacktester:
 
         return None
 
+    def check_market_price_threshold(self, market: Dict, threshold: int = 90) -> Optional[Tuple[str, int]]:
+        """
+        Fallback method: Check if market's final price met the threshold
+        Uses last_price, yes_bid, yes_ask, or close_time fields
+
+        Args:
+            market: Market data dictionary
+            threshold: Threshold in cents (default: 90 = 90%)
+
+        Returns:
+            Tuple of (data_source, price) or None if no price data available
+        """
+        # Try different price fields in order of preference
+        price = None
+        source = None
+
+        # 1. Try last_price (most direct)
+        if 'last_price' in market and market['last_price'] is not None:
+            price = market['last_price']
+            source = 'last_price'
+
+        # 2. Try yes_bid (bid price at close)
+        elif 'yes_bid' in market and market['yes_bid'] is not None:
+            price = market['yes_bid']
+            source = 'yes_bid'
+
+        # 3. Try yes_ask (ask price at close)
+        elif 'yes_ask' in market and market['yes_ask'] is not None:
+            price = market['yes_ask']
+            source = 'yes_ask'
+
+        if price is not None and price >= threshold:
+            return (source, price)
+
+        return None
+
     def calculate_timing_metrics(self, crossing_ts: int, market_open_ts: int, market_close_ts: int) -> Dict:
         """
         Calculate when the 90% crossing happened relative to market lifetime
@@ -195,7 +249,8 @@ class KalshiBacktester:
         }
 
     def analyze_markets(self, max_markets: int = 200, threshold: int = 90,
-                       period_interval: int = 1440) -> Tuple[pd.DataFrame, Dict]:
+                       period_interval: int = 1440, category: Optional[str] = None,
+                       hours_back: Optional[int] = None) -> Tuple[pd.DataFrame, Dict]:
         """
         Main analysis function
         Fetches settled markets and analyzes first 90% crossing accuracy
@@ -204,13 +259,31 @@ class KalshiBacktester:
             max_markets: Maximum number of markets to analyze
             threshold: Probability threshold in % (default: 90)
             period_interval: Candlestick interval - 1 (1min), 60 (1hr), 1440 (1day)
+            category: Filter by category (e.g., 'Tennis', 'Sports')
+            hours_back: Only analyze markets settled in the last N hours
         """
         print(f"🚀 Starting Kalshi backtesting analysis...")
         print(f"📊 Threshold: {threshold}% probability")
+        if category:
+            print(f"🎾 Category filter: {category}")
+        if hours_back:
+            print(f"⏰ Time filter: Last {hours_back} hours")
         print(f"⏱️  Rate limit: {self.rate_limit_delay}s between requests")
         print(f"📦 Batch size: {self.batch_size} markets (pause {self.batch_pause}s between batches)")
         print(f"🕐 Candlestick interval: {period_interval} minutes")
         print("=" * 70)
+
+        # Calculate time range if hours_back is specified
+        min_close_ts = None
+        max_close_ts = None
+        if hours_back:
+            now = datetime.now()
+            cutoff_time = now - timedelta(hours=hours_back)
+            min_close_ts = int(cutoff_time.timestamp())
+            max_close_ts = int(now.timestamp())
+            print(f"🕐 Filtering markets settled between:")
+            print(f"   {cutoff_time.strftime('%Y-%m-%d %H:%M:%S UTC')} and")
+            print(f"   {now.strftime('%Y-%m-%d %H:%M:%S UTC')}")
 
         all_markets = []
         cursor = None
@@ -220,7 +293,13 @@ class KalshiBacktester:
         print(f"\n📥 Fetching settled markets from Kalshi API...")
         while markets_fetched < max_markets:
             print(f"   Fetched: {markets_fetched}/{max_markets}", end='\r')
-            data = self.get_settled_markets(limit=1000, cursor=cursor)
+            data = self.get_settled_markets(
+                limit=1000,
+                cursor=cursor,
+                category=category,
+                min_close_ts=min_close_ts,
+                max_close_ts=max_close_ts
+            )
 
             if not data or 'markets' not in data or len(data['markets']) == 0:
                 break
@@ -277,6 +356,16 @@ class KalshiBacktester:
 
             # Find first 90% crossing
             crossing_result = self.find_first_90_crossing(candlesticks, threshold)
+            data_method = 'candlestick' if crossing_result else None
+
+            # FALLBACK: If no candlestick data, check market's closing price
+            fallback_price = None
+            fallback_source = None
+            if not crossing_result:
+                fallback_result = self.check_market_price_threshold(market, threshold)
+                if fallback_result:
+                    fallback_source, fallback_price = fallback_result
+                    data_method = f'fallback_{fallback_source}'
 
             # Parse timestamps
             open_ts = self._parse_timestamp(market.get('open_time'))
@@ -298,6 +387,12 @@ class KalshiBacktester:
                     signal_timing = 'early'
                 else:
                     signal_timing = 'late'
+            elif fallback_price is not None:
+                # For fallback, we don't know timing, mark as 'unknown'
+                signal_timing = 'unknown'
+
+            # Determine if market hit 90% (either via candlestick or fallback)
+            hit_90 = (crossing_result is not None) or (fallback_price is not None)
 
             # Store result
             market_data = {
@@ -306,9 +401,10 @@ class KalshiBacktester:
                 'category': category,
                 'series_ticker': series_ticker,
                 'result': result,
-                'hit_90_percent': crossing_result is not None,
+                'hit_90_percent': hit_90,
+                'data_method': data_method,
                 'crossing_timestamp': crossing_result[0] if crossing_result else None,
-                'crossing_price': crossing_result[1]['price']['close'] if crossing_result and 'price' in crossing_result[1] else None,
+                'crossing_price': crossing_result[1]['price']['close'] if crossing_result and 'price' in crossing_result[1] else fallback_price,
                 'volume': market.get('volume', 0),
                 'signal_timing': signal_timing,
             }
@@ -325,7 +421,7 @@ class KalshiBacktester:
             results.append(market_data)
 
             # Update category stats
-            if crossing_result:
+            if hit_90:
                 category_stats[category]['total_hit_90'] += 1
 
                 # Check if the 90% prediction was correct
@@ -423,18 +519,22 @@ def main():
     """Main execution function"""
 
     # Configuration
-    MAX_MARKETS = 200          # Number of markets to analyze
+    MAX_MARKETS = 500          # Number of markets to analyze
     THRESHOLD = 90             # Probability threshold (90 = 90%)
     RATE_LIMIT_DELAY = 1.0     # Seconds between API calls (1.0 = conservative)
     BATCH_SIZE = 50            # Process this many markets before pausing
     BATCH_PAUSE = 30           # Pause duration in seconds
     PERIOD_INTERVAL = 1440     # Candlestick interval: 1 (1min), 60 (1hr), 1440 (1day)
+    CATEGORY = "Tennis"        # Category filter (None = all categories)
+    HOURS_BACK = 720           # Only analyze markets settled in last N hours (720 = 30 days)
 
     print("=" * 70)
     print("🎯 KALSHI MARKET BACKTESTING TOOL")
     print("=" * 70)
     print("\nConfiguration:")
     print(f"  • Markets to analyze: {MAX_MARKETS}")
+    print(f"  • Category: {CATEGORY if CATEGORY else 'All'}")
+    print(f"  • Time window: Last {HOURS_BACK} hours" if HOURS_BACK else "  • Time window: All time")
     print(f"  • Threshold: {THRESHOLD}%")
     print(f"  • Rate limit: {RATE_LIMIT_DELAY}s per request")
     print(f"  • Batch processing: {BATCH_SIZE} markets, {BATCH_PAUSE}s pause")
@@ -453,7 +553,9 @@ def main():
         results_df, category_stats = backtester.analyze_markets(
             max_markets=MAX_MARKETS,
             threshold=THRESHOLD,
-            period_interval=PERIOD_INTERVAL
+            period_interval=PERIOD_INTERVAL,
+            category=CATEGORY,
+            hours_back=HOURS_BACK
         )
 
         print("\n" + "=" * 70)
