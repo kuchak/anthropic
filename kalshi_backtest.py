@@ -347,25 +347,17 @@ class KalshiBacktester:
             if series_info and 'series' in series_info:
                 category = series_info['series'].get('category', 'Unknown')
 
-            # Get candlestick data
-            candlesticks = self.get_market_candlesticks(
-                series_ticker,
-                ticker,
-                period_interval=period_interval
-            )
-
-            # Find first 90% crossing
-            crossing_result = self.find_first_90_crossing(candlesticks, threshold)
-            data_method = 'candlestick' if crossing_result else None
-
-            # FALLBACK: If no candlestick data, check market's closing price
+            # OPTIMIZED: Skip candlestick calls (they fail with 400 errors)
+            # Go directly to fallback method using market closing price
+            crossing_result = None
+            data_method = None
             fallback_price = None
             fallback_source = None
-            if not crossing_result:
-                fallback_result = self.check_market_price_threshold(market, threshold)
-                if fallback_result:
-                    fallback_source, fallback_price = fallback_result
-                    data_method = f'fallback_{fallback_source}'
+
+            fallback_result = self.check_market_price_threshold(market, threshold)
+            if fallback_result:
+                fallback_source, fallback_price = fallback_result
+                data_method = f'fallback_{fallback_source}'
 
             # Parse timestamps
             open_ts = self._parse_timestamp(market.get('open_time'))
@@ -521,9 +513,9 @@ def main():
     # Configuration
     MAX_MARKETS = 500          # Number of markets to analyze
     THRESHOLD = 90             # Probability threshold (90 = 90%)
-    RATE_LIMIT_DELAY = 1.0     # Seconds between API calls (1.0 = conservative)
-    BATCH_SIZE = 50            # Process this many markets before pausing
-    BATCH_PAUSE = 30           # Pause duration in seconds
+    RATE_LIMIT_DELAY = 0.5     # Seconds between API calls (0.5 = fast, optimized for fallback-only)
+    BATCH_SIZE = 100           # Process this many markets before pausing (increased since no candlestick calls)
+    BATCH_PAUSE = 10           # Pause duration in seconds (reduced)
     PERIOD_INTERVAL = 1440     # Candlestick interval: 1 (1min), 60 (1hr), 1440 (1day)
     CATEGORY = "Tennis"        # Category filter (None = all categories)
     HOURS_BACK = 720           # Only analyze markets settled in last N hours (720 = 30 days)
