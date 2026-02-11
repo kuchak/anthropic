@@ -1,0 +1,103 @@
+🔍 Discovering available sports series...
+✅ Found 963 sports-related series
+
+======================================================================
+📋 Available Sports Series:
+======================================================================
+  KXNFLWINS-DAL        - Pro football wins Dallas
+  KXINTERCONCUPGAME    - Intercontinental Cup Match
+  KXNBAPRA             - Pro Basketball Points + Rebounds + Assists
+  KXCSGOMAP            - CSGO Map Winner
+  KXNFLWINS-LA         - Pro football wins Los Angeles R
+  KXNBADRAFTPICK       - Pro Basketball Draft Pick
+  KXNFLXINCREASE       - Netflix Price Increase
+  KXNCAAFWINS          - College football wins?
+  KXNCAAMBGAME         - Men's College Basketball Men's Game
+  KXEWCLEAGUEOFLEGENDS - League of Legends featured at 2025 Esports World Cup
+  KXNHLSPREAD          - NHL Spread
+  KXJBLEAGUEGAME       - Japan B League Game
+  KXARGINFLATIONM      - Argentina inflation
+  CBVOLUME             - Coinbase volume
+  KXEVENTTIMES         - NFL games times
+  KXNBASEATTLE         - Seattle NBA team
+  KXNBASIXTH           - Pro Basketball Sixth Man of the Year
+  KXDVHIGH             - Death Valley temperature
+  KXNBASLAMDUNK        - NBA Slam Dunk Contest Winner
+  KXFDVFOOTBALLFUN     - Football Fun
+
+======================================================================
+🔍 ANALYZING SPORTS
+======================================================================
+
+======================================================================
+🏀 Analyzing: Tennis (KXATPMATCH)
+======================================================================
+  📥 Found 200 settled markets
+  🔢 Found 100 unique matches
+
+  📊 Results:
+     Matches analyzed: 100
+     Crossed 90%: 96/100 (96.0%)
+     Accuracy: 90/96 = 93.8%
+     Avg betting window: 47.2 min
+
+======================================================================
+🏀 Analyzing: NBA (HIGHNYBA)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: College Basketball (HIGHNCAAB)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: Cricket (KXCRICMATCH)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: Soccer (KXSOCMATCH)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: NFL (HIGHNFL)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: Hockey (HIGHNHL)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: Baseball (HIGHMLB)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: Esports - LoL (KXLOLMATCH)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: Esports - Dota (KXDOTAMATCH)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+🏀 Analyzing: Esports - CS (KXCSMATCH)
+======================================================================
+  ⚠️  No settled markets found
+
+======================================================================
+📊 CROSS-SPORT COMPARISON
+======================================================================
+
+Sport                     Crossed 90%     Accuracy     Avg Window
+----------------------------------------------------------------------
+Tennis                    96/100 (96%)    93.8%        47.2 min
+
+💾 Detailed results saved to: multi_sport_90_percent_analysis.json
+======================================================================
