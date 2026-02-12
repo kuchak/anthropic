@@ -36,7 +36,7 @@ class Scanner:
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
         logger.info(f"  Settlement window: {config['min_time_to_settlement_minutes']}m - {config['max_time_to_settlement_hours']}h")
 
-    def slow_scan(self) -> int:
+    def slow_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
         """
         Full market discovery scan
 
@@ -44,11 +44,22 @@ class Scanner:
         - In approved categories
         - Settlement time within window
         - Price in target range
+        - NOT in existing positions (prevents duplicate positions)
+
+        Args:
+            existing_position_tickers: List of tickers we already have positions in
 
         Returns:
             Number of markets added to watchlist
         """
+        if existing_position_tickers is None:
+            existing_position_tickers = []
+
+        existing_set = set(existing_position_tickers)
+
         logger.info("🔍 Starting slow scan (full market discovery)...")
+        if existing_set:
+            logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
         # Get all open markets
         all_markets = self.client.get_markets(status='open', limit=1000)
@@ -58,6 +69,13 @@ class Scanner:
         new_watchlist = []
 
         for market_data in all_markets:
+            ticker = market_data.get('ticker', '')
+
+            # CRITICAL: Skip markets where we already have positions
+            if ticker in existing_set:
+                logger.debug(f"  Skipping {ticker} - already have position")
+                continue
+
             # Check category filter
             category = market_data.get('series_ticker', '')
 
@@ -84,12 +102,15 @@ class Scanner:
 
         return len(self.watchlist)
 
-    def fast_scan(self) -> int:
+    def fast_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
         """
         Fast price update scan
 
         Updates prices for markets on the watchlist
-        Removes markets that no longer meet criteria
+        Removes markets that no longer meet criteria or where we have positions
+
+        Args:
+            existing_position_tickers: List of tickers we already have positions in
 
         Returns:
             Number of markets still on watchlist
@@ -98,11 +119,23 @@ class Scanner:
             logger.debug("Fast scan skipped - watchlist empty")
             return 0
 
+        if existing_position_tickers is None:
+            existing_position_tickers = []
+
+        existing_set = set(existing_position_tickers)
+
         logger.debug(f"⚡ Fast scan - updating {len(self.watchlist)} markets...")
+        if existing_set:
+            logger.debug(f"  Filtering out {len(existing_set)} existing positions")
 
         updated_watchlist = []
 
         for market in self.watchlist:
+            # CRITICAL: Skip if we now have a position in this market
+            if market.ticker in existing_set:
+                logger.debug(f"  Removing {market.ticker} - now have position")
+                continue
+
             try:
                 # Get fresh market data
                 market_data = self.client.get_market(market.ticker)

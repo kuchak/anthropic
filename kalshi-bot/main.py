@@ -119,12 +119,15 @@ class TradingBot:
         logger.info("\n📡 Step 1: Market Discovery")
         logger.info("-" * 80)
 
+        # Get existing position tickers to avoid duplicates
+        existing_tickers = list(self.tracker.positions.keys())
+
         if self.scanner.should_run_slow_scan():
             logger.info("Running slow scan (full discovery)...")
-            self.scanner.slow_scan()
+            self.scanner.slow_scan(existing_position_tickers=existing_tickers)
         elif self.scanner.should_run_fast_scan():
             logger.info("Running fast scan (price updates)...")
-            self.scanner.fast_scan()
+            self.scanner.fast_scan(existing_position_tickers=existing_tickers)
         else:
             logger.info("Scan not needed yet, using cached watchlist")
 
