@@ -1,0 +1,11 @@
+ticker,title,category,current_yes_price,current_no_price,time_to_settlement_hours,model_accuracy,score,decision,skip_reason,bet_side,bet_amount,bet_contracts,timestamp,cycle_id,settled,settled_at,outcome,actual_pnl,would_have_won
+MARKET-SKIP-1,Will it rain in Seattle tomorrow?,WEATHER,0.12,0.88,24.0,,,skipped,price too low,,,,2026-02-12T11:10:41.987012,20260212_111041,False,,,,
+MARKET-SKIP-2,Will stocks go up tomorrow?,FINANCE,0.65,0.35,18.0,,,skipped,category not approved,,,,2026-02-12T11:10:41.987035,20260212_111041,False,,,,
+MARKET-SKIP-3,Will Bitcoin hit $100k?,CRYPTO,0.88,0.12,48.0,,,skipped,already have position,,,,2026-02-12T11:10:41.987049,20260212_111041,False,,,,
+MARKET-SKIP-4,Will Fed raise rates?,FED,0.91,0.09,12.0,,2.5,skipped,score below threshold,,,,2026-02-12T11:10:41.987069,20260212_111041,False,,,,
+MARKET-SKIP-5,Will inflation be high?,INFL,0.93,0.07,6.0,,8.2,skipped,insufficient capital,,,,2026-02-12T11:10:41.987090,20260212_111041,False,,,,
+MARKET-BET-1,Will unemployment stay below 4%?,UNEMP,0.89,0.11,36.0,,12.3,bet,,YES,89.0,100,2026-02-12T11:10:41.987124,20260212_111041,True,2026-02-12T11:10:41.989462,YES,11.0,
+MARKET-BET-2,Will GDP growth exceed 2%?,GDP,0.92,0.08,24.0,,8.7,bet,,YES,92.0,100,2026-02-12T11:10:41.987143,20260212_111041,True,2026-02-12T11:10:41.989998,NO,-92.0,
+MARKET-BET-3,Will retail sales increase?,RETAIL,0.87,0.13,30.0,,14.9,bet,,YES,87.0,100,2026-02-12T11:10:41.987159,20260212_111041,True,2026-02-12T11:10:41.990469,YES,13.0,
+MARKET-SKIP-6,Will there be snow?,WEATHER,0.15,0.85,12.0,,,skipped,price too low,,,,2026-02-12T11:10:41.988548,20260212_111041,False,,,,
+MARKET-BET-4,Will jobs report beat expectations?,JOBS,0.9,0.1,6.0,,11.1,bet,,YES,90.0,100,2026-02-12T11:10:41.988558,20260212_111041,False,,,,

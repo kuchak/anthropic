@@ -27,6 +27,8 @@ from scorer import Scorer
 from allocator import Allocator
 from executor import Executor
 from tracker import Tracker
+from decision_logger import DecisionLogger
+from report_generator import ReportGenerator
 
 logger = setup_logger("main")
 
@@ -104,6 +106,12 @@ class TradingBot:
         self.tracker.initialize_balance(self.balance)
         logger.info("✅ Tracker ready")
 
+        # Decision Logger
+        logger.info("\n📝 Initializing decision logger...")
+        self.decision_logger = DecisionLogger(data_dir="data")
+        self.report_generator = ReportGenerator(self.decision_logger)
+        logger.info("✅ Decision logger ready")
+
         logger.info("\n" + "=" * 80)
         logger.info("✅ ALL SYSTEMS INITIALIZED")
         logger.info("=" * 80)
@@ -111,8 +119,12 @@ class TradingBot:
     def run_once(self) -> None:
         """Run one complete trading cycle"""
 
+        # Start decision logging cycle
+        cycle_id = self.decision_logger.start_cycle()
+
         logger.info("\n" + "=" * 80)
         logger.info(f"TRADING CYCLE - {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}")
+        logger.info(f"Cycle ID: {cycle_id}")
         logger.info("=" * 80)
 
         # Step 1: Scan for markets
@@ -134,8 +146,21 @@ class TradingBot:
         watchlist = self.scanner.get_watchlist()
         logger.info(f"✅ Watchlist: {len(watchlist)} markets")
 
+        # Log markets that were filtered out (existing positions)
+        for ticker in existing_tickers:
+            self.decision_logger.log_skipped(
+                ticker=ticker,
+                title="(Existing position)",
+                category="",
+                yes_price=0.0,
+                no_price=0.0,
+                time_to_settlement_hours=0.0,
+                skip_reason="already have position"
+            )
+
         if not watchlist:
             logger.info("⚠️  No markets on watchlist, skipping cycle")
+            self.decision_logger.end_cycle()
             return
 
         # Step 2: Score opportunities
@@ -145,8 +170,24 @@ class TradingBot:
         opportunities = self.scorer.score_markets(watchlist)
         logger.info(f"✅ Found {len(opportunities)} valid opportunities")
 
+        # Log markets that passed scanner but failed scoring
+        scored_tickers = {opp.market.ticker for opp in opportunities}
+        for market in watchlist:
+            if market.ticker not in scored_tickers:
+                # This market was on watchlist but didn't get scored (failed criteria)
+                self.decision_logger.log_skipped(
+                    ticker=market.ticker,
+                    title=market.title,
+                    category=market.category,
+                    yes_price=market.best_yes_price,
+                    no_price=market.best_no_price,
+                    time_to_settlement_hours=(market.settlement_time - datetime.utcnow()).total_seconds() / 3600,
+                    skip_reason="score below threshold"
+                )
+
         if not opportunities:
             logger.info("⚠️  No valid opportunities, skipping cycle")
+            self.decision_logger.end_cycle()
             return
 
         # Show top opportunities
@@ -166,10 +207,27 @@ class TradingBot:
         allocations = self.allocator.allocate_positions(opportunities, current_exposure)
         logger.info(f"✅ Allocated {len(allocations)} positions")
 
+        # Log opportunities that were scored but not allocated
+        allocated_tickers = {alloc.opportunity.market.ticker for alloc in allocations}
+        for opp in opportunities:
+            if opp.market.ticker not in allocated_tickers:
+                # This opportunity was scored but not allocated (capital constraints)
+                self.decision_logger.log_skipped(
+                    ticker=opp.market.ticker,
+                    title=opp.market.title,
+                    category=opp.market.category,
+                    yes_price=opp.market.best_yes_price,
+                    no_price=opp.market.best_no_price,
+                    time_to_settlement_hours=(opp.market.settlement_time - datetime.utcnow()).total_seconds() / 3600,
+                    skip_reason="insufficient capital",
+                    score=opp.expected_roi
+                )
+
         if not allocations:
             logger.info("⚠️  No allocations made (capital constraints or opportunity quality)")
             # Still update existing positions
             self._update_portfolio()
+            self.decision_logger.end_cycle()
             return
 
         # Show allocations
@@ -186,11 +244,34 @@ class TradingBot:
         executions = self.executor.execute_allocations(allocations)
         logger.info(f"✅ Executed {len(executions)} trades")
 
+        # Log executed bets
+        for execution in executions:
+            if execution.status == "success":
+                # Get market details from allocation
+                alloc = next((a for a in allocations if a.opportunity.market.ticker == execution.ticker), None)
+                if alloc:
+                    market = alloc.opportunity.market
+                    self.decision_logger.log_bet(
+                        ticker=market.ticker,
+                        title=market.title,
+                        category=market.category,
+                        yes_price=market.best_yes_price,
+                        no_price=market.best_no_price,
+                        time_to_settlement_hours=(market.settlement_time - datetime.utcnow()).total_seconds() / 3600,
+                        side=execution.side,
+                        amount=execution.total_cost,
+                        contracts=execution.num_contracts,
+                        score=alloc.opportunity.expected_roi
+                    )
+
         # Add to tracker
         self.tracker.add_executions(executions)
 
         # Step 5: Update portfolio
         self._update_portfolio()
+
+        # End decision logging cycle
+        self.decision_logger.end_cycle()
 
         logger.info("\n" + "=" * 80)
         logger.info("✅ CYCLE COMPLETE")
@@ -263,6 +344,35 @@ class TradingBot:
         logger.info("=" * 80)
 
 
+def generate_report_only(days: int = 1) -> int:
+    """Generate and print report without running bot"""
+
+    print("\n" + "=" * 80)
+    print("REPORT GENERATION MODE")
+    print("=" * 80)
+    print()
+
+    # Initialize decision logger and report generator
+    decision_logger = DecisionLogger(data_dir="data")
+    report_generator = ReportGenerator(decision_logger)
+
+    # Generate report
+    if days == 1:
+        report = report_generator.generate_daily_report()
+    else:
+        report = report_generator.generate_period_report(days=days)
+
+    # Print report
+    print(report)
+
+    # Optionally export to CSV
+    csv_file = f"data/decisions_export_{datetime.now().strftime('%Y%m%d')}.csv"
+    report_generator.export_decisions_csv(csv_file, days=days)
+    print(f"\n📄 Decisions exported to: {csv_file}")
+
+    return 0
+
+
 def main():
     """Main entry point"""
 
@@ -285,8 +395,23 @@ def main():
         action='store_true',
         help='Run once and exit (instead of continuous loop)'
     )
+    parser.add_argument(
+        '--report',
+        action='store_true',
+        help='Generate daily summary report and exit'
+    )
+    parser.add_argument(
+        '--report-days',
+        type=int,
+        default=1,
+        help='Number of days to include in report (default: 1 for today)'
+    )
 
     args = parser.parse_args()
+
+    # Handle report mode
+    if args.report:
+        return generate_report_only(args.report_days)
 
     # Determine mode
     dry_run = not args.live
