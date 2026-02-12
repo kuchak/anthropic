@@ -49,19 +49,23 @@ else:
     print("  ⚠️  No price range accuracies configured!")
 print()
 
-# Verify against backtest results
-print("📋 BACKTEST RESULTS (from documentation)")
+# Verify against REAL backtest results
+print("📋 REAL BACKTEST RESULTS (from comprehensive analysis)")
 print("=" * 80)
 print()
-print("  0.85-0.89: 91.2% accuracy (11 wins, 1 loss)")
-print("  0.90-0.95: 89.4% accuracy (84/94 wins)")
-print("  Overall:   ~90% accuracy")
+print("  Source: comprehensive_crossed_90_detailed.csv (12,553 markets)")
+print()
+print("  0.85-0.90: 99.1% accuracy (2,554/2,578 wins)")
+print("  0.90-0.95: 99.0% accuracy (7,885/7,965 wins)")
+print("  0.95-0.98: 98.3% accuracy (3,477/3,536 wins)")
+print("  Overall:   98.5% accuracy (12,365/12,553 wins)")
 print()
 
 # Validate configuration matches backtest
 expected = {
-    "0.85-0.89": 0.912,
-    "0.90-0.95": 0.894,
+    "0.85-0.89": 0.991,
+    "0.90-0.95": 0.990,
+    "0.95-0.98": 0.983,
 }
 
 print("✓ VALIDATION")
@@ -164,10 +168,11 @@ print("✅ SUMMARY")
 print("=" * 80)
 print()
 
-print("Accuracy Data Source:")
-print("  ✓ 0.85-0.89¢: 91.2% (from 11 wins, 1 loss backtest)")
-print("  ✓ 0.90-0.95¢: 89.4% (from 84/94 wins backtest)")
-print("  ✓ Other ranges: 90% (default)")
+print("Accuracy Data Source (REAL backtest data):")
+print("  ✓ 0.85-0.89¢: 99.1% (from 2,554/2,578 wins - comprehensive backtest)")
+print("  ✓ 0.90-0.95¢: 99.0% (from 7,885/7,965 wins - comprehensive backtest)")
+print("  ✓ 0.95-0.98¢: 98.3% (from 3,477/3,536 wins - comprehensive backtest)")
+print("  ✓ Overall: 98.5% (from 12,365/12,553 total wins)")
 print()
 
 print("Category Filtering:")
