@@ -1,0 +1,14 @@
+Category,Total_Series,Total_Events_Analyzed,Total_Events_Crossed_90,Avg_Crossing_Rate_Pct,Series_With_50_Plus_Crossings,Series_With_20_Plus_Crossings,Total_Correct_Predictions,Overall_Accuracy_Pct,Avg_Betting_Window_Minutes
+Sports,172,9025,6476,71.76,45,107,5408,83.51,388.56
+Climate and Weather,27,992,312,31.45,1,4,242,77.56,4702.86
+Economics,26,816,240,29.41,0,4,191,79.58,29104.33
+Crypto,4,381,203,53.28,3,4,171,84.24,6.61
+Financials,11,349,164,46.99,1,2,136,82.93,2025.35
+Mentions,19,220,158,71.82,0,0,113,71.52,1791.99
+Entertainment,20,335,98,29.25,0,0,63,64.29,4060.36
+Health,4,215,92,42.79,0,2,79,85.87,4852.22
+Transportation,2,126,60,47.62,0,2,53,88.33,3693.61
+World,4,187,40,21.39,0,0,29,72.50,802.33
+Politics,6,124,21,16.94,0,0,13,61.90,19195.43
+Science and Technology,3,44,12,27.27,0,0,5,41.67,15506.66
+Companies,1,10,9,90.00,0,0,9,100.00,48098.02

@@ -1,0 +1,28 @@
+Series_Ticker,Series_Title,Events_Analyzed,Events_Crossed_90,Crossing_Rate_Pct,Correct_Predictions,Accuracy_Pct,Avg_Betting_Window_Minutes
+KXHIGHTLV,Las Vegas Max Daily Temperature,28,3,10.71,3,100.00,562.27
+KXHIGHTNOLA,New Orleans Max temp Daily,28,6,21.43,6,100.00,619.92
+KXHURCAT,Hurricane category,40,7,17.50,7,100.00,6669.79
+KXLOWTPHIL,Lowest temperature in Philadelphia,42,21,50.00,20,95.24,1172.69
+KXLOWTDEN,Lowest temperature in Denver,35,17,48.57,16,94.12,683.54
+KXLOWTNYC,Lowest temperature in NYC,34,14,41.18,13,92.86,1080.34
+KXRAINSEA,Seattle rain,100,26,26.00,23,88.46,648.30
+KXLOWTAUS,Lowest temperature in Austin,34,13,38.24,11,84.62,1020.82
+KXHIGHMIA,Highest temperature in Miami,34,6,17.65,5,83.33,890.40
+KXHIGHDEN,Highest temperature in Denver,34,10,29.41,8,80.00,852.63
+KXLOWTMIA,Lowest temperature in Miami,34,5,14.71,4,80.00,542.84
+KXHIGHHOU,Highest temperature in Houston,34,26,76.47,20,76.92,966.23
+KXRAINNYC,NYC rain,100,56,56.00,43,76.79,1287.83
+KXLOWTCHI,Lowest Temperature Chicago,48,16,33.33,12,75.00,980.46
+KXHIGHPHIL,Highest temperature in Philadelphia,34,8,23.53,6,75.00,1051.46
+KXTORNADO,Number of Tornadoes,22,11,50.00,8,72.73,15625.19
+KXHIGHTSFO,San Francisco High Temperature Daily,28,7,25.00,5,71.43,538.24
+KXLOWTLAX,Lowest Temperature in LA,34,9,26.47,6,66.67,1113.42
+KXHIGHAUS,Highest temperature in Austin,34,6,17.65,4,66.67,1463.33
+KXHMONTHRANGE,Monthly Temperature Increase (ºC),19,8,42.11,5,62.50,23478.50
+KXHIGHLAX,Highest temperature in Los Angeles,34,5,14.71,3,60.00,1418.80
+KXHIGHTDC,Washington DC Daily Max Temp,24,2,8.33,1,50.00,474.00
+KXSNOWNYM,Total snow in NYC,18,2,11.11,1,50.00,36777.10
+KXHIGHNY,Highest temperature in NYC,34,2,5.88,1,50.00,1142.25
+KXRAINNYCM,Monthly rain in New York,24,17,70.83,8,47.06,23858.38
+KXHIGHCHI,Highest temperature in Chicago,34,7,20.59,3,42.86,1485.21
+KXHIGHTSEA,Seattle Maximum Temperature Daily,28,2,7.14,0,0.00,573.25

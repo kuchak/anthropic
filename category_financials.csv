@@ -1,0 +1,12 @@
+Series_Ticker,Series_Title,Events_Analyzed,Events_Crossed_90,Crossing_Rate_Pct,Correct_Predictions,Accuracy_Pct,Avg_Betting_Window_Minutes
+KXEUROIMF,EUR/USD,21,10,47.62,10,100.00,313.83
+KXUSDJPY,USD/JPY daily range,14,2,14.29,2,100.00,474.35
+KXGBP,British Pound/US Dollar exchange rate ,23,12,52.17,12,100.00,278.73
+KXNASDAQ100Z,Nasdaq up,100,41,41.00,39,95.12,302.63
+KXTNOTE,Treasury yield 10Y,18,13,72.22,12,92.31,4374.98
+KXINXZ,S&P 500 up,100,54,54.00,46,85.19,325.41
+KXEURO,EURO/USD exchange rate,12,9,75.00,7,77.78,5420.20
+KXGOLD,Price of gold,19,9,47.37,6,66.67,374.93
+KXEURUSD,EUR/USD daily range,14,4,28.57,1,25.00,2182.25
+KXWTIW,WTI oil weekly range,14,4,28.57,1,25.00,2288.78
+KXTNOTEW,Treasury 10Y weekly yield,14,6,42.86,0,0.00,5942.75

@@ -1,0 +1,7 @@
+Series_Ticker,Series_Title,Events_Analyzed,Events_Crossed_90,Crossing_Rate_Pct,Correct_Predictions,Accuracy_Pct,Avg_Betting_Window_Minutes
+KXLAGODAYS,Mar-a-Lago trips,11,4,36.36,4,100.00,8546.93
+KXAPRPOTUS,President RCP approval rating this week,27,4,14.81,3,75.00,611.90
+KX538APPROVEMIN,Biden 538 lowest approval rating,23,6,26.09,4,66.67,19476.83
+KX538APPROVE,President 538 approval rating this week,24,2,8.33,1,50.00,263.75
+KXASYLUMCASES,New asylum cases,17,3,17.65,1,33.33,49531.77
+KX538APPROVEMAX,Biden 538 highest approval rating,22,2,9.09,0,0.00,36741.40
