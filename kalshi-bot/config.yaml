@@ -27,9 +27,10 @@ approved_categories:             # Only trade in these market categories
   - "financials"
   - "weather"
   - "sports"
+  - "unknown"  # Demo API often doesn't set series_ticker
 
 # === Scoring & Entry ===
-min_contract_price: 0.85         # Only consider contracts priced at 85¢+
+min_contract_price: 0.50         # Only consider contracts priced at 50¢+ (lowered for demo)
 max_contract_price: 0.98         # Skip contracts above this (too little edge)
 min_model_accuracy: 0.90         # Minimum historical model accuracy for category
 scoring_formula: "expected_profit / time_to_settlement_hours"
