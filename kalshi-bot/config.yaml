@@ -2,9 +2,10 @@
 dry_run: true                    # true = paper trading, false = real money
 
 # === Kalshi API ===
-# Production: https://trading-api.kalshi.com/trade-api/v2
+# Production (NEW): https://api.elections.kalshi.com/trade-api/v2
+# Production (OLD): https://trading-api.kalshi.com/trade-api/v2 (MOVED - deprecated)
 # Demo: https://demo-api.kalshi.co/trade-api/v2
-kalshi_api_base: "https://trading-api.kalshi.com/trade-api/v2"  # PRODUCTION API
+kalshi_api_base: "https://api.elections.kalshi.com/trade-api/v2"  # PRODUCTION API (new endpoint)
 
 # API Key Authentication (required):
 # Get your API keys at:
