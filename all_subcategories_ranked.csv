@@ -1,0 +1,285 @@
+Rank,Category,Subcategory,Series Ticker,Success Rate (%),Correct,Total Crossed 90%,Wrong
+1,Sports,Professional Basketball Game,KXNBAGAME,100.0,97,97,0
+2,Sports,Pro Basketball Player Rebounds,KXNBAREB,100.0,55,55,0
+3,Sports,Pro Basketball Spread,KXNBASPREAD,100.0,39,39,0
+4,Economics,Fed funds rate,KXFED,100.0,33,33,0
+5,Financials,British Pound/US Dollar exchange rate ,KXGBP,100.0,32,32,0
+6,Financials,EUR/USD,KXEUROIMF,100.0,27,27,0
+7,Sports,Men's College Basketball Men's Game,KXNCAAMBGAME,100.0,20,20,0
+8,Sports,F1 Race,KXF1RACE,100.0,10,10,0
+9,Sports,College Football Game,KXNCAAFGAME,99.0,100,101,1
+10,Sports,Professional Football Game,KXNFLGAME,99.0,100,101,1
+11,Climate and Weather,Lowest temperature in Miami,KXLOWTMIA,96.9,31,32,1
+12,Sports,Scottish Premiership Game,KXSCOTTISHPREMGAME,96.6,57,59,2
+13,Financials,Nasdaq up,KXNASDAQ100Z,96.5,55,57,2
+14,Transportation,NYC subway riders,KXMTA,96.2,25,26,1
+15,Economics,CPI on gas,KXCPIGAS,95.8,46,48,2
+16,Sports,WTA Tennis Match,KXWTAMATCH,95.8,91,95,4
+17,Economics,US gas price,KXAAAGASM,95.7,66,69,3
+18,Economics,CPI on used cars,KXCPIUSEDCAR,95.5,42,44,2
+19,Sports,Ligue 1 Game,KXLIGUE1GAME,95.1,58,61,3
+20,Sports,Professional Baseball Game,KXMLBGAME,95.0,96,101,5
+21,Sports,T20 Match,KXT20MATCH,95.0,19,20,1
+22,Sports,WTA Tour ATX Open,KXWTAATX,94.7,18,19,1
+23,Sports,College Football Total Points,KXNCAAFTOTAL,94.1,112,119,7
+24,Sports,ATP Tennis Match,KXATPMATCH,94.1,80,85,5
+25,Sports,Challenger ATP ,KXATPCHALLENGERMATCH,94.1,80,85,5
+26,Economics,Companies going bankrupt,KXBANKRUPTS,94.1,48,51,3
+27,Sports,FA Cup Game,KXFACUPGAME,94.1,32,34,2
+28,Sports,Pro Basketball Player Threes,KXNBA3PT,94.0,47,50,3
+29,Climate and Weather,Total snow in NYC,KXSNOWNYM,93.9,31,33,2
+30,Sports,Euroleague Game,KXEUROLEAGUEGAME,93.8,90,96,6
+31,Economics,CPI on food,KXCPIFOOD,93.8,15,16,1
+32,Sports,PPL games,KXPPLGAMES,93.8,15,16,1
+33,Mentions,NFL Mention,KXNFLMENTION,93.6,103,110,7
+34,Sports,NHL Game,KXNHLGAME,93.4,99,106,7
+35,Sports,Fifa Game,KXFIFAGAME,93.1,67,72,5
+36,Sports,Pro Basketball Total Points,KXNBATOTAL,93.0,93,100,7
+37,Health,COVID boosters,KXBOOSTER,92.9,13,14,1
+38,Crypto,Bitcoin price up down,KXBTC15M,92.7,51,55,4
+39,Sports,UEFA Champions League Game,KXUCLGAME,92.6,50,54,4
+40,Sports,AFC Champions League Game,KXAFCCLGAME,92.3,12,13,1
+41,Sports,DFB Pokal Game,KXDFBPOKALGAME,92.3,12,13,1
+42,Economics,Unemployment,KXU3,92.2,83,90,7
+43,Sports,Pro Football Total Points,KXNFLTOTAL,92.2,83,90,7
+44,Economics,US GDP growth,KXGDP,92.1,70,76,6
+45,Health,COVID daily cases,KXCASED,91.8,78,85,7
+46,Sports,UFC Fight,KXUFCFIGHT,91.7,77,84,7
+47,Economics,Fed meeting,KXFEDDECISION,91.7,22,24,2
+48,Economics,Gas weekly,KXGAS,91.4,53,58,5
+49,Sports,Super League Greece Game,KXSLGREECEGAME,91.3,21,23,2
+50,Climate and Weather,Highest temperature in Miami,KXHIGHMIA,91.2,31,34,3
+51,Sports,United Cup Match,KXUNITEDCUPMATCH,90.9,50,55,5
+52,Sports,NHL Goal Total,KXNHLTOTAL,90.8,129,142,13
+53,Sports,UEFA Europa League Game,KXUELGAME,90.8,59,65,6
+54,Sports,English Premier League Game,KXEPLGAME,90.7,49,54,5
+55,Mentions,Karoline Leavitt Late,KXLEAVITTLATE,90.7,39,43,4
+56,Sports,Turkish Super Lig Game,KXSUPERLIGGAME,90.6,58,64,6
+57,Entertainment,WHICH SONG WILL BE IN THE TOP 10 OF THE BILLBOARD HOT 100 HUNDERED FOR THE WEEK OF DATE ,KXRANKLISTSONGTOP10,90.6,29,32,3
+58,Sports,Challenger WTA,KXWTACHALLENGERMATCH,90.6,77,85,8
+59,Sports,Winter Olympics Women's Hockey,KXWOWHOCKEY,90.5,19,21,2
+60,Climate and Weather,Number of Tornadoes,KXTORNADO,90.5,19,21,2
+61,Mentions,NBA Mention,KXNBAMENTION,90.3,84,93,9
+62,Economics,CPI,KXCPI,90.1,73,81,8
+63,Economics,Mortgage 30-yr rate this week,KXFRM,89.7,26,29,3
+64,Sports,Counter-Strike 2 Map Winner ,KXCS2MAP,89.4,76,85,9
+65,Sports,La Liga Total,KXLALIGATOTAL,89.4,84,94,10
+66,Sports,Pro Football Spread,KXNFLSPREAD,89.3,50,56,6
+67,Sports,AFCON Game Winner,KXAFCONGAME,89.3,50,56,6
+68,Sports,Saudi Pro League Game,KXSAUDIPLGAME,89.2,58,65,7
+69,Economics,Inflation,KXCPIYOY,89.2,66,74,8
+70,Science and Technology,TSA check-ins this week,KXTSAW,88.9,40,45,5
+71,Climate and Weather,Highest temperature in Los Angeles,KXHIGHLAX,88.6,31,35,4
+72,Climate and Weather,Lowest temperature in Austin,KXLOWTAUS,88.6,31,35,4
+73,Climate and Weather,Highest temperature in NYC,KXHIGHNY,88.6,31,35,4
+74,Sports,Korea KBL Game,KXKBLGAME,88.3,53,60,7
+75,Crypto,Solana 15 minutes,KXSOL15M,88.3,53,60,7
+76,Sports,EFL Championship Game,KXEFLCHAMPIONSHIPGAME,88.2,60,68,8
+77,Climate and Weather,Seattle rain,KXRAINSEA,88.2,60,68,8
+78,Climate and Weather,Lowest temperature in Philadelphia,KXLOWTPHIL,88.2,30,34,4
+79,Entertainment,Netflix TV ranking,KXNETFLIXRANKSHOW,88.2,15,17,2
+80,Sports,Pro Basketball Player Points,KXNBAPTS,87.9,58,66,8
+81,Financials,Treasury yield 10Y,KXTNOTE,87.9,29,33,4
+82,Sports,Counter-Strike 2 Game,KXCS2GAME,87.8,86,98,12
+83,Sports,League of Legends Game,KXLOLGAME,87.7,93,106,13
+84,Sports,Professional Women's Basketball Game,KXWNBAGAME,87.7,100,114,14
+85,Crypto,ETH 15M price up down,KXETH15M,87.7,57,65,8
+86,Sports,Pro Basketball Player Assists,KXNBAAST,87.5,63,72,9
+87,World,O'Hare International Airport total delays and cancellations,KXFLIGHTORD,87.5,42,48,6
+88,World,JFK International Airport total flight delays and cancellations,KXFLIGHTJFK,87.5,28,32,4
+89,Sports,Pickle Ball Games,KXPICKLEBALLGAMES,87.5,28,32,4
+90,Climate and Weather,New Orleans Max temp Daily,KXHIGHTNOLA,87.5,28,32,4
+91,Economics,Argentina inflation,KXARGINFLATIONM,87.5,21,24,3
+92,Politics,Biden 538 lowest approval rating,KX538APPROVEMIN,87.5,21,24,3
+93,Sports,La Liga Game,KXLALIGAGAME,87.3,55,63,8
+94,Financials,S&P 500 up,KXINXZ,87.1,61,70,9
+95,Sports,Pro Basketball Player Steals,KXNBASTL,86.9,53,61,8
+96,Sports,Pro Baseball Total Points,KXMLBTOTAL,86.9,86,99,13
+97,Sports,Croatia HNL Game,KXHNLGAME,86.8,33,38,5
+98,Sports,AHL Game,KXAHLGAME,86.7,72,83,11
+99,Mentions,Congress Mention,KXCONGRESSMENTION,86.7,104,120,16
+100,Sports,League of Legends Games,KXLOLGAMES,86.7,39,45,6
+101,Sports,Liga Portugal Game,KXLIGAPORTUGALGAME,86.6,58,67,9
+102,Sports,ATP Italian Open,KXATPIT,86.5,45,52,7
+103,Sports,Pro Baseball Spread,KXMLBSPREAD,86.5,64,74,10
+104,Economics,CPI core,KXCPICORE,86.2,50,58,8
+105,Sports,Serie A Game,KXSERIEAGAME,86.2,56,65,9
+106,Climate and Weather,Highest temperature in Denver,KXHIGHDEN,86.1,31,36,5
+107,Sports,French Open Women's,KXFOWOMEN,86.0,86,100,14
+108,Mentions,Kathy Hochul,KXHOCHULMENTION,85.8,97,113,16
+109,Sports,Polish Ekstraklasa Game,KXEKSTRAKLASAGAME,85.7,18,21,3
+110,World,NYC rain,KXRAINNY,85.7,12,14,2
+111,Sports,KNVB Cup Game,KXKNVBCUPGAME,85.7,12,14,2
+112,Sports,WTA Tour Merida Open Akron,KXWTAMOA,85.7,12,14,2
+113,Sports,R6 Map Winner,KXR6MAP,85.6,83,97,14
+114,Sports,College Football Spread,KXNCAAFSPREAD,85.5,65,76,11
+115,Sports,Chinese Basketball Association Game ,KXCBAGAME,85.5,100,117,17
+116,Sports,Liga Nacional de Basquetbol Game,KXARGLNBGAME,85.2,52,61,9
+117,Sports,FIBA Europe Cup Game,KXFIBAECUPGAME,85.2,23,27,4
+118,Sports,NBL Basketball Game,KXNBLGAME,85.1,80,94,14
+119,Sports,Major League Soccer Game,KXMLSGAME,84.8,67,79,12
+120,Sports,Counter-Strike 2 Games,KXCSGOGAME,84.7,100,118,18
+121,Sports,UEFA Conference League Game,KXUECLGAME,84.6,66,78,12
+122,Sports,Bundesliga Game,KXBUNDESLIGAGAME,84.6,55,65,10
+123,Sports,SHL Game,KXSHLGAME,84.6,55,65,10
+124,Financials,EURO/USD exchange rate,KXEURO,84.6,11,13,2
+125,Sports,Argentina Primera Division Game,KXARGPREMDIVGAME,84.4,54,64,10
+126,Sports,Champions League Total Goals,KXUCLTOTAL,84.3,86,102,16
+127,Sports,Eurocup Basketball Game,KXEUROCUPGAME,84.3,86,102,16
+128,Sports,EFL Cup Game,KXEFLCUPGAME,84.2,16,19,3
+129,Sports,AFCON To Advance,KXAFCONADVANCE,84.2,16,19,3
+130,Sports,Winter Olympics Curling Game,KXWOCURLGAME,83.9,26,31,5
+131,Sports,Liga MX Game,KXLIGAMXGAME,83.8,57,68,11
+132,Sports,Bundesliga Total,KXBUNDESLIGATOTAL,83.8,93,111,18
+133,Economics,US gas price up,KXAAAGASW,83.3,40,48,8
+134,Transportation,TSA daily check-ins,KXTSA,83.3,30,36,6
+135,Health,COVID vaccinations,KXVAXX,83.3,25,30,5
+136,Sports,English Premier League Spread,KXEPLSPREAD,83.3,20,24,4
+137,Sports,WTA Miami,KXWTAMIA,83.3,15,18,3
+138,Sports,ATP Doubles Tennis Match,KXATPDOUBLES,83.3,15,18,3
+139,Science and Technology,Year-end top LLM,KXLLM1,83.3,15,18,3
+140,Sports,Belgian Pro League Game,KXBELGIANPLGAME,82.9,58,70,12
+141,Climate and Weather,Washington DC Daily Max Temp,KXHIGHTDC,82.8,24,29,5
+142,Economics,Core inflation,KXCPICOREYOY,82.7,43,52,9
+143,Sports,LNB Elite Game,KXLNBELITEGAME,82.4,42,51,9
+144,Climate and Weather,Las Vegas Max Daily Temperature,KXHIGHTLV,82.4,28,34,6
+145,Sports,Valorant Map Winner,KXVALORANTMAP,82.2,60,73,13
+146,Sports,Serie A Spread,KXSERIEASPREAD,82.1,23,28,5
+147,Sports,Tennis Exhibition Match,KXTENNISEXHIBITION,82.1,23,28,5
+148,Sports,FIBA Champions League Game,KXFIBACHAMPLEAGUEGAME,82.0,41,50,9
+149,Sports,KHL Game,KXKHLGAME,81.6,80,98,18
+150,Economics,US Core PCE inflation,KXPCECORE,81.6,31,38,7
+151,Sports,WTA Madrid,KXWTAMAD,81.6,31,38,7
+152,Sports,League of Legends Total Maps,KXLOLTOTALMAPS,81.5,75,92,17
+153,Sports,French Open Men's,KXFOMEN,81.4,83,102,19
+154,Sports,Brasileiro Serie A Game,KXBRASILEIROGAME,81.3,61,75,14
+155,Sports,Darts Match,KXDARTSMATCH,81.2,78,96,18
+156,Mentions,What will Zohran Mamdani say?,KXMAMDANIMENTION,81.2,78,96,18
+157,Climate and Weather,Lowest Temperature in LA,KXLOWTLAX,81.1,30,37,7
+158,Sports,English Premier League Total Goals,KXEPLTOTAL,80.8,80,99,19
+159,Mentions,Vance Says,KXVANCEMENTION,80.8,84,104,20
+160,Climate and Weather,Hurricane category,KXHURCAT,80.7,46,57,11
+161,Climate and Weather,Monthly rain in New York,KXRAINNYCM,80.6,83,103,20
+162,Sports,Club World Club Game,KXCLUBWCGAME,80.5,62,77,15
+163,Sports,Pro Hockey Goalscorer,KXNHLGOAL,80.4,37,46,9
+164,Sports,Swiss Super League Game,KXSWISSLEAGUEGAME,80.4,45,56,11
+165,Sports,Pro Basketball Player Blocks,KXNBABLK,80.0,36,45,9
+166,Health,New COVID-19 cases this week,KXCASEW,80.0,20,25,5
+167,Sports,Coppa Italia Game,KXCOPPAITALIAGAME,80.0,12,15,3
+168,Sports,MVE NCAAF Pre Pack,KXNCAAFPREPACKSGP,80.0,12,15,3
+169,Sports,Dota 2 Game,KXDOTA2GAME,79.7,98,123,25
+170,Economics,Jobs numbers,KXPAYROLLS,79.3,23,29,6
+171,Sports,ATP Miami,KXATPMIA,79.3,23,29,6
+172,Mentions,NCAA Mention,KXNCAAMENTION,79.2,99,125,26
+173,Sports,Eredivisie Game,KXEREDIVISIEGAME,79.2,57,72,15
+174,Sports,College Hockey Game,KXNCAAHOCKEYGAME,78.6,66,84,18
+175,Entertainment,Free app ranking,KXAPPRANKFREE2,78.6,22,28,6
+176,Sports,Men's College Lacrosse Game,KXNCAAMLAXGAME,78.6,22,28,6
+177,Politics,Mar-a-Lago trips,KXLAGODAYS,78.6,11,14,3
+178,Sports,ATP Madrid,KXATPMAD,78.4,29,37,8
+179,Sports,Serie A Total,KXSERIEATOTAL,78.1,75,96,21
+180,Sports,Unrivaled Basketball Game,KXUNRIVALEDGAME,78.1,25,32,7
+181,Entertainment,Free app ranking,KXAPPRANKFREE,78.0,32,41,9
+182,Sports,Pro Football Anytime Touchdown,KXNFLANYTD,78.0,39,50,11
+183,Sports,CS2 Total Maps,KXCS2TOTALMAPS,78.0,46,59,13
+184,Sports,NHL Spread,KXNHLSPREAD,77.8,42,54,12
+185,Sports,Japan B League Game,KXJBLEAGUEGAME,77.6,83,107,24
+186,Climate and Weather,Lowest Temperature Chicago,KXLOWTCHI,77.5,31,40,9
+187,Sports,Japan J League Game,KXJLEAGUEGAME,76.9,40,52,12
+188,Climate and Weather,Lowest temperature in Denver,KXLOWTDEN,76.9,30,39,9
+189,Economics,CPI on shelter,KXCPISHELTER,76.9,10,13,3
+190,Climate and Weather,NYC rain,KXRAINNYC,76.8,73,95,22
+191,Sports,Australian A League Game,KXALEAGUEGAME,76.8,63,82,19
+192,Sports,Valorant game winner,KXVALORANTGAME,76.7,92,120,28
+193,Sports,Cricket T20I Match,KXCRICKETT20IMATCH,76.6,59,77,18
+194,Sports,Ligue 1 Total,KXLIGUE1TOTAL,76.5,78,102,24
+195,Sports,Taca de Portugal Game,KXTACAPORTGAME,76.5,13,17,4
+196,Sports,Call of Duty Games,KXCODGAME,76.4,55,72,17
+197,Sports,Copa Del Rey Game,KXCOPADELREYGAME,76.3,29,38,9
+198,Climate and Weather,Highest temperature in Philadelphia,KXHIGHPHIL,76.2,32,42,10
+199,Science and Technology,Top model,KXTOPMODEL,76.2,16,21,5
+200,Mentions,What will Trump say?,KXTRUMPMENTION,76.1,67,88,21
+201,Sports,MVE NFL Pre Pack,KXNFLPREPACKSGP,75.8,50,66,16
+202,Politics,President RCP approval rating this week,KXAPRPOTUS,75.8,25,33,8
+203,Sports,FA Cup Advance,KXFACUPADVANCE,75.8,25,33,8
+204,Climate and Weather,Highest temperature in Chicago,KXHIGHCHI,75.6,31,41,10
+205,Sports,Pro Football Player Receptions,KXNFLREC,75.2,76,101,25
+206,Sports,WTA Italian Open,KXWTAIT,75.0,30,40,10
+207,Sports,Ligue 1 Spread,KXLIGUE1SPREAD,75.0,24,32,8
+208,Sports,Copa Del Rey To Advance,KXCOPADELREYADVANCE,75.0,18,24,6
+209,Sports,IIHF Game,KXIIHFGAME,75.0,15,20,5
+210,Mentions,What Will Mr Beast say in his next video,KXMRBEASTMENTION,74.6,91,122,31
+211,Sports,League of Legends Map Winner,KXLOLMAP,74.5,82,110,28
+212,Sports,R6 Game,KXR6GAME,74.2,95,128,33
+213,Sports,ATP Set Winner,KXATPSETWINNER,74.1,86,116,30
+214,Climate and Weather,Highest temperature in Houston,KXHIGHHOU,73.9,34,46,12
+215,Mentions,Trump Mention B,KXTRUMPMENTIONB,73.8,93,126,33
+216,Climate and Weather,Lowest temperature in NYC,KXLOWTNYC,73.8,31,42,11
+217,Sports,MVE NFL Pre Pack,KXNFLPREPACK2ML,73.4,47,64,17
+218,Sports,Pro Football Team Total Points,KXNFLTEAMTOTAL,73.3,99,135,36
+219,Sports,Boxing Match Champion,KXBOXING,73.3,22,30,8
+220,Sports,F1 Race Podium Finisher,KXF1RACEPODIUM,73.2,30,41,11
+221,Mentions,College Basketball,KXNCAABMENTION,72.7,80,110,30
+222,Climate and Weather,Highest temperature in Austin,KXHIGHAUS,72.1,31,43,12
+223,Sports,Champions League Spread,KXUCLSPREAD,71.8,28,39,11
+224,Climate and Weather,Seattle Maximum Temperature Daily,KXHIGHTSEA,71.8,28,39,11
+225,Companies,SpaceX Starship launch,KXSPACEXSTARSHIP,71.8,28,39,11
+226,Climate and Weather,San Francisco High Temperature Daily,KXHIGHTSFO,70.0,28,40,12
+227,Politics,President 538 approval rating this week,KX538APPROVE,70.0,21,30,9
+228,Sports,ATP Tour Abierto Mexican Telcel presentado por HSBC,KXATPAMT,70.0,21,30,9
+229,Sports,Pro Football player Receiving Yards,KXNFLRECYDS,69.9,79,113,34
+230,Crypto,XRP 15 Minute,KXXRP15M,69.2,45,65,20
+231,Sports,PGA Ryder Cup Matchups,KXPGARYDERMATCH,68.8,22,32,10
+232,Politics,Biden 538 highest approval rating,KX538APPROVEMAX,68.8,11,16,5
+233,Sports,Coupe de France Gam,KXCOUPEDEFRANCEGAME,68.6,24,35,11
+234,Mentions,Jimmy Kimmel Mention,KXKIMMELMENTION,68.2,60,88,28
+235,Sports,Pro Football player Passing Yards,KXNFLPASSYDS,68.1,81,119,38
+236,Sports,MVE NFL Pre Pack,KXNFLPREPACK,66.7,20,30,10
+237,Entertainment,Netflix movie ranking,KXNETFLIXRANKMOVIE,66.7,14,21,7
+238,Economics,Fear and Greed index,KXFEAR,66.7,12,18,6
+239,Sports,Pro Football Multiple Touchdowns,KXNFL2TD,66.7,12,18,6
+240,Economics,Weekly initial jobless claims,KXJOBLESSCLAIMS,66.0,33,50,17
+241,Entertainment,Will Song be number 2 on Billboard 100?,KXBILLBOARDRUNNERUPSONG,65.2,15,23,8
+242,Sports,ATP Total Sets,KXATPTOTALSETS,64.3,54,84,30
+243,Entertainment,Daily US Spotify chart,KXSPOTIFYD,64.3,9,14,5
+244,Sports,Pro Football player Passing Touchdowns,KXNFLPASSTDS,63.3,69,109,40
+245,Sports,Cricket ODI Match,KXCRICKETODIMATCH,63.2,12,19,7
+246,Entertainment,Weekly US Spotify chart,KXSPOTIFYW,62.5,10,16,6
+247,Sports,Korea K League Game,KXKLEAGUEGAME,62.1,18,29,11
+248,Sports,Winter Olympics Luge,KXWOLUGE,61.5,16,26,10
+249,Mentions,Colbert Mention,KXCOLBERTMENTION,61.2,41,67,26
+250,Sports,La Liga Spread,KXLALIGASPREAD,61.1,22,36,14
+251,Sports,College Football Playoff Seed,KXCFPSEED,61.1,11,18,7
+252,Entertainment,Billboard Top 200 #1,KXTOPALBUM,60.9,14,23,9
+253,Sports,MVE NFL Pre Pack,KXNFLPREPACK3ML,60.0,15,25,10
+254,Entertainment,DGA Awards,KXDGAAWARDS,60.0,12,20,8
+255,Entertainment,WHO WILL BE ELIMINATED FROM SURVIVOR,KXSURVIVORELIMINATION,60.0,12,20,8
+256,Mentions,Starmer mentions,KXSTARMERMENTION,59.7,40,67,27
+257,Mentions,Leavitt Duration,KXLEAVITTMENTIONDURATION,59.1,26,44,18
+258,Entertainment,Billboard Hot 100 #1,KXTOPSONG,57.7,15,26,11
+259,Entertainment,Will Album be runner up this week?,KXBILLBOARDRUNNERUPALBUM,57.1,16,28,12
+260,Climate and Weather,Monthly Temperature Increase (ºC),KXHMONTHRANGE,56.7,17,30,13
+261,Economics,ADP employment change,KXADP,56.5,13,23,10
+262,Sports,Bundesliga Spread,KXBUNDESLIGASPREAD,56.2,18,32,14
+263,Sports,Pro Football player Rushing Yards,KXNFLRSHYDS,56.0,75,134,59
+264,Sports,Pro Basketball Double Double,KXNBA2D,54.0,34,63,29
+265,Mentions,Late Night Mention,KXLATENIGHTMENTION,52.8,38,72,34
+266,World,Los Angeles International Airport total delays and cancellations,KXFLIGHTLAX,52.4,11,21,10
+267,Sports,ATP Exact Match Score,KXATPEXACTMATCH,51.9,28,54,26
+268,Mentions,Survivor Mention,KXSURVIVORMENTION,50.0,58,116,58
+269,Politics,New asylum cases,KXASYLUMCASES,50.0,9,18,9
+270,Sports,pickleball,KXPICKLEBALL,48.4,15,31,16
+271,Sports,UFC Method of Finish,KXUFCMOF,47.6,10,21,11
+272,Entertainment,RUNNER UP NETFLIX SHOW,KXNETFLIXRANKSHOWRUNNERUP,47.4,9,19,10
+273,Mentions,SNL Mention,KXSNLMENTION,46.2,30,65,35
+274,Entertainment,RUNNER UP NETFLIX MOVIE,KXNETFLIXRANKMOVIERUNNERUP,44.4,8,18,10
+275,Financials,Price of gold,KXGOLD,42.9,9,21,12
+276,Entertainment,Weekly US Spotify album chart,KXSPOTIFYALBUMW,42.9,6,14,8
+277,Sports,UFC Method of Victory,KXUFCMOV,31.0,22,71,49
+278,Entertainment,Daily Global Spotify songs,KXSPOTIFYGLOBALD,27.6,8,29,21
+279,Entertainment,Daily US Spotify artist chart,KXSPOTIFYARTISTD,25.0,6,24,18
+280,Entertainment,Daily US Spotify chart Runner-up,KXSPOTIFY2D,21.7,5,23,18
+281,Financials,WTI oil weekly range,KXWTIW,21.2,7,33,26
+282,Sports,Pro Basketball Triple Double,KXNBA3D,21.2,7,33,26
+283,Financials,EUR/USD daily range,KXEURUSD,16.1,5,31,26
+284,Financials,Treasury 10Y weekly yield,KXTNOTEW,14.3,2,14,12
