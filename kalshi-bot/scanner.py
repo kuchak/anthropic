@@ -238,8 +238,8 @@ class Scanner:
         if not (yes_in_range or no_in_range):
             return False  # Neither side in target range
 
-        # Check market is open
-        if market.status != 'open':
+        # Check market is open/active (API returns 'active' status for open markets)
+        if market.status not in ['open', 'active']:
             return False
 
         return True
