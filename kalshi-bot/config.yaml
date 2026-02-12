@@ -50,6 +50,27 @@ accuracy_by_price_range:
   "0.90-0.95": 0.990             # 99.0% accuracy (7,885/7,965 wins) - HIGH confidence
   "0.95-0.98": 0.983             # 98.3% accuracy (3,477/3,536 wins) - VERY HIGH confidence
 
+# === Category Accuracy Override ===
+# If a category has accuracy below 95%, use category accuracy instead of price range
+# This ensures we always use the more conservative estimate
+#
+# Category accuracy from backtest (reference data):
+category_accuracy:
+  "Entertainment": 0.893         # 89.3% accuracy (225/252 markets) - USE OVERRIDE
+  "Financials": 0.883            # 88.3% accuracy (212/240 markets) - USE OVERRIDE
+  "Economics": 0.978             # 97.8% accuracy (827/846 markets)
+  "Politics": 0.978              # 97.8% accuracy (91/93 markets)
+  "Sports": 0.988                # 98.8% accuracy (8,258/8,360 markets)
+  "Climate and Weather": 0.995   # 99.5% accuracy (905/910 markets)
+  "Crypto": 0.995                # 99.5% accuracy (199/200 markets)
+  "Health": 1.000                # 100.0% accuracy (119/119 markets)
+  "Science and Technology": 1.000 # 100.0% accuracy (67/67 markets)
+  "Companies": 1.000             # 100.0% accuracy (28/28 markets)
+  "Mentions": 0.999              # 99.9% accuracy (1,297/1,298 markets)
+  "Transportation": 1.000        # 100.0% accuracy (53/53 markets)
+
+category_accuracy_threshold: 0.95  # Use category accuracy if below this threshold
+
 # === Position Sizing ===
 starting_bankroll: 1000.00
 kelly_fraction: 0.5              # Half-Kelly (0.25 = quarter-Kelly)

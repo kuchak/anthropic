@@ -75,12 +75,17 @@ class Scorer:
         self.accuracy_by_price_range = config.get('accuracy_by_price_range', {})
         self.default_accuracy = config.get('default_accuracy', 0.90)
 
+        # Load category accuracy overrides
+        self.category_accuracy = config.get('category_accuracy', {})
+        self.category_threshold = config.get('category_accuracy_threshold', 0.95)
+
         # Fee configuration
         self.fee_rate = config.get('kalshi_fee_rate', 0.07)  # 7% for takers
 
         logger.info("Scorer initialized")
         logger.info(f"  Default accuracy: {self.default_accuracy * 100:.1f}%")
         logger.info(f"  Price range accuracies: {len(self.accuracy_by_price_range)} ranges configured")
+        logger.info(f"  Category overrides: {len(self.category_accuracy)} categories (<{self.category_threshold*100:.0f}% threshold)")
         logger.info(f"  Kalshi fee rate: {self.fee_rate * 100:.1f}% (taker)")
 
     @staticmethod
@@ -153,8 +158,9 @@ class Scorer:
         if not (self.config['min_contract_price'] <= entry_price <= self.config['max_contract_price']):
             return None
 
-        # Calculate win probability based on price range
-        win_probability = self._get_win_probability(entry_price)
+        # Calculate win probability based on price range AND category
+        # Uses conservative override: if category accuracy < 95%, uses min(price_acc, category_acc)
+        win_probability = self._get_win_probability(entry_price, market.category)
 
         # Calculate Kalshi fees (per contract)
         fee_per_contract = self.calculate_fee_per_contract(entry_price, self.fee_rate)
@@ -206,28 +212,48 @@ class Scorer:
             estimated_fee_per_contract=fee_per_contract
         )
 
-    def _get_win_probability(self, price: float) -> float:
+    def _get_win_probability(self, price: float, category: str = None) -> float:
         """
-        Get win probability based on price range
+        Get win probability based on price range and category
 
-        Uses backtest accuracy data from config
+        Uses backtest accuracy data from config.
+
+        CONSERVATIVE OVERRIDE: If category accuracy < threshold (95%), uses the
+        LOWER of price range accuracy vs category accuracy. This ensures we
+        never overestimate win probability for underperforming categories.
 
         Args:
             price: Contract price (0.0 - 1.0)
+            category: Market category (optional)
 
         Returns:
-            Win probability (0.0 - 1.0)
+            Win probability (0.0 - 1.0) - conservative estimate
         """
-        # Check if we have specific accuracy for this price range
+        # Get price-based accuracy
+        price_accuracy = self.default_accuracy
         for price_range, accuracy in self.accuracy_by_price_range.items():
             # Parse range like "0.85-0.89" or "0.90-0.95"
             if '-' in price_range:
                 min_price, max_price = map(float, price_range.split('-'))
                 if min_price <= price <= max_price:
-                    return accuracy
+                    price_accuracy = accuracy
+                    break
 
-        # Default to overall accuracy
-        return self.default_accuracy
+        # Check category override (conservative approach)
+        if category and category in self.category_accuracy:
+            category_acc = self.category_accuracy[category]
+
+            # If category accuracy is below threshold, use the MORE CONSERVATIVE estimate
+            if category_acc < self.category_threshold:
+                # Use the lower of the two
+                conservative_accuracy = min(price_accuracy, category_acc)
+                logger.debug(f"Category override for {category}: "
+                           f"price={price_accuracy:.3f}, category={category_acc:.3f}, "
+                           f"using={conservative_accuracy:.3f}")
+                return conservative_accuracy
+
+        # Use price-based accuracy (category is good or not found)
+        return price_accuracy
 
     def get_top_opportunities(self, markets: List[Market], limit: int = 10) -> List[ScoredOpportunity]:
         """
