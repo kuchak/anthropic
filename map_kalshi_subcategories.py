@@ -487,12 +487,34 @@ def analyze_subcategories_with_hierarchy():
     print(f"  Average EV: {high_accuracy['EV_per_Contract'].mean():.2f}¢")
     print("=" * 100)
 
-    # Save to CSV
+    # Save summary to CSV
     output_file = 'hierarchical_subcategories_90plus.csv'
     high_accuracy.to_csv(output_file, index=False)
-    print(f"\nResults saved to {output_file}")
+    print(f"\nSummary saved to {output_file}")
 
-    return high_accuracy
+    # Save detailed market-by-market data
+    detailed_file = 'hierarchical_markets_detailed.csv'
+
+    # Filter to only markets in sub-categories with 90%+ accuracy and 20+ markets
+    qualifying_paths = set(high_accuracy['Hierarchical_Path'].values)
+    detailed_df = df[df['Hierarchical_Path'].isin(qualifying_paths)].copy()
+
+    # Sort by hierarchical path, then by date
+    detailed_df = detailed_df.sort_values(['Hierarchical_Path', 'First Touch Time'])
+
+    # Select relevant columns for analysis
+    columns_to_save = [
+        'Hierarchical_Path', 'Category', 'Sub_Category', 'Sub_Sub_Category',
+        'Series Ticker', 'Series Title', 'Ticker', 'Title',
+        'Result', 'Settlement (¢)', 'First Touch Price (¢)',
+        'First Touch Time', 'Permanent Cross Time', 'Market Close Time',
+        'Prediction Correct', 'Trades Count'
+    ]
+
+    detailed_df[columns_to_save].to_csv(detailed_file, index=False)
+    print(f"Detailed market data saved to {detailed_file} ({len(detailed_df):,} markets)")
+
+    return high_accuracy, detailed_df
 
 
 if __name__ == "__main__":
