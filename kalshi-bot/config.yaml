@@ -22,6 +22,14 @@ fast_scan_interval_minutes: 3    # Watchlist price check frequency
 max_time_to_settlement_hours: 6  # Only consider markets settling within this window
 min_time_to_settlement_minutes: 5 # Ignore markets too close to settlement (avoid illiquidity)
 
+# === Market Filtering ===
+# WHITELIST: Only trade these series tickers (profitable NBA markets from backtest)
+series_ticker_whitelist:
+  - KXNBAGAME      # NBA Game Winner - 100% accuracy (97/97 markets)
+  - KXNBASPREAD    # NBA Spread - 100% accuracy (39/39 markets)
+  - KXNBAREB       # NBA Rebounds - 100% accuracy (55/55 markets)
+  - KXNBATOTAL     # NBA Total Points - 93% accuracy (91/98 markets)
+
 # === Scoring & Entry ===
 min_contract_price: 0.85         # Include 85-89¢ range (99.1% accuracy, highest win rate!)
 max_contract_price: 0.98         # Skip contracts above this (too little edge)
@@ -50,6 +58,14 @@ accuracy_by_price_range:
   "0.85-0.89": 0.991             # 99.1% accuracy (2,554/2,578 wins) - HIGHEST confidence
   "0.90-0.95": 0.990             # 99.0% accuracy (7,885/7,965 wins) - HIGH confidence
   "0.95-0.98": 0.983             # 98.3% accuracy (3,477/3,536 wins) - VERY HIGH confidence
+
+# === Series Ticker Accuracy (for whitelisted markets) ===
+# Actual backtest accuracy for profitable NBA series (from nba_timing_analysis.csv)
+series_ticker_accuracy:
+  "KXNBAGAME": 1.000      # 100.0% accuracy (97/97 markets, +5.80¢ avg profit)
+  "KXNBASPREAD": 1.000    # 100.0% accuracy (39/39 markets, +7.74¢ avg profit)
+  "KXNBAREB": 1.000       # 100.0% accuracy (55/55 markets, +3.24¢ avg profit)
+  "KXNBATOTAL": 0.929     # 92.9% accuracy (91/98 markets, +1.85¢ avg profit)
 
 # === Category Accuracy Override ===
 # If a category has accuracy below 95%, use category accuracy instead of price range

@@ -32,7 +32,16 @@ class Scanner:
         self.last_fast_scan: Optional[datetime] = None
 
         logger.info("Scanner initialized")
-        logger.info(f"  NO CATEGORY FILTERING - evaluating ALL markets")
+
+        # Check if whitelist is configured
+        whitelist = config.get('series_ticker_whitelist')
+        if whitelist:
+            logger.info(f"  WHITELIST MODE: Only trading {len(whitelist)} series tickers:")
+            for ticker in whitelist:
+                logger.info(f"    - {ticker}")
+        else:
+            logger.info(f"  NO CATEGORY FILTERING - evaluating ALL markets")
+
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
         logger.info(f"  Settlement window: {config['min_time_to_settlement_minutes']}m - {config['max_time_to_settlement_hours']}h")
 
@@ -219,6 +228,13 @@ class Scanner:
         Returns:
             True if market meets all criteria
         """
+        # Check series ticker whitelist (if configured)
+        whitelist = self.config.get('series_ticker_whitelist')
+        if whitelist:
+            # market.category stores the series_ticker
+            if market.category not in whitelist:
+                return False  # Not in whitelist
+
         # Check settlement time window
         time_to_settlement_minutes = market.time_to_settlement_minutes
 

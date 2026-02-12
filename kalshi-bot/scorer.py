@@ -75,6 +75,9 @@ class Scorer:
         self.accuracy_by_price_range = config.get('accuracy_by_price_range', {})
         self.default_accuracy = config.get('default_accuracy', 0.90)
 
+        # Load series ticker accuracy (highest priority - for whitelisted markets)
+        self.series_ticker_accuracy = config.get('series_ticker_accuracy', {})
+
         # Load category accuracy overrides
         self.category_accuracy = config.get('category_accuracy', {})
         self.category_threshold = config.get('category_accuracy_threshold', 0.95)
@@ -84,6 +87,7 @@ class Scorer:
 
         logger.info("Scorer initialized")
         logger.info(f"  Default accuracy: {self.default_accuracy * 100:.1f}%")
+        logger.info(f"  Series ticker accuracies: {len(self.series_ticker_accuracy)} series (whitelisted NBA markets)")
         logger.info(f"  Price range accuracies: {len(self.accuracy_by_price_range)} ranges configured")
         logger.info(f"  Category overrides: {len(self.category_accuracy)} categories (<{self.category_threshold*100:.0f}% threshold)")
         logger.info(f"  Kalshi fee rate: {self.fee_rate * 100:.1f}% (taker)")
@@ -214,22 +218,28 @@ class Scorer:
 
     def _get_win_probability(self, price: float, category: str = None) -> float:
         """
-        Get win probability based on price range and category
+        Get win probability based on series ticker, price range, and category
 
-        Uses backtest accuracy data from config.
-
-        CONSERVATIVE OVERRIDE: If category accuracy < threshold (95%), uses the
-        LOWER of price range accuracy vs category accuracy. This ensures we
-        never overestimate win probability for underperforming categories.
+        Priority order (highest to lowest):
+        1. Series ticker accuracy (for whitelisted NBA markets with 100%/93% accuracy)
+        2. Category accuracy (if below 95% threshold, uses conservative estimate)
+        3. Price-based accuracy (default fallback)
 
         Args:
             price: Contract price (0.0 - 1.0)
-            category: Market category (optional)
+            category: Market category / series ticker (optional)
 
         Returns:
             Win probability (0.0 - 1.0) - conservative estimate
         """
-        # Get price-based accuracy
+        # PRIORITY 1: Check series ticker accuracy (for whitelisted markets)
+        # category field stores series_ticker from the API
+        if category and category in self.series_ticker_accuracy:
+            series_acc = self.series_ticker_accuracy[category]
+            logger.debug(f"Using series ticker accuracy for {category}: {series_acc:.3f}")
+            return series_acc
+
+        # PRIORITY 2: Get price-based accuracy
         price_accuracy = self.default_accuracy
         for price_range, accuracy in self.accuracy_by_price_range.items():
             # Parse range like "0.85-0.89" or "0.90-0.95"
@@ -239,7 +249,7 @@ class Scorer:
                     price_accuracy = accuracy
                     break
 
-        # Check category override (conservative approach)
+        # PRIORITY 3: Check category override (conservative approach)
         if category and category in self.category_accuracy:
             category_acc = self.category_accuracy[category]
 
