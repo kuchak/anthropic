@@ -1,0 +1,158 @@
+==========================================================================================
+📊 ALL SERIES WITH 50+ EVENTS THAT CROSSED 90%
+==========================================================================================
+
+Total series analyzed: 299
+Series with 50+ crossings: 50
+
+==========================================================================================
+📊 CATEGORY PERFORMANCE RANKINGS
+==========================================================================================
+
+Rank   Category                  Series   Events     Crossed    Cross %    Accuracy     Avg Window
+--------------------------------------------------------------------------------------------------------------
+#1     Sports                    45       3999       3797       94.7%      86.5%        269.7m
+#2     Financials                1        100        54         54.0%      85.2%        325.4m
+#3     Crypto                    3        281        156        55.9%      80.8%        6.8m
+#4     Climate and Weather       1        100        56         56.0%      76.8%        1287.8m
+
+==========================================================================================
+📊 ALL SERIES BY CATEGORY (Sorted by Accuracy)
+==========================================================================================
+
+==========================================================================================
+📂 SPORTS
+   45 series | 3797 crossed 90% | 86.5% avg accuracy
+==========================================================================================
+Series                         Events     Crossed      Cross %    Accuracy   Window
+------------------------------------------------------------------------------------------
+KXNBAGAME                      100        98/100       98.0%      100.0%     44.6m      🥇
+KXNFLGAME                      100        99/100       99.0%      99.0%      38.0m      🥈
+KXNCAAFGAME                    100        97/100       97.0%      99.0%      910.5m     🥈
+KXNCAAMBGAME                   100        99/100       99.0%      98.0%      294.4m     🥈
+KXWTAMATCH                     100        96/100       96.0%      96.9%      74.0m      🥈
+KXMLBGAME                      100        96/100       96.0%      95.8%      91.5m      🥈
+KXNHLGAME                      100        99/100       99.0%      93.9%      66.3m      🥉
+KXATPCHALLENGERMATCH           100        97/100       97.0%      93.8%      54.3m      🥉
+KXEUROLEAGUEGAME               100        100/100      100.0%     93.0%      55.6m      🥉
+KXATPMATCH                     100        95/100       95.0%      92.6%      76.2m      🥉
+KXKBLGAME                      53         53/53        100.0%     92.5%      104.2m     🥉
+KXUNITEDCUPMATCH               52         51/52        98.1%      90.2%      313.2m     🥉
+KXNCAAWBGAME                   100        100/100      100.0%     90.0%      713.2m     🥉
+KXUFCFIGHT                     100        88/100       88.0%      89.8%      119.6m     
+KXWTACHALLENGERMATCH           78         78/78        100.0%     89.7%      141.0m     
+KXSHLGAME                      56         56/56        100.0%     89.3%      60.8m      
+KXCS2MAP                       100        98/100       98.0%      88.8%      169.8m     
+KXWNBAGAME                     100        100/100      100.0%     88.0%      267.0m     
+KXR6MAP                        86         82/86        95.3%      87.8%      32.4m      
+KXCS2GAME                      100        97/100       97.0%      87.6%      272.0m     
+KXCSGOGAME                     100        100/100      100.0%     87.0%      133.5m     
+KXCBAGAME                      100        100/100      100.0%     87.0%      340.8m     
+KXFOWOMEN                      100        96/100       96.0%      86.5%      437.4m     
+KXEREDIVISIEGAME               67         51/67        76.1%      86.3%      54.9m      
+KXLOLGAME                      100        100/100      100.0%     86.0%      192.8m     
+KXAHLGAME                      100        99/100       99.0%      85.9%      380.5m     
+KXVALORANTMAP                  61         60/61        98.4%      85.0%      36.9m      
+KXNBLGAME                      81         80/81        98.8%      85.0%      195.1m     
+KXEUROCUPGAME                  86         86/86        100.0%     84.9%      164.9m     
+KXFOMEN                        100        99/100       99.0%      82.8%      736.7m     
+KXLOLTOTALMAPS                 100        57/100       57.0%      82.5%      162.5m     
+KXARGLNBGAME                   60         51/60        85.0%      82.4%      147.0m     
+KXKHLGAME                      100        100/100      100.0%     81.0%      268.6m     
+KXDOTA2GAME                    100        100/100      100.0%     80.0%      160.5m     
+KXDARTSMATCH                   100        84/100       84.0%      79.8%      230.8m     
+KXJBLEAGUEGAME                 83         83/83        100.0%     79.5%      272.1m     
+KXATPSETWINNER                 100        92/100       92.0%      77.2%      245.3m     
+KXCRICKETT20IMATCH             68         61/68        89.7%      77.0%      709.0m     
+KXCODGAME                      55         55/55        100.0%     76.4%      854.2m     
+KXR6GAME                       97         96/97        99.0%      76.0%      318.3m     
+KXVALORANTGAME                 100        100/100      100.0%     75.0%      658.8m     
+KXALEAGUEGAME                  67         51/67        76.1%      74.5%      39.8m      
+KXLOLMAP                       100        100/100      100.0%     74.0%      31.3m      
+KXUCLTOTAL                     67         57/67        85.1%      73.7%      66.3m      
+KXATPTOTALSETS                 82         60/82        73.2%      63.3%      1400.8m    
+
+==========================================================================================
+📂 FINANCIALS
+   1 series | 54 crossed 90% | 85.2% avg accuracy
+==========================================================================================
+Series                         Events     Crossed      Cross %    Accuracy   Window
+------------------------------------------------------------------------------------------
+KXINXZ                         100        54/100       54.0%      85.2%      325.4m     
+
+==========================================================================================
+📂 CRYPTO
+   3 series | 156 crossed 90% | 80.8% avg accuracy
+==========================================================================================
+Series                         Events     Crossed      Cross %    Accuracy   Window
+------------------------------------------------------------------------------------------
+KXETH15M                       100        55/100       55.0%      87.3%      6.7m       
+KXSOL15M                       100        51/100       51.0%      86.3%      6.7m       
+KXXRP15M                       81         50/81        61.7%      68.0%      6.9m       
+
+==========================================================================================
+📂 CLIMATE AND WEATHER
+   1 series | 56 crossed 90% | 76.8% avg accuracy
+==========================================================================================
+Series                         Events     Crossed      Cross %    Accuracy   Window
+------------------------------------------------------------------------------------------
+KXRAINNYC                      100        56/100       56.0%      76.8%      1287.8m    
+
+==========================================================================================
+📊 SERIES WITH FEWER THAN 50 CROSSINGS (Not recommended)
+==========================================================================================
+
+Series                         Category             Events     Crossed      Accuracy
+------------------------------------------------------------------------------------------
+KXSPOTIFYALBUMW                Entertainment        14         2/14         100.0%
+KXNETFLIXRANKSHOW              Entertainment        16         8/16         100.0%
+KXRANKLISTSONGTOP10            Entertainment        11         5/11         100.0%
+KXSPOTIFYD                     Entertainment        13         1/13         100.0%
+KXCPIFOOD                      Economics            24         2/24         100.0%
+KXFED                          Economics            20         2/20         100.0%
+KXCPICORE                      Economics            30         5/30         100.0%
+KXBANKRUPTS                    Economics            20         9/20         100.0%
+KXCPIGAS                       Economics            34         10/34        100.0%
+KXEUROIMF                      Financials           21         10/21        100.0%
+KXUSDJPY                       Financials           14         2/14         100.0%
+KXGBP                          Financials           23         12/23        100.0%
+KXLAGODAYS                     Politics             11         4/11         100.0%
+KXKNVBCUPGAME                  Sports               12         9/12         100.0%
+KXNFLTOTAL                     Sports               21         4/21         100.0%
+KXMLBTOTAL                     Sports               17         3/17         100.0%
+KXNHLGOAL                      Sports               12         5/12         100.0%
+KXSLGREECEGAME                 Sports               21         11/21        100.0%
+KXAFCCLGAME                    Sports               12         8/12         100.0%
+KXUCLGOAL                      Sports               100        1/100        100.0%
+KXNCAAFTOTAL                   Sports               22         9/22         100.0%
+KXNBASPREAD                    Sports               17         4/17         100.0%
+KXF1RACE                       Sports               10         5/10         100.0%
+KXHIGHTLV                      Climate and Weathe   28         3/28         100.0%
+KXHIGHTNOLA                    Climate and Weathe   28         6/28         100.0%
+KXHURCAT                       Climate and Weathe   40         7/40         100.0%
+KXSPACEXSTARSHIP               Companies            10         9/10         100.0%
+KXTRUMPMENTION                 Mentions             10         5/10         100.0%
+KXNFLMENTION                   Mentions             10         6/10         100.0%
+KXNBAMENTION                   Mentions             12         12/12        100.0%
+KXLIGUE1GAME                   Sports               67         48/67        97.9%
+KXSCOTTISHPREMGAME             Sports               67         43/67        97.7%
+KXMTA                          Transportation       47         25/47        96.0%
+KXBTC15M                       Crypto               100        47/100       95.7%
+KXATPIT                        Sports               46         45/46        95.6%
+KXFIFAGAME                     Sports               67         42/67        95.2%
+KXLOWTPHIL                     Climate and Weathe   42         21/42        95.2%
+KXNASDAQ100Z                   Financials           100        41/100       95.1%
+KXT20MATCH                     Sports               23         20/23        95.0%
+KXFACUPGAME                    Sports               32         19/32        94.7%
+KXWTAATX                       Sports               19         18/19        94.4%
+KXAFCONGAME                    Sports               51         35/51        94.3%
+KXLOWTDEN                      Climate and Weathe   35         17/35        94.1%
+KXPPLGAMES                     Sports               15         15/15        93.3%
+KXLOWTNYC                      Climate and Weathe   34         14/34        92.9%
+KXBOOSTER                      Health               29         14/29        92.9%
+KXBUNDESLIGAGAME               Sports               67         40/67        92.5%
+KXTNOTE                        Financials           18         13/18        92.3%
+KXLALIGATOTAL                  Sports               64         38/64        92.1%
+KXUELGAME                      Sports               67         38/67        92.1%
+
+==========================================================================================

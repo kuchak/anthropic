@@ -140,19 +140,19 @@ class ComprehensiveKalshiAnalyzer:
             return []
 
     def find_first_90_touch(self, trades: List[Tuple[str, int]], close_time: str,
-                            max_hours_before_close: int = 4) -> Optional[Dict]:
-        """Find first touch of 90% within X hours of market close"""
+                            max_hours_before_close: int = None) -> Optional[Dict]:
+        """Find first touch of 90% at ANY point before close (no time restriction)"""
         if not close_time:
             return None
 
         close_dt = datetime.fromisoformat(close_time.replace('Z', '+00:00'))
-        cutoff_dt = close_dt - timedelta(hours=max_hours_before_close)
 
         for timestamp, price in trades:
             try:
                 trade_dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
 
-                if trade_dt >= cutoff_dt and price >= 90:
+                # No time restriction - find ANY 90% crossing before close
+                if trade_dt <= close_dt and price >= 90:
                     return {
                         'timestamp': timestamp,
                         'price': price
@@ -184,9 +184,9 @@ class ComprehensiveKalshiAnalyzer:
         if not trades_a and not trades_b:
             return None
 
-        # Find 90% crossings
-        crossing_a = self.find_first_90_touch(trades_a, close_time, max_hours_before_close=4)
-        crossing_b = self.find_first_90_touch(trades_b, close_time, max_hours_before_close=4) if trades_b else None
+        # Find 90% crossings (NO time restriction - anytime before close)
+        crossing_a = self.find_first_90_touch(trades_a, close_time)
+        crossing_b = self.find_first_90_touch(trades_b, close_time) if trades_b else None
 
         # Determine which side crossed first
         crossed_side = None
@@ -323,7 +323,7 @@ def main():
 
     # Now analyze viable series in detail (100 events for speed)
     print("\n" + "="*70)
-    print("🔍 ANALYZING VIABLE SERIES (100 events each for speed)")
+    print("🔍 ANALYZING VIABLE SERIES (100 events each, NO TIME RESTRICTION)")
     print("="*70)
 
     analyzed_count = 0
