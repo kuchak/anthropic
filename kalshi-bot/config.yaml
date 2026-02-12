@@ -22,7 +22,7 @@ max_time_to_settlement_hours: 6  # Only consider markets settling within this wi
 min_time_to_settlement_minutes: 5 # Ignore markets too close to settlement (avoid illiquidity)
 
 # === Scoring & Entry ===
-min_contract_price: 0.90         # Only bet on contracts 90¢+ (high-probability only)
+min_contract_price: 0.85         # Include 85-89¢ range (99.1% accuracy, highest win rate!)
 max_contract_price: 0.98         # Skip contracts above this (too little edge)
 
 # === Kalshi Fees ===
