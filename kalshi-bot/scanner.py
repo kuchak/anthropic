@@ -32,7 +32,7 @@ class Scanner:
         self.last_fast_scan: Optional[datetime] = None
 
         logger.info("Scanner initialized")
-        logger.info(f"  Approved categories: {config['approved_categories']}")
+        logger.info(f"  NO CATEGORY FILTERING - evaluating ALL markets")
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
         logger.info(f"  Settlement window: {config['min_time_to_settlement_minutes']}m - {config['max_time_to_settlement_hours']}h")
 
@@ -40,11 +40,13 @@ class Scanner:
         """
         Full market discovery scan
 
-        Finds all active markets that meet our criteria:
-        - In approved categories
+        Evaluates ALL active markets (no category filtering):
         - Settlement time within window
         - Price in target range
         - NOT in existing positions (prevents duplicate positions)
+
+        Decision making is purely based on scoring: model accuracy by price range,
+        expected profit after fees, and time to settlement.
 
         Args:
             existing_position_tickers: List of tickers we already have positions in
@@ -76,12 +78,8 @@ class Scanner:
                 logger.debug(f"  Skipping {ticker} - already have position")
                 continue
 
-            # Check category filter
-            category = market_data.get('series_ticker', '')
-
-            # Match against approved categories (prefix matching)
-            if not any(category.lower().startswith(cat.lower()) for cat in self.config['approved_categories']):
-                continue
+            # NO CATEGORY FILTERING - evaluate ALL markets
+            # Decision based purely on: price range accuracy, expected profit, time to settlement
 
             # Parse market
             try:
