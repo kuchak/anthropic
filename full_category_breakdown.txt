@@ -1,0 +1,533 @@
+====================================================================================================
+COMPLETE ANALYSIS - ALL CATEGORIES & SERIES
+====================================================================================================
+
+Total series analyzed: 299
+
+Total categories found: 13
+
+====================================================================================================
+BREAKDOWN BY CATEGORY
+====================================================================================================
+
+====================================================================================================
+📂 SPORTS
+====================================================================================================
+Series in category: 172
+Total events analyzed: 9025
+Total events that crossed 90%: 6476
+Average crossing rate: 71.8%
+
+Series with 50+ crossings: 45
+Series with 20+ crossings: 107
+Series with ANY crossings: 172
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXWTAMAD                       31         31/31           100.0%       90.3%        🟡
+KXIIHFGAME                     15         15/15           100.0%       73.3%        ⚪
+KXWTACHALLENGERMATCH           78         78/78           100.0%       89.7%        🟢
+KXWTAMIA                       15         15/15           100.0%       86.7%        ⚪
+KXKHLGAME                      100        100/100         100.0%       81.0%        🟢
+KXCOPADELREYADVANCE            18         18/18           100.0%       88.9%        ⚪
+KXEUROCUPGAME                  86         86/86           100.0%       84.9%        🟢
+KXCSGOGAME                     100        100/100         100.0%       87.0%        🟢
+KXWTAIT                        30         30/30           100.0%       76.7%        🟡
+KXWOWHOCKEY                    19         19/19           100.0%       89.5%        ⚪
+KXCODGAME                      55         55/55           100.0%       76.4%        🟢
+KXNCAAMLAXGAME                 22         22/22           100.0%       81.8%        🟡
+KXLOLGAME                      100        100/100         100.0%       86.0%        🟢
+KXCBAGAME                      100        100/100         100.0%       87.0%        🟢
+KXJBLEAGUEGAME                 83         83/83           100.0%       79.5%        🟢
+KXATPDOUBLES                   15         15/15           100.0%       86.7%        ⚪
+KXFIBACHAMPLEAGUEGAME          41         41/41           100.0%       80.5%        🟡
+KXLOLMAP                       100        100/100         100.0%       74.0%        🟢
+KXAFCONADVANCE                 16         16/16           100.0%       87.5%        ⚪
+KXWNBAGAME                     100        100/100         100.0%       88.0%        🟢
+KXKBLGAME                      53         53/53           100.0%       92.5%        🟢
+KXPICKLEBALLGAMES              30         30/30           100.0%       86.7%        🟡
+KXATPMAD                       29         29/29           100.0%       82.8%        🟡
+KXDOTA2GAME                    100        100/100         100.0%       80.0%        🟢
+KXATPAMT                       21         21/21           100.0%       57.1%        🟡
+KXVALORANTGAME                 100        100/100         100.0%       75.0%        🟢
+KXPPLGAMES                     15         15/15           100.0%       93.3%        ⚪
+KXEUROLEAGUEGAME               100        100/100         100.0%       93.0%        🟢
+KXATPMIA                       23         23/23           100.0%       82.6%        🟡
+KXLOLGAMES                     39         39/39           100.0%       87.2%        🟡
+KXFIBAECUPGAME                 23         23/23           100.0%       87.0%        🟡
+KXWOCURLGAME                   26         26/26           100.0%       80.8%        🟡
+KXSHLGAME                      56         56/56           100.0%       89.3%        🟢
+KXNCAAWBGAME                   100        100/100         100.0%       90.0%        🟢
+KXFOMEN                        100        99/100          99.0%        82.8%        🟢
+KXNFLGAME                      100        99/100          99.0%        99.0%        🟢
+KXNCAAMBGAME                   100        99/100          99.0%        98.0%        🟢
+KXNHLGAME                      100        99/100          99.0%        93.9%        🟢
+KXAHLGAME                      100        99/100          99.0%        85.9%        🟢
+KXR6GAME                       97         96/97           99.0%        76.0%        🟢
+KXNBLGAME                      81         80/81           98.8%        85.0%        🟢
+KXVALORANTMAP                  61         60/61           98.4%        85.0%        🟢
+KXUNITEDCUPMATCH               52         51/52           98.1%        90.2%        🟢
+KXCS2MAP                       100        98/100          98.0%        88.8%        🟢
+KXNBAGAME                      100        98/100          98.0%        100.0%       🟢
+KXATPIT                        46         45/46           97.8%        95.6%        🟡
+KXLNBELITEGAME                 43         42/43           97.7%        85.7%        🟡
+KXNCAAFGAME                    100        97/100          97.0%        99.0%        🟢
+KXCS2GAME                      100        97/100          97.0%        87.6%        🟢
+KXATPCHALLENGERMATCH           100        97/100          97.0%        93.8%        🟢
+KXBOXING                       27         26/27           96.3%        76.9%        🟡
+KXUNRIVALEDGAME                26         25/26           96.2%        76.0%        🟡
+KXWTAMATCH                     100        96/100          96.0%        96.9%        🟢
+KXMLBGAME                      100        96/100          96.0%        95.8%        🟢
+KXFOWOMEN                      100        96/100          96.0%        86.5%        🟢
+KXUFCMOV                       22         21/22           95.5%        9.5%         🟡
+KXR6MAP                        86         82/86           95.3%        87.8%        🟢
+KXATPMATCH                     100        95/100          95.0%        92.6%        🟢
+KXWTAATX                       19         18/19           94.7%        94.4%        ⚪
+KXCRICKETODIMATCH              16         15/16           93.8%        66.7%        ⚪
+KXATPSETWINNER                 100        92/100          92.0%        77.2%        🟢
+KXUFCMOF                       10         9/10            90.0%        22.2%        ⚪
+KXCRICKETT20IMATCH             68         61/68           89.7%        77.0%        🟢
+KXUFCFIGHT                     100        88/100          88.0%        89.8%        🟢
+KXCOUPEDEFRANCEGAME            24         21/24           87.5%        61.9%        🟡
+KXT20MATCH                     23         20/23           87.0%        95.0%        🟡
+KXUCLTOTAL                     67         57/67           85.1%        73.7%        🟢
+KXARGLNBGAME                   60         51/60           85.0%        82.4%        🟢
+KXDARTSMATCH                   100        84/100          84.0%        79.8%        🟢
+KXFACUPADVANCE                 32         26/32           81.2%        84.6%        🟡
+KXNFLPREPACK2ML                21         17/21           81.0%        76.5%        ⚪
+KXTACAPORTGAME                 13         10/13           76.9%        70.0%        ⚪
+KXEREDIVISIEGAME               67         51/67           76.1%        86.3%        🟢
+KXALEAGUEGAME                  67         51/67           76.1%        74.5%        🟢
+KXPGARYDERMATCH                29         22/29           75.9%        81.8%        🟡
+KXKNVBCUPGAME                  12         9/12            75.0%        100.0%       ⚪
+KXATPTOTALSETS                 82         60/82           73.2%        63.3%        🟢
+KXEPLTOTAL                     67         49/67           73.1%        65.3%        🟡
+KXLIGUE1GAME                   67         48/67           71.6%        97.9%        🟡
+KXLIGAMXGAME                   67         48/67           71.6%        77.1%        🟡
+KXARGPREMDIVGAME               65         46/65           70.8%        84.8%        🟡
+KXWTAMOA                       17         12/17           70.6%        83.3%        ⚪
+KXLIGUE1TOTAL                  64         45/64           70.3%        62.2%        🟡
+KXNCAAHOCKEYGAME               67         47/67           70.1%        78.7%        🟡
+KXCOPADELREYGAME               29         20/29           69.0%        75.0%        🟡
+KXMLSGAME                      67         46/67           68.7%        87.0%        🟡
+KXAFCONGAME                    51         35/51           68.6%        94.3%        🟡
+KXTENNISEXHIBITION             34         23/34           67.6%        78.3%        🟡
+KXBUNDESLIGATOTAL              64         43/64           67.2%        79.1%        🟡
+KXSERIEATOTAL                  64         43/64           67.2%        74.4%        🟡
+KXSAUDIPLGAME                  67         45/67           67.2%        88.9%        🟡
+KXEPLGAME                      67         45/67           67.2%        86.7%        🟡
+KXBRASILEIROGAME               67         45/67           67.2%        86.7%        🟡
+KXAFCCLGAME                    12         8/12            66.7%        100.0%       ⚪
+KXKLEAGUEGAME                  18         12/18           66.7%        58.3%        ⚪
+KXDFBPOKALGAME                 12         8/12            66.7%        87.5%        ⚪
+KXSWISSLEAGUEGAME              47         31/47           66.0%        80.6%        🟡
+KXSUPERLIGGAME                 67         44/67           65.7%        88.6%        🟡
+KXSCOTTISHPREMGAME             67         43/67           64.2%        97.7%        🟡
+KXNFLRSHYDS                    44         28/44           63.6%        32.1%        🟡
+KXBELGIANPLGAME                67         42/67           62.7%        90.5%        🟡
+KXFIFAGAME                     67         42/67           62.7%        95.2%        🟡
+KXUECLGAME                     67         42/67           62.7%        88.1%        🟡
+KXNFLPREPACKSGP                50         31/50           62.0%        87.1%        🟡
+KXLIGAPORTUGALGAME             67         41/67           61.2%        80.5%        🟡
+KXJLEAGUEGAME                  40         24/40           60.0%        70.8%        🟡
+KXLALIGAGAME                   67         40/67           59.7%        87.5%        🟡
+KXBUNDESLIGAGAME               67         40/67           59.7%        92.5%        🟡
+KXSERIEAGAME                   67         40/67           59.7%        85.0%        🟡
+KXFACUPGAME                    32         19/32           59.4%        94.7%        ⚪
+KXLALIGATOTAL                  64         38/64           59.4%        92.1%        🟡
+KXNFLRECYDS                    45         26/45           57.8%        46.2%        🟡
+KXNHLTOTAL                     40         23/40           57.5%        91.3%        🟡
+KXNBA2D                        56         32/56           57.1%        53.1%        🟡
+KXLOLTOTALMAPS                 100        57/100          57.0%        82.5%        🟢
+KXUELGAME                      67         38/67           56.7%        92.1%        🟡
+KXCLUBWCGAME                   62         35/62           56.5%        68.6%        🟡
+KXNFLPREPACK3ML                16         9/16            56.2%        77.8%        ⚪
+KXHNLGAME                      35         19/35           54.3%        78.9%        ⚪
+KXEFLCHAMPIONSHIPGAME          67         36/67           53.7%        91.7%        🟡
+KXSLGREECEGAME                 21         11/21           52.4%        100.0%       ⚪
+KXUCLGAME                      67         35/67           52.2%        91.4%        🟡
+KXCOPPAITALIAGAME              12         6/12            50.0%        66.7%        ⚪
+KXF1RACE                       10         5/10            50.0%        100.0%       ⚪
+KXNCAAMBTOTAL                  22         10/22           45.5%        80.0%        ⚪
+KXNBAAST                       44         20/44           45.5%        70.0%        🟡
+KXEKSTRAKLASAGAME              19         8/19            42.1%        87.5%        ⚪
+KXCS2TOTALMAPS                 100        42/100          42.0%        83.3%        🟡
+KXNHLSPREAD                    50         21/50           42.0%        81.0%        🟡
+KXNHLGOAL                      12         5/12            41.7%        100.0%       ⚪
+KXNCAAFPREPACKSGP              12         5/12            41.7%        60.0%        ⚪
+KXATPEXACTMATCH                34         14/34           41.2%        42.9%        ⚪
+KXNCAAFTOTAL                   22         9/22            40.9%        100.0%       ⚪
+KXNFLPASSTDS                   50         20/50           40.0%        60.0%        🟡
+KXPICKLEBALL                   15         6/15            40.0%        66.7%        ⚪
+KXNFLPREPACK                   20         8/20            40.0%        37.5%        ⚪
+KXNBAREB                       41         16/41           39.0%        81.2%        ⚪
+KXEFLCUPGAME                   16         6/16            37.5%        50.0%        ⚪
+KXNBAPTS                       51         19/51           37.3%        63.2%        ⚪
+KXNBATOTAL                     19         7/19            36.8%        71.4%        ⚪
+KXCFPSEED                      11         4/11            36.4%        50.0%        ⚪
+KXNBASTL                       67         24/67           35.8%        75.0%        🟡
+KXNFLREC                       40         14/40           35.0%        64.3%        ⚪
+KXNFLPASSYDS                   23         8/23            34.8%        50.0%        ⚪
+KXNFLTEAMTOTAL                 12         4/12            33.3%        0.0%         ⚪
+KXMLBSPREAD                    34         11/34           32.4%        90.9%        ⚪
+KXNCAAFSPREAD                  13         4/13            30.8%        75.0%        ⚪
+KXF1RACEPODIUM                 10         3/10            30.0%        33.3%        ⚪
+KXWOLUGE                       10         3/10            30.0%        0.0%         ⚪
+KXWOSSKATE                     10         3/10            30.0%        33.3%        ⚪
+KXNCAAMBSPREAD                 18         5/18            27.8%        60.0%        ⚪
+KXNFLSPREAD                    12         3/12            25.0%        66.7%        ⚪
+KXNBA3PT                       44         11/44           25.0%        90.9%        ⚪
+KXNBA3D                        100        25/100          25.0%        24.0%        🟡
+KXLIGUE1SPREAD                 50         12/50           24.0%        91.7%        ⚪
+KXUCLSPREAD                    51         12/51           23.5%        58.3%        ⚪
+KXNBASPREAD                    17         4/17            23.5%        100.0%       ⚪
+KXSERIEASPREAD                 50         11/50           22.0%        72.7%        ⚪
+KXBUNDESLIGASPREAD             50         11/50           22.0%        72.7%        ⚪
+KXNFLTOTAL                     21         4/21            19.0%        100.0%       ⚪
+KXLALIGASPREAD                 50         9/50            18.0%        66.7%        ⚪
+KXNBABLK                       67         12/67           17.9%        66.7%        ⚪
+KXMLBTOTAL                     17         3/17            17.6%        100.0%       ⚪
+KXEPLSPREAD                    50         8/50            16.0%        75.0%        ⚪
+KXNFLANYTD                     13         2/13            15.4%        0.0%         ⚪
+KXNFL2TD                       32         3/32            9.4%         66.7%        ⚪
+KXMVEGRAMMYS                   40         1/40            2.5%         0.0%         ⚪
+KXMVENFLMULTIGAMEEXTENDED      85         2/85            2.4%         0.0%         ⚪
+KXEPLGOAL                      100        2/100           2.0%         50.0%        ⚪
+KXNHLPTS                       67         1/67            1.5%         0.0%         ⚪
+KXUCLGOAL                      100        1/100           1.0%         100.0%       ⚪
+KXMVENFLSINGLEGAME             100        1/100           1.0%         0.0%         ⚪
+
+====================================================================================================
+📂 CLIMATE AND WEATHER
+====================================================================================================
+Series in category: 27
+Total events analyzed: 992
+Total events that crossed 90%: 312
+Average crossing rate: 31.5%
+
+Series with 50+ crossings: 1
+Series with 20+ crossings: 4
+Series with ANY crossings: 27
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXHIGHHOU                      34         26/34           76.5%        76.9%        🟡
+KXRAINNYCM                     24         17/24           70.8%        47.1%        ⚪
+KXRAINNYC                      100        56/100          56.0%        76.8%        🟢
+KXLOWTPHIL                     42         21/42           50.0%        95.2%        🟡
+KXTORNADO                      22         11/22           50.0%        72.7%        ⚪
+KXLOWTDEN                      35         17/35           48.6%        94.1%        ⚪
+KXHMONTHRANGE                  19         8/19            42.1%        62.5%        ⚪
+KXLOWTNYC                      34         14/34           41.2%        92.9%        ⚪
+KXLOWTAUS                      34         13/34           38.2%        84.6%        ⚪
+KXLOWTCHI                      48         16/48           33.3%        75.0%        ⚪
+KXHIGHDEN                      34         10/34           29.4%        80.0%        ⚪
+KXLOWTLAX                      34         9/34            26.5%        66.7%        ⚪
+KXRAINSEA                      100        26/100          26.0%        88.5%        🟡
+KXHIGHTSFO                     28         7/28            25.0%        71.4%        ⚪
+KXHIGHPHIL                     34         8/34            23.5%        75.0%        ⚪
+KXHIGHTNOLA                    28         6/28            21.4%        100.0%       ⚪
+KXHIGHCHI                      34         7/34            20.6%        42.9%        ⚪
+KXHIGHMIA                      34         6/34            17.6%        83.3%        ⚪
+KXHIGHAUS                      34         6/34            17.6%        66.7%        ⚪
+KXHURCAT                       40         7/40            17.5%        100.0%       ⚪
+KXHIGHLAX                      34         5/34            14.7%        60.0%        ⚪
+KXLOWTMIA                      34         5/34            14.7%        80.0%        ⚪
+KXSNOWNYM                      18         2/18            11.1%        50.0%        ⚪
+KXHIGHTLV                      28         3/28            10.7%        100.0%       ⚪
+KXHIGHTDC                      24         2/24            8.3%         50.0%        ⚪
+KXHIGHTSEA                     28         2/28            7.1%         0.0%         ⚪
+KXHIGHNY                       34         2/34            5.9%         50.0%        ⚪
+
+====================================================================================================
+📂 ECONOMICS
+====================================================================================================
+Series in category: 26
+Total events analyzed: 816
+Total events that crossed 90%: 240
+Average crossing rate: 29.4%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 4
+Series with ANY crossings: 26
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXGDP                          23         13/23           56.5%        84.6%        ⚪
+KXCPIUSEDCAR                   40         22/40           55.0%        90.9%        🟡
+KXPAYROLLS                     47         25/47           53.2%        88.0%        🟡
+KXADP                          21         11/21           52.4%        54.5%        ⚪
+KXBANKRUPTS                    20         9/20            45.0%        100.0%       ⚪
+KXOILW                         16         7/16            43.8%        71.4%        ⚪
+KXAAAGASW                      100        43/100          43.0%        81.4%        🟡
+KXARGINFLATIONM                19         8/19            42.1%        75.0%        ⚪
+KXCPI                          55         23/55           41.8%        91.3%        🟡
+KXPCECORE                      16         6/16            37.5%        66.7%        ⚪
+KXCPIYOY                       21         7/21            33.3%        85.7%        ⚪
+KXCPIGAS                       34         10/34           29.4%        100.0%       ⚪
+KXCPICOREYOY                   23         6/23            26.1%        66.7%        ⚪
+KXAAAGASM                      26         6/26            23.1%        50.0%        ⚪
+KXFRM                          40         9/40            22.5%        88.9%        ⚪
+KXGAS                          29         6/29            20.7%        33.3%        ⚪
+KXCPICORE                      30         5/30            16.7%        100.0%       ⚪
+KXFEDDECISION                  24         3/24            12.5%        66.7%        ⚪
+KXCPISHELTER                   17         2/17            11.8%        50.0%        ⚪
+KXFEAR                         18         2/18            11.1%        0.0%         ⚪
+KXCPIAPPAREL                   38         4/38            10.5%        75.0%        ⚪
+KXFED                          20         2/20            10.0%        100.0%       ⚪
+KXJOBLESSCLAIMS                22         2/22            9.1%         0.0%         ⚪
+KXJOBLESS                      69         6/69            8.7%         66.7%        ⚪
+KXCPIFOOD                      24         2/24            8.3%         100.0%       ⚪
+KXU3                           24         1/24            4.2%         0.0%         ⚪
+
+====================================================================================================
+📂 ENTERTAINMENT
+====================================================================================================
+Series in category: 20
+Total events analyzed: 335
+Total events that crossed 90%: 98
+Average crossing rate: 29.3%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 0
+Series with ANY crossings: 20
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXNETFLIXRANKMOVIE             15         9/15            60.0%        66.7%        ⚪
+KXNETFLIXRANKSHOWRUNNERUP      11         6/11            54.5%        66.7%        ⚪
+KXNETFLIXRANKSHOW              16         8/16            50.0%        100.0%       ⚪
+KXTOPSONG                      19         9/19            47.4%        77.8%        ⚪
+KXRANKLISTSONGTOP10            11         5/11            45.5%        100.0%       ⚪
+KXTOPALBUM                     19         8/19            42.1%        75.0%        ⚪
+KXDGAAWARDS                    12         5/12            41.7%        80.0%        ⚪
+KXNETFLIXRANKMOVIERUNNERUP     11         4/11            36.4%        50.0%        ⚪
+KXSPOTIFYGLOBALD               14         5/14            35.7%        0.0%         ⚪
+KXSPOTIFYW                     13         4/13            30.8%        75.0%        ⚪
+KXBILLBOARDRUNNERUPALBUM       19         5/19            26.3%        40.0%        ⚪
+KXAPPRANKFREE                  40         9/40            22.5%        77.8%        ⚪
+KXBILLBOARDRUNNERUPSONG        18         4/18            22.2%        50.0%        ⚪
+KXAPPRANKFREE2                 40         8/40            20.0%        50.0%        ⚪
+KXSURVIVORELIMINATION          11         2/11            18.2%        0.0%         ⚪
+KXSPOTIFY2D                    14         2/14            14.3%        0.0%         ⚪
+KXSPOTIFYALBUMW                14         2/14            14.3%        100.0%       ⚪
+KXSPOTIFYVIRALD                11         1/11            9.1%         0.0%         ⚪
+KXSPOTIFYD                     13         1/13            7.7%         100.0%       ⚪
+KXSPOTIFYARTISTD               14         1/14            7.1%         0.0%         ⚪
+
+====================================================================================================
+📂 MENTIONS
+====================================================================================================
+Series in category: 19
+Total events analyzed: 220
+Total events that crossed 90%: 158
+Average crossing rate: 71.8%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 0
+Series with ANY crossings: 19
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXHOCHULMENTION                11         11/11           100.0%       90.9%        ⚪
+KXNBAMENTION                   12         12/12           100.0%       100.0%       ⚪
+KXNCAAMENTION                  11         11/11           100.0%       81.8%        ⚪
+KXNCAABMENTION                 13         13/13           100.0%       61.5%        ⚪
+KXCOLBERTMENTION               12         10/12           83.3%        60.0%        ⚪
+KXCONGRESSMENTION              11         9/11            81.8%        88.9%        ⚪
+KXSTARMERMENTION               11         9/11            81.8%        33.3%        ⚪
+KXTRUMPMENTIONB                10         8/10            80.0%        87.5%        ⚪
+KXLATENIGHTMENTION             15         12/15           80.0%        41.7%        ⚪
+KXSNLMENTION                   11         8/11            72.7%        37.5%        ⚪
+KXMRBEASTMENTION               12         8/12            66.7%        75.0%        ⚪
+KXMAMDANIMENTION               14         9/14            64.3%        88.9%        ⚪
+KXNFLMENTION                   10         6/10            60.0%        100.0%       ⚪
+KXSURVIVORMENTION              12         7/12            58.3%        28.6%        ⚪
+KXVANCEMENTION                 11         6/11            54.5%        83.3%        ⚪
+KXKIMMELMENTION                14         7/14            50.0%        85.7%        ⚪
+KXTRUMPMENTION                 10         5/10            50.0%        100.0%       ⚪
+KXLEAVITTLATE                  10         5/10            50.0%        60.0%        ⚪
+KXLEAVITTMENTIONDURATION       10         2/10            20.0%        50.0%        ⚪
+
+====================================================================================================
+📂 FINANCIALS
+====================================================================================================
+Series in category: 11
+Total events analyzed: 349
+Total events that crossed 90%: 164
+Average crossing rate: 47.0%
+
+Series with 50+ crossings: 1
+Series with 20+ crossings: 2
+Series with ANY crossings: 11
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXEURO                         12         9/12            75.0%        77.8%        ⚪
+KXTNOTE                        18         13/18           72.2%        92.3%        ⚪
+KXINXZ                         100        54/100          54.0%        85.2%        🟢
+KXGBP                          23         12/23           52.2%        100.0%       ⚪
+KXEUROIMF                      21         10/21           47.6%        100.0%       ⚪
+KXGOLD                         19         9/19            47.4%        66.7%        ⚪
+KXTNOTEW                       14         6/14            42.9%        0.0%         ⚪
+KXNASDAQ100Z                   100        41/100          41.0%        95.1%        🟡
+KXEURUSD                       14         4/14            28.6%        25.0%        ⚪
+KXWTIW                         14         4/14            28.6%        25.0%        ⚪
+KXUSDJPY                       14         2/14            14.3%        100.0%       ⚪
+
+====================================================================================================
+📂 POLITICS
+====================================================================================================
+Series in category: 6
+Total events analyzed: 124
+Total events that crossed 90%: 21
+Average crossing rate: 16.9%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 0
+Series with ANY crossings: 6
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXLAGODAYS                     11         4/11            36.4%        100.0%       ⚪
+KX538APPROVEMIN                23         6/23            26.1%        66.7%        ⚪
+KXASYLUMCASES                  17         3/17            17.6%        33.3%        ⚪
+KXAPRPOTUS                     27         4/27            14.8%        75.0%        ⚪
+KX538APPROVEMAX                22         2/22            9.1%         0.0%         ⚪
+KX538APPROVE                   24         2/24            8.3%         50.0%        ⚪
+
+====================================================================================================
+📂 WORLD
+====================================================================================================
+Series in category: 4
+Total events analyzed: 187
+Total events that crossed 90%: 40
+Average crossing rate: 21.4%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 0
+Series with ANY crossings: 4
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXRAINNY                       29         13/29           44.8%        84.6%        ⚪
+KXFLIGHTORD                    53         15/53           28.3%        73.3%        ⚪
+KXFLIGHTJFK                    53         8/53            15.1%        87.5%        ⚪
+KXFLIGHTLAX                    52         4/52            7.7%         0.0%         ⚪
+
+====================================================================================================
+📂 CRYPTO
+====================================================================================================
+Series in category: 4
+Total events analyzed: 381
+Total events that crossed 90%: 203
+Average crossing rate: 53.3%
+
+Series with 50+ crossings: 3
+Series with 20+ crossings: 4
+Series with ANY crossings: 4
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXXRP15M                       81         50/81           61.7%        68.0%        🟢
+KXETH15M                       100        55/100          55.0%        87.3%        🟢
+KXSOL15M                       100        51/100          51.0%        86.3%        🟢
+KXBTC15M                       100        47/100          47.0%        95.7%        🟡
+
+====================================================================================================
+📂 HEALTH
+====================================================================================================
+Series in category: 4
+Total events analyzed: 215
+Total events that crossed 90%: 92
+Average crossing rate: 42.8%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 2
+Series with ANY crossings: 4
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXVAXX                         46         25/46           54.3%        84.0%        🟡
+KXBOOSTER                      29         14/29           48.3%        92.9%        ⚪
+KXCASEW                        40         19/40           47.5%        73.7%        ⚪
+KXCASED                        100        34/100          34.0%        91.2%        🟡
+
+====================================================================================================
+📂 SCIENCE AND TECHNOLOGY
+====================================================================================================
+Series in category: 3
+Total events analyzed: 44
+Total events that crossed 90%: 12
+Average crossing rate: 27.3%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 0
+Series with ANY crossings: 3
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXTOPMODEL                     18         8/18            44.4%        50.0%        ⚪
+KXLLM1                         16         3/16            18.8%        33.3%        ⚪
+KXTSAW                         10         1/10            10.0%        0.0%         ⚪
+
+====================================================================================================
+📂 TRANSPORTATION
+====================================================================================================
+Series in category: 2
+Total events analyzed: 126
+Total events that crossed 90%: 60
+Average crossing rate: 47.6%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 2
+Series with ANY crossings: 2
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXMTA                          47         25/47           53.2%        96.0%        🟡
+KXTSA                          79         35/79           44.3%        82.9%        🟡
+
+====================================================================================================
+📂 COMPANIES
+====================================================================================================
+Series in category: 1
+Total events analyzed: 10
+Total events that crossed 90%: 9
+Average crossing rate: 90.0%
+
+Series with 50+ crossings: 0
+Series with 20+ crossings: 0
+Series with ANY crossings: 1
+
+Series Ticker                  Events     Crossed         Cross %      Accuracy    
+----------------------------------------------------------------------------------------------------
+KXSPACEXSTARSHIP               10         9/10            90.0%        100.0%       ⚪
+
+====================================================================================================
+CATEGORY SUMMARY TABLE
+====================================================================================================
+
+Category                  Series     Events       Crossed      Cross %      50+ Series   20+ Series
+----------------------------------------------------------------------------------------------------
+Sports                    172        9025         6476         71.8%        45           107         
+Climate and Weather       27         992          312          31.5%        1            4           
+Economics                 26         816          240          29.4%        0            4           
+Entertainment             20         335          98           29.3%        0            0           
+Mentions                  19         220          158          71.8%        0            0           
+Financials                11         349          164          47.0%        1            2           
+Politics                  6          124          21           16.9%        0            0           
+World                     4          187          40           21.4%        0            0           
+Crypto                    4          381          203          53.3%        3            4           
+Health                    4          215          92           42.8%        0            2           
+Science and Technology    3          44           12           27.3%        0            0           
+Transportation            2          126          60           47.6%        0            2           
+Companies                 1          10           9            90.0%        0            0           
+
+====================================================================================================
+KEY:
+🟢 = 50+ crossings (reliable for trading)
+🟡 = 20-49 crossings (moderate data)
+⚪ = 1-19 crossings (insufficient data)
+🔴 = 0 crossings (never crossed 90%)
+====================================================================================================
