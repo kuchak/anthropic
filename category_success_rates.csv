@@ -1,0 +1,14 @@
+Rank,Category,Success Rate (%),Correct Predictions,Total Crossed 90%,Wrong Predictions
+1,Transportation,88.7,55,62,7
+2,Health,88.3,136,154,18
+3,Economics,87.6,937,1070,133
+4,Science and Technology,84.5,71,84,13
+5,Crypto,84.1,206,245,39
+6,Sports,82.0,8346,10172,1826
+7,World,80.9,93,115,22
+8,Climate and Weather,80.8,931,1152,221
+9,Mentions,74.2,1312,1769,457
+10,Politics,72.6,98,135,37
+11,Companies,71.8,28,39,11
+12,Financials,70.8,240,339,99
+13,Entertainment,58.7,259,441,182
