@@ -1,0 +1,52 @@
+# === Mode ===
+dry_run: true                    # true = paper trading, false = real money
+
+# === Kalshi API ===
+kalshi_api_base: "https://trading-api.kalshi.com/trade-api/v2"
+# Credentials should be in environment variables:
+#   KALSHI_EMAIL
+#   KALSHI_PASSWORD
+
+# === Scanning ===
+slow_scan_interval_minutes: 15   # Full market scan frequency
+fast_scan_interval_minutes: 3    # Watchlist price check frequency
+max_time_to_settlement_hours: 6  # Only consider markets settling within this window
+min_time_to_settlement_minutes: 5 # Ignore markets too close to settlement (avoid illiquidity)
+
+# === Market Filters ===
+approved_categories:             # Only trade in these market categories
+  - "economics"
+  - "financials"
+  - "weather"
+  - "sports"
+
+# === Scoring & Entry ===
+min_contract_price: 0.85         # Only consider contracts priced at 85¢+
+max_contract_price: 0.98         # Skip contracts above this (too little edge)
+min_model_accuracy: 0.90         # Minimum historical model accuracy for category
+scoring_formula: "expected_profit / time_to_settlement_hours"
+
+# === Model Accuracy by Category ===
+# These come from your backtesting results
+category_accuracy:
+  "economics": 0.93
+  "financials": 0.95
+  "weather": 0.94
+  "sports": 0.92
+
+# === Position Sizing ===
+starting_bankroll: 1000.00
+kelly_fraction: 0.5              # Half-Kelly (0.25 = quarter-Kelly)
+max_bet_pct_of_bankroll: 0.15    # Never risk more than 15% on a single bet
+max_total_exposure_pct: 0.70     # Never have more than 70% of bankroll in open positions
+min_bet_amount: 1.00             # Kalshi minimum
+
+# === Risk Management ===
+max_daily_loss: 100.00           # Stop trading if daily losses exceed this
+max_consecutive_losses: 5        # Pause and alert after N consecutive losses
+max_trades_per_day: 50           # Circuit breaker
+
+# === Rate Limiting ===
+api_requests_per_second: 2       # Stay well under Kalshi's rate limits
+retry_max_attempts: 3
+retry_backoff_seconds: 2
