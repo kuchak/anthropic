@@ -35,6 +35,12 @@ max_contract_price: 0.98         # Skip contracts above this (too little edge)
 min_model_accuracy: 0.90         # Minimum historical model accuracy for category
 scoring_formula: "expected_profit / time_to_settlement_hours"
 
+# === Kalshi Fees ===
+kalshi_fee_rate: 0.07            # 7% taker fee (market orders)
+                                  # Note: Limit orders qualify for lower maker fees (~3.5%)
+                                  # Fee formula: ceil(fee_rate × contracts × price × (1 - price))
+                                  # Scorer subtracts estimated fees from expected profit
+
 # === Model Accuracy by Category ===
 # These come from your backtesting results
 category_accuracy:

@@ -167,18 +167,27 @@ class Allocator:
             position_size_dollars = available_capital
             reasoning = "Limited by available capital"
 
-        # Check minimum position size
-        if position_size_dollars < self.min_position_size_dollars:
-            return None
-
         # Calculate number of contracts
         # Each contract costs entry_price
         num_contracts = int(position_size_dollars / entry_price)
 
-        # Adjust position size to actual contract count
-        actual_position_size = num_contracts * entry_price
-
+        # CRITICAL: Enforce minimum bet of 1 contract ($1.00)
+        # If Kelly sizing produces less than 1 contract, round up to 1
+        # This ensures we can participate in high-quality opportunities
+        # even if Kelly suggests a tiny position
         if num_contracts < 1:
+            # Check if we can afford 1 contract
+            if entry_price <= available_capital and entry_price <= self.current_balance * self.max_position_size_pct:
+                num_contracts = 1
+                reasoning = "Rounded up to 1 contract minimum"
+                logger.debug(f"  {opportunity.market.ticker}: Kelly suggested <1 contract, rounding up to 1")
+            else:
+                # Can't afford even 1 contract
+                return None
+
+        # Check minimum position size (should be at least $1 now)
+        actual_position_size = num_contracts * entry_price
+        if actual_position_size < 1.0:
             return None
 
         return PositionAllocation(

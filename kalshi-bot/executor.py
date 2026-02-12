@@ -60,11 +60,18 @@ class Executor:
     - Dry-run: Simulates trades without API calls (default)
     - Live: Actually places orders on Kalshi
 
+    Order Type:
+    - Uses LIMIT orders (not market orders)
+    - Limit orders qualify for MAKER fees (lower than taker fees)
+    - Kalshi maker fees: ~3.5% vs taker fees: ~7%
+    - Limit price set at current ask to fill immediately
+
     Safety features:
     - Requires explicit live mode activation
     - Validates orders before submission
     - Tracks execution history
     - Handles API errors gracefully
+    - Slippage protection (max 2%)
     """
 
     def __init__(self, client: KalshiClient, config: Dict[str, Any], dry_run: bool = True):
@@ -183,7 +190,9 @@ class Executor:
             if slippage > self.max_slippage_pct:
                 raise Exception(f"Slippage too high: {slippage * 100:.1f}% > {self.max_slippage_pct * 100:.1f}%")
 
-            # Place order
+            # Place LIMIT order (not market order)
+            # Limit orders get MAKER fees (~3.5%) instead of TAKER fees (~7%)
+            # We set limit price at current ask to fill immediately while qualifying for maker fees
             order_response = self.client.place_order(
                 ticker=ticker,
                 side=side,

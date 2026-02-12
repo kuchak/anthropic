@@ -1,9 +1,10 @@
 """
 Opportunity Scorer
-Ranks trading opportunities by expected profit
+Ranks trading opportunities by expected profit (after fees)
 """
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
+import math
 from logger_setup import get_logger
 from models import Market
 
@@ -20,10 +21,11 @@ class ScoredOpportunity:
         side: "YES" or "NO" - which side to buy
         entry_price: Price we'd pay to enter
         win_probability: Our estimated probability of winning (from backtests)
-        expected_profit: Expected profit per contract
-        expected_roi: Expected return on investment (%)
+        expected_profit: Expected profit per contract (AFTER FEES)
+        expected_roi: Expected return on investment (%) (AFTER FEES)
         rank_score: Final ranking score (higher = better)
         time_to_settlement_hours: Hours until settlement
+        estimated_fee_per_contract: Kalshi's estimated fee per contract
     """
     market: Market
     side: str
@@ -33,6 +35,7 @@ class ScoredOpportunity:
     expected_roi: float
     rank_score: float
     time_to_settlement_hours: float
+    estimated_fee_per_contract: float
 
     def __repr__(self) -> str:
         return (
@@ -51,14 +54,18 @@ class Scorer:
 
     Uses backtest accuracy data to calculate:
     - Win probability
-    - Expected profit
-    - Expected ROI
+    - Expected profit (AFTER FEES)
+    - Expected ROI (AFTER FEES)
     - Rank score
 
     Key insight from backtests:
     - 85-89¢ contracts: 91.2% accuracy (11 wins, 1 loss, 91.7% avg profit)
     - 90-95¢ contracts: 89.4% accuracy (84/94 wins, 89.4% avg profit)
     - Overall 85-98¢: ~90% accuracy
+
+    Kalshi Fees (Market taker):
+    - Fee = ceil(7% × contracts × price × (1 - price))
+    - Lower for market makers (limit orders)
     """
 
     def __init__(self, config: Dict[str, Any]):
@@ -68,9 +75,34 @@ class Scorer:
         self.accuracy_by_price_range = config.get('accuracy_by_price_range', {})
         self.default_accuracy = config.get('default_accuracy', 0.90)
 
+        # Fee configuration
+        self.fee_rate = config.get('kalshi_fee_rate', 0.07)  # 7% for takers
+
         logger.info("Scorer initialized")
         logger.info(f"  Default accuracy: {self.default_accuracy * 100:.1f}%")
         logger.info(f"  Price range accuracies: {len(self.accuracy_by_price_range)} ranges configured")
+        logger.info(f"  Kalshi fee rate: {self.fee_rate * 100:.1f}% (taker)")
+
+    @staticmethod
+    def calculate_fee_per_contract(price: float, fee_rate: float = 0.07) -> float:
+        """
+        Calculate Kalshi's fee per contract
+
+        Formula: fee = ceil(fee_rate × price × (1 - price))
+
+        This is for TAKER orders (market orders).
+        MAKER orders (limit orders) have lower fees.
+
+        Args:
+            price: Contract price (0.0 - 1.0)
+            fee_rate: Fee rate (default 7% for takers)
+
+        Returns:
+            Fee per contract in dollars
+        """
+        fee = fee_rate * price * (1.0 - price)
+        # Round up to nearest cent
+        return math.ceil(fee * 100) / 100
 
     def score_markets(self, markets: List[Market]) -> List[ScoredOpportunity]:
         """
@@ -89,7 +121,7 @@ class Scorer:
             yes_opp = self._score_market_side(market, "YES")
             no_opp = self._score_market_side(market, "NO")
 
-            # Add valid opportunities
+            # Add valid opportunities (must have positive ROI AFTER fees)
             if yes_opp and yes_opp.expected_roi > 0:
                 opportunities.append(yes_opp)
 
@@ -124,12 +156,15 @@ class Scorer:
         # Calculate win probability based on price range
         win_probability = self._get_win_probability(entry_price)
 
-        # Calculate expected profit
-        # Win: Profit = $1.00 - entry_price
-        # Loss: Loss = entry_price
+        # Calculate Kalshi fees (per contract)
+        fee_per_contract = self.calculate_fee_per_contract(entry_price, self.fee_rate)
+
+        # Calculate expected profit AFTER FEES
+        # Win: Profit = $1.00 - entry_price - fee
+        # Loss: Loss = entry_price + fee
         # Expected profit = P(win) * profit - P(loss) * loss
-        profit_if_win = 1.0 - entry_price
-        loss_if_loss = entry_price
+        profit_if_win = 1.0 - entry_price - fee_per_contract
+        loss_if_loss = entry_price + fee_per_contract
 
         expected_profit = (win_probability * profit_if_win) - ((1 - win_probability) * loss_if_loss)
         expected_roi = (expected_profit / entry_price) * 100 if entry_price > 0 else 0
@@ -167,7 +202,8 @@ class Scorer:
             expected_profit=expected_profit,
             expected_roi=expected_roi,
             rank_score=rank_score,
-            time_to_settlement_hours=time_to_settlement_hours
+            time_to_settlement_hours=time_to_settlement_hours,
+            estimated_fee_per_contract=fee_per_contract
         )
 
     def _get_win_probability(self, price: float) -> float:
