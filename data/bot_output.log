@@ -1,0 +1,7 @@
+
+❌ Error: API credentials not configured
+
+Please set environment variables:
+  export KALSHI_API_KEY_ID='your-key-id'
+  export KALSHI_PRIVATE_KEY_PATH='/path/to/private_key.pem'
+
