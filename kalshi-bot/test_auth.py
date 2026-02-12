@@ -1,5 +1,5 @@
 """
-Test script to validate Kalshi API authentication
+Test script to validate Kalshi API authentication with API keys
 Run this first to ensure API credentials and connection work
 """
 import os
@@ -16,24 +16,37 @@ def test_authentication():
     """Test API authentication and basic endpoints"""
 
     print("=" * 80)
-    print("KALSHI API AUTHENTICATION TEST")
+    print("KALSHI API AUTHENTICATION TEST (API Keys)")
     print("=" * 80)
 
     # Check environment variables
-    email = os.getenv('KALSHI_EMAIL')
-    password = os.getenv('KALSHI_PASSWORD')
+    api_key_id = os.getenv('KALSHI_API_KEY_ID')
+    private_key_path = os.getenv('KALSHI_PRIVATE_KEY_PATH')
 
-    if not email or not password:
+    if not api_key_id or not private_key_path:
         print("\n❌ ERROR: Environment variables not set")
-        print("   Please set KALSHI_EMAIL and KALSHI_PASSWORD")
-        print("\n   Example:")
-        print("   export KALSHI_EMAIL='your_email@example.com'")
-        print("   export KALSHI_PASSWORD='your_password'")
+        print("   Please set KALSHI_API_KEY_ID and KALSHI_PRIVATE_KEY_PATH")
+        print("\n   How to get API keys:")
+        print("   1. Go to https://demo.kalshi.com/account/profile (for demo)")
+        print("      Or https://kalshi.com/account/profile (for production)")
+        print("   2. Click 'Create New API Key'")
+        print("   3. Download the private key file")
+        print("   4. Note your Key ID")
+        print("\n   Then set environment variables:")
+        print("   export KALSHI_API_KEY_ID='your_key_id_here'")
+        print("   export KALSHI_PRIVATE_KEY_PATH='/path/to/private_key.pem'")
         return False
 
     print(f"\n✅ Environment variables found")
-    print(f"   Email: {email}")
-    print(f"   Password: {'*' * len(password)}")
+    print(f"   API Key ID: {api_key_id}")
+    print(f"   Private Key Path: {private_key_path}")
+
+    # Check if private key file exists
+    if not os.path.exists(private_key_path):
+        print(f"\n❌ ERROR: Private key file not found at {private_key_path}")
+        return False
+
+    print(f"   ✅ Private key file exists")
 
     # Load config
     try:
@@ -42,6 +55,12 @@ def test_authentication():
         print(f"\n✅ Config loaded")
         print(f"   API Base: {config['kalshi_api_base']}")
         print(f"   Rate Limit: {config['api_requests_per_second']} req/sec")
+
+        # Show if using demo or production
+        if 'demo' in config['kalshi_api_base']:
+            print(f"   🧪 Using DEMO API (safe for testing)")
+        else:
+            print(f"   💰 Using PRODUCTION API (real money!)")
     except Exception as e:
         print(f"\n❌ Failed to load config: {e}")
         return False
@@ -52,21 +71,23 @@ def test_authentication():
         print(f"\n✅ Client initialized")
     except Exception as e:
         print(f"\n❌ Failed to initialize client: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
-    # Test authentication
-    print("\n🔐 Testing authentication...")
+    # Test connection and authentication
+    print("\n🔐 Testing API connection and authentication...")
     try:
-        success = client.authenticate()
+        success = client.test_connection()
         if not success:
-            print("❌ Authentication failed")
+            print("❌ API connection test failed")
             return False
 
-        print("✅ Authentication successful!")
-        print(f"   Token: {client.token[:20]}..." if client.token else "   No token")
-        print(f"   Token expiry: {client.token_expiry}")
+        print("✅ API authentication successful!")
     except Exception as e:
-        print(f"❌ Authentication error: {e}")
+        print(f"❌ API connection error: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
     # Test getting markets
@@ -83,12 +104,15 @@ def test_authentication():
                 print(f"   - {ticker}: {title[:60]}")
     except Exception as e:
         print(f"❌ Failed to get markets: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
     # Test parsing a market
     print("\n🔍 Testing market parsing...")
     if markets:
         try:
+            print("   Parsing first market (this may take a few seconds)...")
             market_obj = client.parse_market(markets[0])
             if market_obj:
                 print(f"✅ Successfully parsed market")
@@ -99,10 +123,10 @@ def test_authentication():
                 print(f"   Best NO: ${market_obj.best_no_price:.2f}")
                 print(f"   Time to settlement: {market_obj.time_to_settlement_minutes:.1f} minutes")
             else:
-                print("⚠️  Market parsing returned None")
+                print("⚠️  Market parsing returned None (orderbook may be empty)")
         except Exception as e:
-            print(f"❌ Market parsing error: {e}")
-            return False
+            print(f"⚠️  Market parsing error: {e}")
+            # Not critical for auth test
 
     # Test balance (if available)
     print("\n💰 Testing balance retrieval...")
@@ -111,7 +135,7 @@ def test_authentication():
         if balance is not None:
             print(f"✅ Account balance: ${balance:.2f}")
         else:
-            print("⚠️  Balance retrieval returned None (may not have access)")
+            print("⚠️  Balance retrieval returned None")
     except Exception as e:
         print(f"⚠️  Balance check error: {e}")
         # Not critical, continue

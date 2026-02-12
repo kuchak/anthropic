@@ -2,10 +2,18 @@
 dry_run: true                    # true = paper trading, false = real money
 
 # === Kalshi API ===
-kalshi_api_base: "https://trading-api.kalshi.com/trade-api/v2"
-# Credentials should be in environment variables:
-#   KALSHI_EMAIL
-#   KALSHI_PASSWORD
+# Production: https://trading-api.kalshi.com/trade-api/v2
+# Demo: https://demo-api.kalshi.co/trade-api/v2
+kalshi_api_base: "https://demo-api.kalshi.co/trade-api/v2"
+
+# API Key Authentication (required):
+# Get your API keys at:
+#   Production: https://kalshi.com/account/profile
+#   Demo: https://demo.kalshi.com/account/profile
+#
+# Set these environment variables:
+#   KALSHI_API_KEY_ID="your_key_id"
+#   KALSHI_PRIVATE_KEY_PATH="/path/to/your/private_key.pem"
 
 # === Scanning ===
 slow_scan_interval_minutes: 15   # Full market scan frequency

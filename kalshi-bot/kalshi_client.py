@@ -1,13 +1,17 @@
 """
 Kalshi API Client
-Handles authentication, rate limiting, retries, and all API interactions
+Handles API key authentication with RSA signing, rate limiting, retries, and all API interactions
 """
 import os
 import time
+import base64
 import requests
 from typing import Optional, Dict, Any, List
-from datetime import datetime, timedelta
+from datetime import datetime
 from dateutil.parser import parse as parse_datetime
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.backends import default_backend
 from logger_setup import get_logger
 from models import Market
 
@@ -34,20 +38,36 @@ class RateLimiter:
 
 class KalshiClient:
     """
-    Kalshi API v2 client with authentication, rate limiting, and retry logic
+    Kalshi API v2 client with RSA API key authentication, rate limiting, and retry logic
     """
 
     def __init__(self, config: Dict[str, Any]):
         self.base_url = config['kalshi_api_base']
-        self.email = os.getenv('KALSHI_EMAIL')
-        self.password = os.getenv('KALSHI_PASSWORD')
 
-        if not self.email or not self.password:
-            raise ValueError("KALSHI_EMAIL and KALSHI_PASSWORD environment variables must be set")
+        # API Key authentication
+        self.api_key_id = os.getenv('KALSHI_API_KEY_ID')
+        private_key_path = os.getenv('KALSHI_PRIVATE_KEY_PATH')
+
+        if not self.api_key_id or not private_key_path:
+            raise ValueError(
+                "KALSHI_API_KEY_ID and KALSHI_PRIVATE_KEY_PATH environment variables must be set\n"
+                "Get your API keys at: https://kalshi.com/account/profile\n"
+                "Or use demo: https://demo.kalshi.com/account/profile"
+            )
+
+        # Load private key
+        try:
+            with open(private_key_path, 'rb') as key_file:
+                self.private_key = serialization.load_pem_private_key(
+                    key_file.read(),
+                    password=None,
+                    backend=default_backend()
+                )
+            logger.info(f"✅ Loaded private key from {private_key_path}")
+        except Exception as e:
+            raise ValueError(f"Failed to load private key: {e}")
 
         self.session = requests.Session()
-        self.token: Optional[str] = None
-        self.token_expiry: Optional[datetime] = None
 
         # Rate limiting
         self.rate_limiter = RateLimiter(config['api_requests_per_second'])
@@ -57,59 +77,61 @@ class KalshiClient:
         self.retry_backoff = config['retry_backoff_seconds']
 
         logger.info(f"Kalshi client initialized. Base URL: {self.base_url}")
+        logger.info(f"API Key ID: {self.api_key_id}")
 
-    def authenticate(self) -> bool:
+    def _generate_signature(self, timestamp_ms: str, method: str, path: str) -> str:
         """
-        Authenticate with Kalshi API and store auth token
-        Returns True if successful, False otherwise
+        Generate RSA-PSS signature for API request
+
+        Args:
+            timestamp_ms: Request timestamp in milliseconds
+            method: HTTP method (GET, POST, etc.)
+            path: API path WITHOUT query parameters
+
+        Returns:
+            Base64-encoded signature
         """
-        try:
-            logger.info(f"Authenticating with Kalshi API as {self.email}")
+        # Message to sign: timestamp + method + path
+        message = timestamp_ms + method + path
+        message_bytes = message.encode('utf-8')
 
-            url = f"{self.base_url}/login"
-            payload = {
-                "email": self.email,
-                "password": self.password
-            }
+        # Sign with RSA-PSS
+        signature = self.private_key.sign(
+            message_bytes,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.DIGEST_LENGTH
+            ),
+            hashes.SHA256()
+        )
 
-            response = self.session.post(url, json=payload, timeout=10)
-            response.raise_for_status()
+        # Encode to base64
+        return base64.b64encode(signature).decode('utf-8')
 
-            data = response.json()
-            self.token = data.get('token')
+    def _get_signed_headers(self, method: str, path: str) -> Dict[str, str]:
+        """
+        Generate signed authentication headers
 
-            if not self.token:
-                logger.error("Authentication failed: No token in response")
-                return False
+        Args:
+            method: HTTP method
+            path: API path WITHOUT query parameters
 
-            # Kalshi tokens typically expire in 24 hours
-            self.token_expiry = datetime.utcnow() + timedelta(hours=23)
+        Returns:
+            Dictionary of authentication headers
+        """
+        # Timestamp in milliseconds
+        timestamp_ms = str(int(time.time() * 1000))
 
-            # Set auth header for future requests
-            self.session.headers.update({
-                'Authorization': f'Bearer {self.token}'
-            })
+        # Generate signature
+        signature = self._generate_signature(timestamp_ms, method, path)
 
-            logger.info("✅ Authentication successful")
-            return True
-
-        except requests.exceptions.RequestException as e:
-            logger.error(f"❌ Authentication failed: {e}")
-            return False
-
-    def _is_token_valid(self) -> bool:
-        """Check if current token is still valid"""
-        if not self.token or not self.token_expiry:
-            return False
-        # Refresh if less than 1 hour remaining
-        return datetime.utcnow() < (self.token_expiry - timedelta(hours=1))
-
-    def _ensure_authenticated(self):
-        """Ensure we have a valid auth token, refresh if needed"""
-        if not self._is_token_valid():
-            logger.info("Token expired or missing, re-authenticating...")
-            if not self.authenticate():
-                raise Exception("Failed to authenticate with Kalshi API")
+        return {
+            'KALSHI-ACCESS-KEY': self.api_key_id,
+            'KALSHI-ACCESS-TIMESTAMP': timestamp_ms,
+            'KALSHI-ACCESS-SIGNATURE': signature,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
 
     def _request(
         self,
@@ -121,17 +143,37 @@ class KalshiClient:
     ) -> Dict[str, Any]:
         """
         Make authenticated API request with rate limiting and retry logic
+
+        Args:
+            method: HTTP method
+            endpoint: API endpoint (e.g., '/markets')
+            params: Query parameters
+            json_data: JSON body for POST requests
+            retry_count: Current retry attempt
+
+        Returns:
+            Response JSON
         """
-        self._ensure_authenticated()
         self.rate_limiter.wait_if_needed()
 
+        # Full path for signing (without query params)
+        path = endpoint
+        if not path.startswith('/trade-api/v2'):
+            path = f"/trade-api/v2{endpoint}"
+
+        # Generate signed headers
+        headers = self._get_signed_headers(method, path)
+
+        # Full URL
         url = f"{self.base_url}{endpoint}"
 
         try:
             if method == "GET":
-                response = self.session.get(url, params=params, timeout=10)
+                response = self.session.get(url, params=params, headers=headers, timeout=10)
             elif method == "POST":
-                response = self.session.post(url, json=json_data, timeout=10)
+                response = self.session.post(url, json=json_data, headers=headers, timeout=10)
+            elif method == "DELETE":
+                response = self.session.delete(url, headers=headers, timeout=10)
             else:
                 raise ValueError(f"Unsupported HTTP method: {method}")
 
@@ -168,6 +210,26 @@ class KalshiClient:
                 logger.error(f"Request failed after {self.max_retries} retries: {e}")
                 raise
 
+    def test_connection(self) -> bool:
+        """
+        Test API connection and authentication
+
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            logger.info("Testing API connection and authentication...")
+            response = self._request('GET', '/exchange/status')
+            if response.get('exchange_active'):
+                logger.info("✅ API connection and authentication successful")
+                return True
+            else:
+                logger.warning("⚠️  API connected but exchange not active")
+                return False
+        except Exception as e:
+            logger.error(f"❌ API connection failed: {e}")
+            return False
+
     def get_markets(
         self,
         status: Optional[str] = None,
@@ -179,7 +241,7 @@ class KalshiClient:
 
         Args:
             status: Filter by status (e.g., 'open', 'closed', 'settled')
-            category: Filter by category
+            category: Filter by series ticker
             limit: Max number of markets to return
 
         Returns:
