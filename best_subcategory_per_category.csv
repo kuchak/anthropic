@@ -1,0 +1,14 @@
+Category,Category Overall Rate (%),Best Subcategory,Series Ticker,Subcategory Rate (%),Correct,Total,Improvement (%)
+Economics,87.6,Fed funds rate,KXFEDDECISION,100.0,33,33,12.4
+Financials,70.8,EUR/USD,KXEURUSD,100.0,27,27,29.2
+Sports,82.0,Pro Basketball Player Rebounds,KXNBABLK,100.0,55,55,18.0
+Climate and Weather,80.8,Lowest temperature in Miami,KXLOWTMIA,96.9,31,32,16.1
+Transportation,88.7,NYC subway riders,KXMTA,96.2,25,26,7.5
+Mentions,74.2,NFL Mention,KXNFLMENTION,93.6,103,110,19.4
+Health,88.3,COVID daily cases,KXCASED,91.8,78,85,3.5
+Crypto,84.1,Bitcoin price up down,KXBTC15M,92.7,51,55,8.6
+Politics,72.6,Biden 538 lowest approval rating,KX538APPROVEMIN,87.5,21,24,14.9
+Entertainment,58.7,Billboard Hot 100 Top 10,KXBILLBOARDSONGTOP10,90.6,29,32,31.9
+Science and Technology,84.5,TSA check-ins this week,KXTSAW,88.9,40,45,4.4
+World,80.9,JFK Airport delays/cancellations,KXFLIGHTJFK,87.5,28,32,6.6
+Companies,71.8,SpaceX Starship launch,KXSPACEXSTARSHIP,71.8,28,39,0.0

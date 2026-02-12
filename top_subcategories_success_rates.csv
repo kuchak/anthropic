@@ -1,0 +1,31 @@
+Rank,Category,Subcategory,Series Ticker,Success Rate (%),Correct,Total Crossed 90%,Wrong
+1,Economics,Fed funds rate,KXFEDDECISION,100.0,33,33,0
+2,Financials,EUR/USD,KXEURUSD,100.0,27,27,0
+3,Financials,British Pound/US Dollar exchange rate,KXGBP,100.0,32,32,0
+4,Sports,Pro Basketball Player Rebounds,KXNBABLK,100.0,55,55,0
+5,Sports,Men's College Basketball Men's Game,KXNCAAMBSPREAD,100.0,20,20,0
+6,Sports,Pro Basketball Spread,KXNBASTL,100.0,39,39,0
+7,Sports,Professional Basketball Game,KXNBAGAME,100.0,97,97,0
+8,Sports,College Football Game,KXNCAAFGAME,99.0,100,101,1
+9,Sports,Professional Football Game,KXNFLGAME,99.0,100,101,1
+10,Climate and Weather,Lowest temperature in Miami,KXLOWTMIA,96.9,31,32,1
+11,Sports,Scottish Premiership Game,KXSCOTTISHPREMGAME,96.6,57,59,2
+12,Financials,Nasdaq up,KXNASDAQ100Z,96.5,55,57,2
+13,Transportation,NYC subway riders,KXMTA,96.2,25,26,1
+14,Economics,CPI on gas,KXAAAGASW,95.8,46,48,2
+15,Sports,WTA Tennis Match,KXWTAMATCH,95.8,91,95,4
+16,Economics,US gas price,KXGASW,95.7,66,69,3
+17,Economics,CPI on used cars,KXCPIUSEDCARS,95.5,42,44,2
+18,Sports,Ligue 1 Game,KXLIGUE1GAME,95.1,58,61,3
+19,Sports,Professional Baseball Game,KXMLBGAME,95.0,96,101,5
+20,Sports,T20 Match,KXCRICKETT20IMATCH,95.0,19,20,1
+21,Economics,Companies going bankrupt,KXFRM,94.1,48,51,3
+22,Sports,FA Cup Game,KXFACUPGAME,94.1,32,34,2
+23,Sports,ATP Tennis Match,KXATPMATCH,94.1,80,85,5
+24,Sports,College Football Total Points,KXNCAAFTOTAL,94.1,112,119,7
+25,Sports,Challenger ATP,KXATPCHALLENGERMATCH,94.1,80,85,5
+26,Sports,Pro Basketball Player Threes,KXNBA3PT,94.0,47,50,3
+27,Climate and Weather,Total snow in NYC,KXSNOWNYM,93.9,31,33,2
+28,Sports,Euroleague Game,KXEUROLEGAME,93.8,90,96,6
+29,Mentions,NFL Mention,KXNFLMENTION,93.6,103,110,7
+30,Sports,NHL Game,KXNHLGAME,93.4,99,106,7
