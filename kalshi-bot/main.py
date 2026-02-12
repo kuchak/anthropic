@@ -87,7 +87,7 @@ class TradingBot:
             logger.info(f"✅ Balance: ${self.balance:.2f}")
         else:
             # Use simulated balance for dry-run or if API fails
-            self.balance = config.get('simulated_balance', 1000.0)
+            self.balance = config.get('starting_bankroll', 1000.0)
             logger.info(f"✅ Using simulated balance: ${self.balance:.2f}")
 
         # Allocator

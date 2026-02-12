@@ -73,7 +73,7 @@ category_accuracy:
 category_accuracy_threshold: 0.95  # Use category accuracy if below this threshold
 
 # === Position Sizing ===
-starting_bankroll: 1000.00
+starting_bankroll: 10000.00
 kelly_fraction: 0.5              # Half-Kelly (0.25 = quarter-Kelly)
 max_bet_pct_of_bankroll: 0.15    # Never risk more than 15% on a single bet
 max_total_exposure_pct: 0.70     # Never have more than 70% of bankroll in open positions
