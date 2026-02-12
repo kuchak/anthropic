@@ -2,3 +2,10 @@
 # Environment files with credentials
 *.env
 .env
+*.pem
+kalshi_private_key.pem
+
+# Runtime logs and data
+data/
+*.log
+kalshi-bot/*.log
