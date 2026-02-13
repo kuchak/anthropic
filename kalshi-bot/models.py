@@ -37,7 +37,8 @@ class Market:
     @property
     def time_to_settlement_minutes(self) -> float:
         """Calculate minutes until settlement"""
-        now = datetime.utcnow()
+        from datetime import timezone
+        now = datetime.now(timezone.utc)
         if self.settlement_time <= now:
             return 0.0
         delta = self.settlement_time - now
