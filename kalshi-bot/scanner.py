@@ -158,6 +158,18 @@ class Scanner:
         logger.info(f"    No volume (volume_24h = 0): {filter_stats['not_live']}")
         logger.info(f"    ✅ PASSED: {filter_stats['passed']}")
 
+        # Also print to stdout for debugging
+        print(f"\n🔍 SCANNER FILTER BREAKDOWN:")
+        print(f"  Total markets from API: {filter_stats['total']}")
+        print(f"  Already have positions: {filter_stats['existing_position']}")
+        print(f"  Parse failed: {filter_stats['parse_failed']}")
+        print(f"  Not in whitelist: {filter_stats['not_whitelisted']}")
+        print(f"  Wrong price (not 90-93¢): {filter_stats['wrong_price']}")
+        print(f"  Wrong settlement time: {filter_stats['wrong_settlement']}")
+        print(f"  Wrong status (not open): {filter_stats['wrong_status']}")
+        print(f"  No volume (volume_24h = 0): {filter_stats['not_live']}")
+        print(f"  ✅ PASSED ALL FILTERS: {filter_stats['passed']}\n")
+
         return len(self.watchlist)
 
     def fast_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
