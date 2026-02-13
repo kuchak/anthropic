@@ -43,7 +43,7 @@ class Scanner:
             logger.info(f"  NO CATEGORY FILTERING - evaluating ALL markets")
 
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
-        logger.info(f"  Settlement window: {config['min_time_to_settlement_minutes']}m - {config['max_time_to_settlement_hours']}h")
+        logger.info(f"  Volume filter: volume_24h > 0 (no time filters)")
 
     def slow_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
         """
@@ -155,7 +155,7 @@ class Scanner:
         logger.info(f"    Wrong price: {filter_stats['wrong_price']}")
         logger.info(f"    Wrong settlement time: {filter_stats['wrong_settlement']}")
         logger.info(f"    Wrong status: {filter_stats['wrong_status']}")
-        logger.info(f"    Not live (no volume or >6h away): {filter_stats['not_live']}")
+        logger.info(f"    No volume (volume_24h = 0): {filter_stats['not_live']}")
         logger.info(f"    ✅ PASSED: {filter_stats['passed']}")
 
         return len(self.watchlist)
@@ -366,14 +366,11 @@ class Scanner:
             filter_stats['wrong_status'] += 1
             return False
 
-        # Check if market is LIVE (event happening now)
-        # Proxy: close_time within 6 hours AND volume_24h > 0
-        time_to_close_hours = time_to_settlement_minutes / 60
-        is_live = (time_to_close_hours <= 6.0) and (market.volume_24h > 0)
-
-        if not is_live:
+        # Check if market has active trading (volume_24h > 0)
+        # NO TIME FILTERS - Kalshi's close_time is the outer deadline, not when event ends
+        if market.volume_24h <= 0:
             filter_stats['not_live'] += 1
-            return False  # Not a live market (future event or no active trading)
+            return False  # No active trading
 
         return True
 
