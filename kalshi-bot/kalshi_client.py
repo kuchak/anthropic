@@ -235,7 +235,8 @@ class KalshiClient:
         status: Optional[str] = None,
         category: Optional[str] = None,
         limit: int = 1000,
-        max_total: Optional[int] = None
+        max_total: Optional[int] = None,
+        min_volume: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """
         Get list of markets with optional filters (with automatic pagination)
@@ -245,6 +246,7 @@ class KalshiClient:
             category: Filter by series ticker
             limit: Number of markets per page (max 1000)
             max_total: Maximum total markets to fetch across all pages (None = fetch all)
+            min_volume: Minimum 24h volume (server-side filter to reduce API calls)
 
         Returns:
             List of market dictionaries
@@ -260,6 +262,8 @@ class KalshiClient:
                 params['status'] = status
             if category:
                 params['series_ticker'] = category
+            if min_volume is not None:
+                params['min_volume'] = min_volume
             if cursor:
                 params['cursor'] = cursor
 
