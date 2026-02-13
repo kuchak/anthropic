@@ -5,9 +5,9 @@ dry_run: true                    # true = paper trading, false = real money
 kalshi_api_base: "https://api.elections.kalshi.com/trade-api/v2"  # PRODUCTION API
 
 # === Scanning ===
-cycle_interval_seconds: 60       # Run trading cycle every 60 seconds (1 minute)
-slow_scan_interval_minutes: 5    # Full market scan frequency (faster for more opportunities)
-fast_scan_interval_minutes: 1    # Watchlist price check frequency (1 min to match fastest wait times)
+cycle_interval_seconds: 30       # Run trading cycle every 30 seconds
+slow_scan_interval_minutes: 0.5  # Full market scan every 30 seconds (catch fleeting live event opportunities)
+fast_scan_interval_minutes: 0.5  # Watchlist price check every 30 seconds
 max_time_to_settlement_hours: 999999  # No settlement time limit - scan ALL active markets
 min_time_to_settlement_minutes: 0     # No minimum - we'll bet right up to settlement if stable
 
