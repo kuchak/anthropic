@@ -392,39 +392,29 @@ class Scanner:
             filter_stats['not_live'] += 1
             return False  # No active trading
 
-        # CRITICAL: Check if this is a LIVE event happening NOW (not a future event with some volume)
-        # Use expected_expiration_time (actual event time) or updated_time (recent activity)
-        from datetime import datetime, timezone, timedelta
+        # CRITICAL: Check if this is a LIVE event happening NOW (not a future event)
+        # ONLY use expected_expiration_time - the actual event time
+        # DO NOT use updated_time - recent trades don't mean the event is happening now
+        from datetime import datetime, timezone
         from dateutil.parser import parse as parse_datetime
 
         now = datetime.now(timezone.utc)
         is_live_event = False
 
-        # Check expected_expiration_time (event happening within next 3 hours)
+        # Check expected_expiration_time (event happening within next 4 hours)
         if hasattr(market, '_raw_data') and market._raw_data.get('expected_expiration_time'):
             try:
                 expected_exp = parse_datetime(market._raw_data['expected_expiration_time'])
                 time_until_event = (expected_exp - now).total_seconds() / 3600  # hours
-                # Event is happening NOW if it's within next 3 hours
-                if -1 <= time_until_event <= 3:  # -1 to 3 hours (includes events in progress)
-                    is_live_event = True
-            except:
-                pass
-
-        # OR check updated_time (recent activity within last 10 minutes)
-        if not is_live_event and hasattr(market, '_raw_data') and market._raw_data.get('updated_time'):
-            try:
-                updated = parse_datetime(market._raw_data['updated_time'])
-                minutes_since_update = (now - updated).total_seconds() / 60
-                # Recent activity = updated within last 10 minutes
-                if minutes_since_update <= 10:
+                # Event is LIVE if it's happening within next 4 hours (or currently in progress)
+                if -1 <= time_until_event <= 4:  # -1 to 4 hours
                     is_live_event = True
             except:
                 pass
 
         if not is_live_event:
             filter_stats['not_live'] += 1
-            return False  # Not a live event (future market with stale volume)
+            return False  # Not a live event (future market)
 
         return True
 
