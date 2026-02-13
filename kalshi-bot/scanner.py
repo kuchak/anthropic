@@ -155,7 +155,7 @@ class Scanner:
         logger.info(f"    Wrong price: {filter_stats['wrong_price']}")
         logger.info(f"    Wrong settlement time: {filter_stats['wrong_settlement']}")
         logger.info(f"    Wrong status: {filter_stats['wrong_status']}")
-        logger.info(f"    No volume (volume_24h = 0): {filter_stats['not_live']}")
+        logger.info(f"    Not live event (future or stale): {filter_stats['not_live']}")
         logger.info(f"    ✅ PASSED: {filter_stats['passed']}")
 
         # Also print to stdout for debugging
@@ -167,7 +167,7 @@ class Scanner:
         print(f"  Wrong price (not 90-93¢): {filter_stats['wrong_price']}")
         print(f"  Wrong settlement time: {filter_stats['wrong_settlement']}")
         print(f"  Wrong status (not open): {filter_stats['wrong_status']}")
-        print(f"  No volume (volume_24h = 0): {filter_stats['not_live']}")
+        print(f"  Not a live event (future market or stale activity): {filter_stats['not_live']}")
         print(f"  ✅ PASSED ALL FILTERS: {filter_stats['passed']}\n")
 
         return len(self.watchlist)
@@ -273,7 +273,8 @@ class Scanner:
             # Get volume (use volume_24h_fp if available, otherwise volume_24h)
             volume_24h = float(market_data.get('volume_24h_fp', 0) or market_data.get('volume_24h', 0) or 0)
 
-            return Market(
+            # Store raw market data for additional checks
+            market = Market(
                 ticker=ticker,
                 title=market_data['title'],
                 category=series_ticker,
@@ -285,6 +286,14 @@ class Scanner:
                 best_no_size=0,
                 volume_24h=volume_24h
             )
+
+            # Store additional metadata for live event detection
+            market._raw_data = {
+                'expected_expiration_time': market_data.get('expected_expiration_time'),
+                'updated_time': market_data.get('updated_time')
+            }
+
+            return market
 
         except Exception as e:
             logger.debug(f"Quick parse failed for {market_data.get('ticker')}: {e}")
@@ -379,10 +388,43 @@ class Scanner:
             return False
 
         # Check if market has active trading (volume_24h > 0)
-        # NO TIME FILTERS - Kalshi's close_time is the outer deadline, not when event ends
         if market.volume_24h <= 0:
             filter_stats['not_live'] += 1
             return False  # No active trading
+
+        # CRITICAL: Check if this is a LIVE event happening NOW (not a future event with some volume)
+        # Use expected_expiration_time (actual event time) or updated_time (recent activity)
+        from datetime import datetime, timezone, timedelta
+        from dateutil.parser import parse as parse_datetime
+
+        now = datetime.now(timezone.utc)
+        is_live_event = False
+
+        # Check expected_expiration_time (event happening within next 3 hours)
+        if hasattr(market, '_raw_data') and market._raw_data.get('expected_expiration_time'):
+            try:
+                expected_exp = parse_datetime(market._raw_data['expected_expiration_time'])
+                time_until_event = (expected_exp - now).total_seconds() / 3600  # hours
+                # Event is happening NOW if it's within next 3 hours
+                if -1 <= time_until_event <= 3:  # -1 to 3 hours (includes events in progress)
+                    is_live_event = True
+            except:
+                pass
+
+        # OR check updated_time (recent activity within last 10 minutes)
+        if not is_live_event and hasattr(market, '_raw_data') and market._raw_data.get('updated_time'):
+            try:
+                updated = parse_datetime(market._raw_data['updated_time'])
+                minutes_since_update = (now - updated).total_seconds() / 60
+                # Recent activity = updated within last 10 minutes
+                if minutes_since_update <= 10:
+                    is_live_event = True
+            except:
+                pass
+
+        if not is_live_event:
+            filter_stats['not_live'] += 1
+            return False  # Not a live event (future market with stale volume)
 
         return True
 
