@@ -1,0 +1,106 @@
+# === Mode ===
+dry_run: true                    # true = paper trading, false = real money
+
+# === Kalshi API ===
+# Production (NEW): https://api.elections.kalshi.com/trade-api/v2
+# Production (OLD): https://trading-api.kalshi.com/trade-api/v2 (MOVED - deprecated)
+# Demo: https://demo-api.kalshi.co/trade-api/v2
+kalshi_api_base: "https://api.elections.kalshi.com/trade-api/v2"  # PRODUCTION API (new endpoint)
+
+# API Key Authentication (required):
+# Get your API keys at:
+#   Production: https://kalshi.com/account/profile
+#   Demo: https://demo.kalshi.com/account/profile
+#
+# Set these environment variables:
+#   KALSHI_API_KEY_ID="your_key_id"
+#   KALSHI_PRIVATE_KEY_PATH="/path/to/your/private_key.pem"
+
+# === Scanning ===
+slow_scan_interval_minutes: 15   # Full market scan frequency
+fast_scan_interval_minutes: 3    # Watchlist price check frequency
+max_time_to_settlement_hours: 6  # Only consider markets settling within this window
+min_time_to_settlement_minutes: 5 # Ignore markets too close to settlement (avoid illiquidity)
+
+# === Market Filtering ===
+# WHITELIST: Only trade these series tickers (profitable NBA markets from backtest)
+series_ticker_whitelist:
+  - KXNBAGAME      # NBA Game Winner - 100% accuracy (97/97 markets)
+  - KXNBASPREAD    # NBA Spread - 100% accuracy (39/39 markets)
+  - KXNBAREB       # NBA Rebounds - 100% accuracy (55/55 markets)
+  - KXNBATOTAL     # NBA Total Points - 93% accuracy (91/98 markets)
+
+# === Scoring & Entry ===
+min_contract_price: 0.85         # Include 85-89¢ range (99.1% accuracy, highest win rate!)
+max_contract_price: 0.98         # Skip contracts above this (too little edge)
+
+# === Kalshi Fees ===
+kalshi_fee_rate: 0.07            # 7% taker fee (market orders)
+                                  # Note: Limit orders qualify for lower maker fees (~3.5%)
+                                  # Fee formula: ceil(fee_rate × contracts × price × (1 - price))
+                                  # Scorer subtracts estimated fees from expected profit
+
+# === Model Accuracy (from REAL backtest results) ===
+# NO CATEGORY FILTERING - evaluate ALL markets based on price range accuracy
+# Data from comprehensive backtest: 12,553 markets that crossed 90%+ probability
+#
+# REAL Backtest Results (from comprehensive_crossed_90_detailed.csv):
+# - Overall: 98.5% accuracy (12,365 wins / 12,553 markets)
+# - 85-90¢: 99.1% accuracy (2,554 wins / 2,578 markets)
+# - 90-95¢: 99.0% accuracy (7,885 wins / 7,965 markets)
+# - 95-98¢: 98.3% accuracy (3,477 wins / 3,536 markets)
+#
+# These are ACTUAL results from markets that hit 90%+ probability and settled.
+# The bot targets this exact strategy: high-probability contracts (85-98¢).
+#
+default_accuracy: 0.985          # 98.5% overall across all price ranges
+accuracy_by_price_range:
+  "0.85-0.89": 0.991             # 99.1% accuracy (2,554/2,578 wins) - HIGHEST confidence
+  "0.90-0.95": 0.990             # 99.0% accuracy (7,885/7,965 wins) - HIGH confidence
+  "0.95-0.98": 0.983             # 98.3% accuracy (3,477/3,536 wins) - VERY HIGH confidence
+
+# === Series Ticker Accuracy (for whitelisted markets) ===
+# Actual backtest accuracy for profitable NBA series (from nba_timing_analysis.csv)
+series_ticker_accuracy:
+  "KXNBAGAME": 1.000      # 100.0% accuracy (97/97 markets, +5.80¢ avg profit)
+  "KXNBASPREAD": 1.000    # 100.0% accuracy (39/39 markets, +7.74¢ avg profit)
+  "KXNBAREB": 1.000       # 100.0% accuracy (55/55 markets, +3.24¢ avg profit)
+  "KXNBATOTAL": 0.929     # 92.9% accuracy (91/98 markets, +1.85¢ avg profit)
+
+# === Category Accuracy Override ===
+# If a category has accuracy below 95%, use category accuracy instead of price range
+# This ensures we always use the more conservative estimate
+#
+# Category accuracy from backtest (reference data):
+category_accuracy:
+  "Entertainment": 0.893         # 89.3% accuracy (225/252 markets) - USE OVERRIDE
+  "Financials": 0.883            # 88.3% accuracy (212/240 markets) - USE OVERRIDE
+  "Economics": 0.978             # 97.8% accuracy (827/846 markets)
+  "Politics": 0.978              # 97.8% accuracy (91/93 markets)
+  "Sports": 0.988                # 98.8% accuracy (8,258/8,360 markets)
+  "Climate and Weather": 0.995   # 99.5% accuracy (905/910 markets)
+  "Crypto": 0.995                # 99.5% accuracy (199/200 markets)
+  "Health": 1.000                # 100.0% accuracy (119/119 markets)
+  "Science and Technology": 1.000 # 100.0% accuracy (67/67 markets)
+  "Companies": 1.000             # 100.0% accuracy (28/28 markets)
+  "Mentions": 0.999              # 99.9% accuracy (1,297/1,298 markets)
+  "Transportation": 1.000        # 100.0% accuracy (53/53 markets)
+
+category_accuracy_threshold: 0.95  # Use category accuracy if below this threshold
+
+# === Position Sizing ===
+starting_bankroll: 10000.00
+kelly_fraction: 0.5              # Half-Kelly (0.25 = quarter-Kelly)
+max_bet_pct_of_bankroll: 0.15    # Never risk more than 15% on a single bet
+max_total_exposure_pct: 0.70     # Never have more than 70% of bankroll in open positions
+min_bet_amount: 1.00             # Kalshi minimum
+
+# === Risk Management ===
+max_daily_loss: 100.00           # Stop trading if daily losses exceed this
+max_consecutive_losses: 5        # Pause and alert after N consecutive losses
+max_trades_per_day: 50           # Circuit breaker
+
+# === Rate Limiting ===
+api_requests_per_second: 2       # Stay well under Kalshi's rate limits
+retry_max_attempts: 3
+retry_backoff_seconds: 2
