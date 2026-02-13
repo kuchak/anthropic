@@ -1,0 +1,70 @@
+sub_category,total_markets,markets_0-25%,accuracy_0-25%,status_0-25%,markets_25-50%,accuracy_25-50%,status_25-50%,markets_50-75%,accuracy_50-75%,status_50-75%,markets_75-100%,accuracy_75-100%,status_75-100%
+Climate and Weather > Other Weather,33,0,,N/A,0,,N/A,2,100.0,PROFITABLE,31,80.6,NOT
+Climate and Weather > Precipitation,79,23,95.7,PROFITABLE,6,66.7,NOT,24,83.3,NOT,26,84.6,NOT
+Climate and Weather > Temperature,554,4,100.0,PROFITABLE,42,83.3,NOT,234,88.0,NOT,274,84.7,NOT
+Crypto > Bitcoin,110,10,100.0,PROFITABLE,22,90.9,NOT,52,96.2,PROFITABLE,26,84.6,NOT
+Crypto > Ethereum,60,6,100.0,PROFITABLE,15,80.0,NOT,25,88.0,NOT,14,100.0,PROFITABLE
+Crypto > XRP,32,5,100.0,PROFITABLE,10,70.0,NOT,9,66.7,NOT,8,75.0,NOT
+Economics > Employment & Fed,68,15,73.3,NOT,17,94.1,PROFITABLE,16,87.5,NOT,20,80.0,NOT
+Economics > Energy Prices,84,43,86.0,NOT,19,100.0,PROFITABLE,12,100.0,PROFITABLE,10,70.0,NOT
+Economics > GDP,43,9,77.8,NOT,10,100.0,PROFITABLE,9,88.9,NOT,15,100.0,PROFITABLE
+Economics > Inflation,219,47,87.2,NOT,62,93.5,PROFITABLE,61,83.6,NOT,49,79.6,NOT
+Economics > Other Economics,23,5,80.0,NOT,5,100.0,PROFITABLE,8,100.0,PROFITABLE,5,80.0,NOT
+Entertainment > Movies,55,25,52.0,NOT,9,66.7,NOT,9,77.8,NOT,12,75.0,NOT
+Entertainment > Music charts,40,8,75.0,NOT,10,60.0,NOT,9,77.8,NOT,13,84.6,NOT
+Financials > Forex,31,7,100.0,PROFITABLE,11,72.7,NOT,2,100.0,PROFITABLE,11,90.9,NOT
+Financials > Stock Indices,73,1,100.0,PROFITABLE,3,100.0,PROFITABLE,12,91.7,PROFITABLE,57,93.0,PROFITABLE
+Health > COVID-19,78,39,92.3,PROFITABLE,18,94.4,PROFITABLE,7,100.0,PROFITABLE,14,92.9,PROFITABLE
+Mentions > Mentions,769,259,73.7,NOT,80,81.2,NOT,127,70.9,NOT,303,65.3,NOT
+Politics > Approval Ratings,28,0,,N/A,1,100.0,PROFITABLE,8,100.0,PROFITABLE,19,68.4,NOT
+Politics > Other Politics,37,2,100.0,PROFITABLE,5,100.0,PROFITABLE,8,50.0,NOT,22,81.8,NOT
+Sports > Baseball > MLB,125,0,,N/A,0,,N/A,3,100.0,PROFITABLE,122,90.2,NOT
+Sports > Basketball > NBA,52,0,,N/A,2,50.0,NOT,0,,N/A,50,94.0,PROFITABLE
+Sports > Cricket > T20,49,3,100.0,PROFITABLE,1,100.0,PROFITABLE,7,57.1,NOT,38,84.2,NOT
+Sports > Darts > Darts,20,0,,N/A,0,,N/A,1,100.0,PROFITABLE,19,78.9,NOT
+Sports > Esports > Call of Duty,35,2,100.0,PROFITABLE,1,100.0,PROFITABLE,1,100.0,PROFITABLE,31,74.2,NOT
+Sports > Esports > Counter-Strike,374,0,,N/A,12,100.0,PROFITABLE,20,100.0,PROFITABLE,342,87.1,NOT
+Sports > Esports > Dota 2,116,0,,N/A,0,,N/A,4,50.0,NOT,112,89.3,NOT
+Sports > Esports > FIFA,58,0,,N/A,2,100.0,PROFITABLE,1,0.0,NOT,55,96.4,PROFITABLE
+Sports > Esports > League of Legends,183,4,100.0,PROFITABLE,3,66.7,NOT,15,80.0,NOT,161,84.5,NOT
+Sports > Football > NFL,394,23,56.5,NOT,11,63.6,NOT,16,62.5,NOT,344,73.8,NOT
+Sports > Golf > PGA,127,0,,N/A,1,0.0,NOT,2,100.0,PROFITABLE,124,87.1,NOT
+Sports > Hockey > AHL,90,0,,N/A,2,0.0,NOT,2,100.0,PROFITABLE,86,86.0,NOT
+Sports > Hockey > KHL,41,0,,N/A,0,,N/A,1,0.0,NOT,40,87.5,NOT
+Sports > Hockey > NHL,160,0,,N/A,0,,N/A,6,100.0,PROFITABLE,154,92.9,PROFITABLE
+Sports > Motorsport > Formula 1,52,0,,N/A,0,,N/A,4,100.0,PROFITABLE,48,87.5,NOT
+Sports > Other Sports,711,4,100.0,PROFITABLE,11,100.0,PROFITABLE,18,94.4,PROFITABLE,678,86.6,NOT
+Sports > Soccer > AFC Champions League,20,0,,N/A,0,,N/A,0,,N/A,20,90.0,NOT
+Sports > Soccer > AFCON,60,2,100.0,PROFITABLE,2,100.0,PROFITABLE,2,50.0,NOT,54,88.9,NOT
+Sports > Soccer > Argentina Primera Division,60,0,,N/A,0,,N/A,0,,N/A,60,86.7,NOT
+Sports > Soccer > Australian A-League,67,0,,N/A,0,,N/A,0,,N/A,67,79.1,NOT
+Sports > Soccer > Belgian Pro League,61,0,,N/A,0,,N/A,0,,N/A,61,83.6,NOT
+Sports > Soccer > Brasileiro Serie A,73,0,,N/A,0,,N/A,0,,N/A,73,80.8,NOT
+Sports > Soccer > Bundesliga,119,1,100.0,PROFITABLE,0,,N/A,3,33.3,NOT,115,87.8,NOT
+Sports > Soccer > Club World Cup,44,1,100.0,PROFITABLE,0,,N/A,1,100.0,PROFITABLE,42,83.3,NOT
+Sports > Soccer > Copa del Rey,49,2,100.0,PROFITABLE,1,0.0,NOT,1,0.0,NOT,45,75.6,NOT
+Sports > Soccer > Coupe de France,38,0,,N/A,0,,N/A,0,,N/A,38,89.5,NOT
+Sports > Soccer > Croatia HNL,54,0,,N/A,0,,N/A,0,,N/A,54,92.6,PROFITABLE
+Sports > Soccer > EFL Championship,64,0,,N/A,0,,N/A,0,,N/A,64,89.1,NOT
+Sports > Soccer > English Premier League,135,1,100.0,PROFITABLE,0,,N/A,1,100.0,PROFITABLE,133,83.5,NOT
+Sports > Soccer > Eredivisie,67,0,,N/A,0,,N/A,0,,N/A,67,82.1,NOT
+Sports > Soccer > FA Cup,36,1,100.0,PROFITABLE,1,100.0,PROFITABLE,0,,N/A,34,94.1,PROFITABLE
+Sports > Soccer > Japan J League,24,0,,N/A,0,,N/A,2,100.0,PROFITABLE,22,86.4,NOT
+Sports > Soccer > Korea K League,34,0,,N/A,2,100.0,PROFITABLE,2,0.0,NOT,30,66.7,NOT
+Sports > Soccer > La Liga,180,0,,N/A,0,,N/A,0,,N/A,180,87.2,NOT
+Sports > Soccer > Liga MX,53,0,,N/A,0,,N/A,0,,N/A,53,83.0,NOT
+Sports > Soccer > Liga Portugal,55,0,,N/A,0,,N/A,0,,N/A,55,85.5,NOT
+Sports > Soccer > Ligue 1,108,0,,N/A,0,,N/A,0,,N/A,108,87.0,NOT
+Sports > Soccer > MLS,63,0,,N/A,0,,N/A,0,,N/A,63,87.3,NOT
+Sports > Soccer > Polish Ekstraklasa,42,0,,N/A,0,,N/A,0,,N/A,42,85.7,NOT
+Sports > Soccer > Scottish Premiership,52,0,,N/A,0,,N/A,0,,N/A,52,96.2,PROFITABLE
+Sports > Soccer > Serie A,61,0,,N/A,0,,N/A,0,,N/A,61,86.9,NOT
+Sports > Soccer > Super League Greece,22,0,,N/A,1,100.0,PROFITABLE,0,,N/A,21,90.5,NOT
+Sports > Soccer > UEFA Conference League,63,0,,N/A,4,50.0,NOT,1,0.0,NOT,58,87.9,NOT
+Sports > Soccer > UEFA Europa League,58,0,,N/A,0,,N/A,0,,N/A,58,91.4,PROFITABLE
+Sports > Tennis > ATP,177,5,60.0,NOT,8,75.0,NOT,4,50.0,NOT,160,81.2,NOT
+Sports > Tennis > ATP Challenger,76,1,100.0,PROFITABLE,0,,N/A,1,100.0,PROFITABLE,74,94.6,PROFITABLE
+Sports > Tennis > ATP Italian Open,20,7,100.0,PROFITABLE,1,100.0,PROFITABLE,3,100.0,PROFITABLE,9,100.0,PROFITABLE
+Sports > Tennis > French Open Men's Singles,38,7,71.4,NOT,2,50.0,NOT,6,66.7,NOT,23,95.7,PROFITABLE
+Sports > Tennis > French Open Women's Singles,45,6,83.3,NOT,6,100.0,PROFITABLE,4,100.0,PROFITABLE,29,79.3,NOT
+World > Flight Delays,39,1,100.0,PROFITABLE,0,,N/A,13,92.3,PROFITABLE,25,88.0,NOT
