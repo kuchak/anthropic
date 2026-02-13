@@ -72,9 +72,38 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get all open markets
-        all_markets = self.client.get_markets(status='open', limit=1000)
+        # Get markets - if whitelist configured, query each series separately
+        # This avoids getting multi-leg markets that have no series_ticker
+        whitelist = self.config.get('series_ticker_whitelist')
+        all_markets = []
+
+        if whitelist:
+            logger.info(f"  Querying {len(whitelist)} whitelisted series tickers...")
+            for series_ticker in whitelist:
+                series_markets = self.client.get_markets(
+                    category=series_ticker,
+                    status='open',
+                    limit=1000
+                )
+                all_markets.extend(series_markets)
+                if series_markets:
+                    logger.debug(f"    {series_ticker}: {len(series_markets)} markets")
+        else:
+            all_markets = self.client.get_markets(status='open', limit=1000)
+
         logger.info(f"  Retrieved {len(all_markets)} total open markets")
+
+        # Debug counters
+        filter_stats = {
+            'total': len(all_markets),
+            'existing_position': 0,
+            'parse_failed': 0,
+            'not_whitelisted': 0,
+            'wrong_price': 0,
+            'wrong_settlement': 0,
+            'wrong_status': 0,
+            'passed': 0
+        }
 
         # Filter markets
         new_watchlist = []
@@ -85,6 +114,7 @@ class Scanner:
             # CRITICAL: Skip markets where we already have positions
             if ticker in existing_set:
                 logger.debug(f"  Skipping {ticker} - already have position")
+                filter_stats['existing_position'] += 1
                 continue
 
             # NO CATEGORY FILTERING - evaluate ALL markets
@@ -93,10 +123,20 @@ class Scanner:
             # Parse market
             try:
                 market = self._parse_market_quick(market_data)
-                if market and self._meets_criteria(market):
-                    new_watchlist.append(market)
+                if not market:
+                    filter_stats['parse_failed'] += 1
+                    continue
+
+                # Check criteria and track reason if fails
+                if not self._meets_criteria_with_debug(market, filter_stats):
+                    continue
+
+                new_watchlist.append(market)
+                filter_stats['passed'] += 1
+
             except Exception as e:
                 logger.debug(f"  Failed to parse market {market_data.get('ticker')}: {e}")
+                filter_stats['parse_failed'] += 1
                 continue
 
         # Update watchlist
@@ -106,6 +146,15 @@ class Scanner:
 
         logger.info(f"✅ Slow scan complete")
         logger.info(f"  Watchlist: {len(self.watchlist)} markets (was {old_count})")
+        logger.info(f"  Filter breakdown:")
+        logger.info(f"    Total markets: {filter_stats['total']}")
+        logger.info(f"    Existing positions: {filter_stats['existing_position']}")
+        logger.info(f"    Parse failed: {filter_stats['parse_failed']}")
+        logger.info(f"    Not whitelisted: {filter_stats['not_whitelisted']}")
+        logger.info(f"    Wrong price: {filter_stats['wrong_price']}")
+        logger.info(f"    Wrong settlement time: {filter_stats['wrong_settlement']}")
+        logger.info(f"    Wrong status: {filter_stats['wrong_status']}")
+        logger.info(f"    ✅ PASSED: {filter_stats['passed']}")
 
         return len(self.watchlist)
 
@@ -202,10 +251,15 @@ class Scanner:
             if no_price == 0.0:
                 no_price = 1.0 - yes_price if yes_price > 0 else 0.0
 
+            # Extract series ticker from ticker field
+            # Format: KXEPLGAME-26FEB28LEEMCI-TIE -> KXEPLGAME
+            ticker = market_data['ticker']
+            series_ticker = ticker.split('-')[0] if '-' in ticker else ticker
+
             return Market(
-                ticker=market_data['ticker'],
+                ticker=ticker,
                 title=market_data['title'],
-                category=market_data.get('series_ticker', 'unknown'),
+                category=series_ticker,
                 settlement_time=parse_datetime(market_data['close_time']),
                 status=market_data['status'],
                 best_yes_price=yes_price,
@@ -256,6 +310,54 @@ class Scanner:
 
         # Check market is open/active (API returns 'active' status for open markets)
         if market.status not in ['open', 'active']:
+            return False
+
+        return True
+
+    def _meets_criteria_with_debug(self, market: Market, filter_stats: Dict[str, int]) -> bool:
+        """
+        Check if market meets criteria and track reason for failure
+
+        Args:
+            market: Market to check
+            filter_stats: Dict to update with failure reason
+
+        Returns:
+            True if market meets all criteria
+        """
+        # Check series ticker whitelist (if configured)
+        whitelist = self.config.get('series_ticker_whitelist')
+        if whitelist:
+            # market.category stores the series_ticker
+            if market.category not in whitelist:
+                filter_stats['not_whitelisted'] += 1
+                return False  # Not in whitelist
+
+        # Check settlement time window
+        time_to_settlement_minutes = market.time_to_settlement_minutes
+
+        if time_to_settlement_minutes < self.config['min_time_to_settlement_minutes']:
+            filter_stats['wrong_settlement'] += 1
+            return False  # Too close to settlement
+
+        if time_to_settlement_minutes > self.config['max_time_to_settlement_hours'] * 60:
+            filter_stats['wrong_settlement'] += 1
+            return False  # Too far out
+
+        # Check price range (either YES or NO must be in range)
+        min_price = self.config['min_contract_price']
+        max_price = self.config['max_contract_price']
+
+        yes_in_range = min_price <= market.best_yes_price <= max_price
+        no_in_range = min_price <= market.best_no_price <= max_price
+
+        if not (yes_in_range or no_in_range):
+            filter_stats['wrong_price'] += 1
+            return False  # Neither side in target range
+
+        # Check market is open/active (API returns 'active' status for open markets)
+        if market.status not in ['open', 'active']:
+            filter_stats['wrong_status'] += 1
             return False
 
         return True
