@@ -1,0 +1,377 @@
+series_ticker_wait_times:
+  KXEPLGAME:
+    wait_minutes: 1
+    median_gap_minutes: 2.5487093
+    category: Soccer
+    sample_size: 31
+  KXBTC15M:
+    wait_minutes: 1
+    median_gap_minutes: 3.358754283333333
+    category: Bitcoin
+    sample_size: 26
+  KXSOL15M:
+    wait_minutes: 1
+    median_gap_minutes: 3.4165898833333337
+    category: Solana
+    sample_size: 28
+  KXBUNDESLIGAGAME:
+    wait_minutes: 1
+    median_gap_minutes: 3.6894679833333335
+    category: Soccer
+    sample_size: 36
+  KXLALIGAGAME:
+    wait_minutes: 1
+    median_gap_minutes: 3.6952948666666665
+    category: Soccer
+    sample_size: 41
+  KXUCLGAME:
+    wait_minutes: 1
+    median_gap_minutes: 3.7912596833333336
+    category: Soccer
+    sample_size: 31
+  KXETH15M:
+    wait_minutes: 1
+    median_gap_minutes: 4.065940683333333
+    category: Ethereum
+    sample_size: 34
+  KXEREDIVISIEGAME:
+    wait_minutes: 1
+    median_gap_minutes: 4.338934633333333
+    category: Soccer
+    sample_size: 36
+  KXSUPERLIGGAME:
+    wait_minutes: 1
+    median_gap_minutes: 4.587217058333334
+    category: Soccer
+    sample_size: 34
+  KXSERIEAGAME:
+    wait_minutes: 3
+    median_gap_minutes: 5.172612091666667
+    category: Soccer
+    sample_size: 34
+  KXUFCFIGHT:
+    wait_minutes: 3
+    median_gap_minutes: 5.3357057
+    category: MMA
+    sample_size: 26
+  KXUELGAME:
+    wait_minutes: 3
+    median_gap_minutes: 5.626678066666667
+    category: Soccer
+    sample_size: 45
+  KXLIGUE1GAME:
+    wait_minutes: 3
+    median_gap_minutes: 5.96295915
+    category: Soccer
+    sample_size: 44
+  KXEFLCHAMPIONSHIPGAME:
+    wait_minutes: 3
+    median_gap_minutes: 6.3004479
+    category: Soccer
+    sample_size: 34
+  KXAFCONGAME:
+    wait_minutes: 3
+    median_gap_minutes: 6.346421733333333
+    category: Soccer
+    sample_size: 35
+  KXALEAGUEGAME:
+    wait_minutes: 3
+    median_gap_minutes: 6.413334133333334
+    category: Soccer
+    sample_size: 42
+  KXUECLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 6.50332105
+    category: Soccer
+    sample_size: 30
+  KXSWISSLEAGUEGAME:
+    wait_minutes: 3
+    median_gap_minutes: 6.558602766666667
+    category: Soccer
+    sample_size: 27
+  KXSCOTTISHPREMGAME:
+    wait_minutes: 3
+    median_gap_minutes: 6.593384599999999
+    category: Soccer
+    sample_size: 33
+  KXARGPREMDIVGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.031162358333333
+    category: Soccer
+    sample_size: 44
+  KXLIGAPORTUGALGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.031194425000001
+    category: Soccer
+    sample_size: 36
+  KXMLSGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.0632521666666666
+    category: Soccer
+    sample_size: 42
+  KXFIBACHAMPLEAGUEGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.121716766666666
+    category: Other Sports
+    sample_size: 31
+  KXBELGIANPLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.459674566666666
+    category: Soccer
+    sample_size: 37
+  KXNHLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.574111683333333
+    category: Hockey
+    sample_size: 53
+  KXHNLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.575739216666666
+    category: Soccer
+    sample_size: 20
+  KXNFLSPREAD:
+    wait_minutes: 3
+    median_gap_minutes: 7.714590558333333
+    category: Football
+    sample_size: 38
+  KXBRASILEIROGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.836662041666667
+    category: Soccer
+    sample_size: 48
+  KXLIGAMXGAME:
+    wait_minutes: 3
+    median_gap_minutes: 8.023901258333334
+    category: Soccer
+    sample_size: 40
+  KXSAUDIPLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 8.340808266666667
+    category: Soccer
+    sample_size: 48
+  KXEUROLEAGUEGAME:
+    wait_minutes: 3
+    median_gap_minutes: 8.55334455
+    category: Other Sports
+    sample_size: 75
+  KXLOLMAP:
+    wait_minutes: 3
+    median_gap_minutes: 9.393529783333332
+    category: Esports
+    sample_size: 24
+  KXFACUPGAME:
+    wait_minutes: 3
+    median_gap_minutes: 9.824646
+    category: Soccer
+    sample_size: 22
+  KXNCAAFGAME:
+    wait_minutes: 3
+    median_gap_minutes: 11.733984066666666
+    category: Football
+    sample_size: 30
+  KXWTAMATCH:
+    wait_minutes: 3
+    median_gap_minutes: 11.863803216666668
+    category: Tennis
+    sample_size: 69
+  KXUNITEDCUPMATCH:
+    wait_minutes: 3
+    median_gap_minutes: 12.006374633333332
+    category: Tennis
+    sample_size: 31
+  KXNBLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 12.246143633333332
+    category: Other Sports
+    sample_size: 47
+  KXATPCHALLENGERMATCH:
+    wait_minutes: 3
+    median_gap_minutes: 12.455084708333334
+    category: Tennis
+    sample_size: 56
+  KXNFLPREPACKSGP:
+    wait_minutes: 3
+    median_gap_minutes: 12.562076783333334
+    category: Football
+    sample_size: 23
+  KXLOLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 12.784272958333332
+    category: Esports
+    sample_size: 60
+  KXDOTA2GAME:
+    wait_minutes: 3
+    median_gap_minutes: 14.430985616666668
+    category: Esports
+    sample_size: 29
+  KXFIFAGAME:
+    wait_minutes: 5
+    median_gap_minutes: 16.774749183333334
+    category: Esports
+    sample_size: 42
+  KXATPMATCH:
+    wait_minutes: 5
+    median_gap_minutes: 18.31726313333333
+    category: Tennis
+    sample_size: 51
+  KXEUROCUPGAME:
+    wait_minutes: 5
+    median_gap_minutes: 18.721524225
+    category: Golf
+    sample_size: 62
+  KXCBAGAME:
+    wait_minutes: 5
+    median_gap_minutes: 18.77099405
+    category: Other Sports
+    sample_size: 80
+  KXCS2GAME:
+    wait_minutes: 5
+    median_gap_minutes: 20.93525688333333
+    category: Esports
+    sample_size: 51
+  KXLALIGATOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 22.866312416666663
+    category: Soccer
+    sample_size: 23
+  KXCLUBWCGAME:
+    wait_minutes: 5
+    median_gap_minutes: 24.70784163333333
+    category: Soccer
+    sample_size: 34
+  KXCSGOGAME:
+    wait_minutes: 5
+    median_gap_minutes: 25.25823675
+    category: Esports
+    sample_size: 59
+  KXNBATOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 25.46696495
+    category: Basketball
+    sample_size: 62
+  KXNFLTOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 26.497942625
+    category: Football
+    sample_size: 50
+  KXKBLGAME:
+    wait_minutes: 5
+    median_gap_minutes: 26.802297016666667
+    category: Other Sports
+    sample_size: 37
+  KXWTACHALLENGERMATCH:
+    wait_minutes: 5
+    median_gap_minutes: 28.61217543333333
+    category: Tennis
+    sample_size: 51
+  KXMLBGAME:
+    wait_minutes: 5
+    median_gap_minutes: 29.586657683333332
+    category: Baseball
+    sample_size: 42
+  KXMLBSPREAD:
+    wait_minutes: 5
+    median_gap_minutes: 30.257464683333332
+    category: Baseball
+    sample_size: 29
+  KXVALORANTGAME:
+    wait_minutes: 5
+    median_gap_minutes: 30.2733673
+    category: Esports
+    sample_size: 42
+  KXWNBAGAME:
+    wait_minutes: 5
+    median_gap_minutes: 31.119293141666667
+    category: Basketball
+    sample_size: 62
+  KXCODGAME:
+    wait_minutes: 5
+    median_gap_minutes: 32.389889866666664
+    category: Esports
+    sample_size: 23
+  KXUCLTOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 35.031284
+    category: Soccer
+    sample_size: 33
+  KXJBLEAGUEGAME:
+    wait_minutes: 5
+    median_gap_minutes: 39.049201016666665
+    category: Other Sports
+    sample_size: 45
+  KXEPLTOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 39.971526266666665
+    category: Soccer
+    sample_size: 39
+  KXMAMDANIMENTION:
+    wait_minutes: 5
+    median_gap_minutes: 41.72905806666667
+    category: Mentions
+    sample_size: 27
+  KXNCAAFSPREAD:
+    wait_minutes: 5
+    median_gap_minutes: 42.54760998333333
+    category: Football
+    sample_size: 48
+  KXNCAAFTOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 45.104683
+    category: Football
+    sample_size: 75
+  KXKHLGAME:
+    wait_minutes: 5
+    median_gap_minutes: 46.030357433333336
+    category: Hockey
+    sample_size: 20
+  KXNCAABMENTION:
+    wait_minutes: 5
+    median_gap_minutes: 46.86311001666666
+    category: Mentions
+    sample_size: 35
+  KXBUNDESLIGATOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 47.29585341666667
+    category: Soccer
+    sample_size: 29
+  KXINXZ:
+    wait_minutes: 5
+    median_gap_minutes: 49.976666083333335
+    category: Stock Indices
+    sample_size: 21
+  KXHIGHAUS:
+    wait_minutes: 5
+    median_gap_minutes: 50.23149765833333
+    category: Temperature
+    sample_size: 26
+  KXHIGHLAX:
+    wait_minutes: 5
+    median_gap_minutes: 52.71860614166667
+    category: Temperature
+    sample_size: 26
+  KXHIGHDEN:
+    wait_minutes: 5
+    median_gap_minutes: 53.58719043333333
+    category: Temperature
+    sample_size: 23
+  KXLNBELITEGAME:
+    wait_minutes: 5
+    median_gap_minutes: 54.293603775
+    category: Other Sports
+    sample_size: 24
+  KXNHLTOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 58.821548750000005
+    category: Hockey
+    sample_size: 57
+metadata:
+  fast_count: 9
+  medium_count: 32
+  slow_count: 32
+  excluded_count: 29
+  total_analyzed: 102
+  classification:
+    fast: "< 5 min median gap \u2192 1 min wait"
+    medium: "5-15 min median gap \u2192 3 min wait"
+    slow: "15-60 min median gap \u2192 5 min wait"
+    excluded: "60+ min median gap \u2192 do not trade"
