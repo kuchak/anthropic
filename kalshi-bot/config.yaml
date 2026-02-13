@@ -103,8 +103,8 @@ series_ticker_wait_times:
   KXMLBSPREAD: 5
 
 # === Scoring & Entry ===
-min_contract_price: 0.90         # Focus on 90-92¢ range (best accuracy)
-max_contract_price: 0.93         # Skip contracts above this
+min_contract_price: 0.85         # Expanded range: 85-97¢ for more opportunities
+max_contract_price: 0.97         # Bigger bets at 90-93¢, smaller at edges
 
 # === Kalshi Fees ===
 kalshi_fee_rate: 0.07            # 7% taker fee (market orders)

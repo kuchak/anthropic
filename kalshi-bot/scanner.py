@@ -156,7 +156,7 @@ class Scanner:
         print(f"  Already have positions: {filter_stats['existing_position']}")
         print(f"  Parse failed: {filter_stats['parse_failed']}")
         print(f"  Not in whitelist: {filter_stats['not_whitelisted']}")
-        print(f"  Wrong price (not 90-93¢): {filter_stats['wrong_price']}")
+        print(f"  Wrong price (not 85-97¢): {filter_stats['wrong_price']}")
         print(f"  Wrong settlement time: {filter_stats['wrong_settlement']}")
         print(f"  Wrong status (not open): {filter_stats['wrong_status']}")
         print(f"  Not a live event (future market or stale activity): {filter_stats['not_live']}")
