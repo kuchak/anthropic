@@ -1,0 +1,287 @@
+ticker,category,series_title,total_markets,wins,losses,accuracy,expected_profit,profitable,breakeven,is_seasonal,is_year_round
+KXLLM1,Science and Technology,Year-end top LLM,8,8,0,100.0,0.07999999999999996,True,False,False,False
+KXCRICKETODIMATCH,Sports,Cricket ODI Match,7,7,0,100.0,0.07999999999999996,True,False,False,False
+KXWOSSKATE,Sports,Winter Olympics Speed Skating,3,3,0,100.0,0.07999999999999996,True,False,False,False
+KXF1RACE,Sports,F1 Race,10,10,0,100.0,0.07999999999999996,True,False,False,False
+KXWOCURLGAME,Sports,Winter Olympics Curling Game,7,7,0,100.0,0.07999999999999996,True,False,False,False
+KXSHLGAME,Sports,SHL Game,13,13,0,100.0,0.07999999999999996,True,False,False,False
+KXNBAGAME,Sports,Professional Basketball Game,32,32,0,100.0,0.07999999999999996,True,False,True,False
+KXGOLD,Financials,Price of gold,3,3,0,100.0,0.07999999999999996,True,False,False,False
+KX538APPROVEMAX,Politics,Biden 538 highest approval rating,2,2,0,100.0,0.07999999999999996,True,False,False,False
+KXTNOTE,Financials,Treasury yield 10Y,17,17,0,100.0,0.07999999999999996,True,False,False,False
+KXTNOTEW,Financials,Treasury 10Y weekly yield,1,1,0,100.0,0.07999999999999996,True,False,False,False
+KXEUROIMF,Financials,EUR/USD,9,9,0,100.0,0.07999999999999996,True,False,True,False
+KXGBP,Financials,British Pound/US Dollar exchange rate ,14,14,0,100.0,0.07999999999999996,True,False,False,False
+KXFEDDECISION,Economics,Fed meeting,11,11,0,100.0,0.07999999999999996,True,False,False,False
+KXFLIGHTORD,World,O'Hare International Airport total delays and cancellations,8,8,0,100.0,0.07999999999999996,True,False,False,False
+KXPCECORE,Economics,US Core PCE inflation,8,8,0,100.0,0.07999999999999996,True,False,False,False
+KXFEAR,Economics,Fear and Greed index,4,4,0,100.0,0.07999999999999996,True,False,False,False
+KXFRM,Economics,Mortgage 30-yr rate this week,15,15,0,100.0,0.07999999999999996,True,False,False,False
+KXPPLGAMES,Sports,PPL games,4,4,0,100.0,0.07999999999999996,True,False,False,False
+KXNBASPREAD,Sports,Pro Basketball Spread,24,24,0,100.0,0.07999999999999996,True,False,True,False
+KXATPAMT,Sports,ATP Tour Abierto Mexican Telcel presentado por HSBC,7,7,0,100.0,0.07999999999999996,True,False,False,False
+KXT20MATCH,Sports,T20 Match,11,11,0,100.0,0.07999999999999996,True,False,False,False
+KXNBA3PT,Sports,Pro Basketball Player Threes,5,5,0,100.0,0.07999999999999996,True,False,True,False
+KXNCAAMBGAME,Sports,Men's College Basketball Men's Game,15,15,0,100.0,0.07999999999999996,True,False,True,False
+KXFACUPADVANCE,Sports,FA Cup Advance,7,7,0,100.0,0.07999999999999996,True,False,True,False
+KXR6MAP,Sports,R6 Map Winner,9,9,0,100.0,0.07999999999999996,True,False,False,False
+KXWTAMAD,Sports,WTA Madrid,11,11,0,100.0,0.07999999999999996,True,False,False,False
+KXNBAREB,Sports,Pro Basketball Player Rebounds,10,10,0,100.0,0.07999999999999996,True,False,True,False
+KXATPIT,Sports,ATP Italian Open,20,20,0,100.0,0.07999999999999996,True,False,False,False
+KXFED,Economics,Fed funds rate,13,13,0,100.0,0.07999999999999996,True,False,False,False
+KXHIGHTNOLA,Climate and Weather,New Orleans Max temp Daily,16,16,0,100.0,0.07999999999999996,True,False,False,True
+KXLOWTMIA,Climate and Weather,Lowest temperature in Miami,14,14,0,100.0,0.07999999999999996,True,False,False,False
+KXKNVBCUPGAME,Sports,KNVB Cup Game,11,11,0,100.0,0.07999999999999996,True,False,True,False
+KXNBABLK,Sports,Pro Basketball Player Blocks,2,2,0,100.0,0.07999999999999996,True,False,True,False
+KXRANKLISTSONGTOP10,Entertainment,WHICH SONG WILL BE IN THE TOP 10 OF THE BILLBOARD HOT 100 HUNDERED FOR THE WEEK OF DATE ,6,6,0,100.0,0.07999999999999996,True,False,False,False
+KXSPOTIFYGLOBALD,Entertainment,Daily Global Spotify songs,1,1,0,100.0,0.07999999999999996,True,False,False,False
+KXSPOTIFYW,Entertainment,Weekly US Spotify chart,1,1,0,100.0,0.07999999999999996,True,False,False,False
+KXCPIFOOD,Economics,CPI on food,10,10,0,100.0,0.07999999999999996,True,False,False,False
+KXBILLBOARDRUNNERUPALBUM,Entertainment,Will Album be runner up this week?,9,9,0,100.0,0.07999999999999996,True,False,False,False
+KXARGINFLATIONM,Economics,Argentina inflation,5,5,0,100.0,0.07999999999999996,True,False,True,False
+KXTOPALBUM,Entertainment,Billboard Top 200 #1,7,7,0,100.0,0.07999999999999996,True,False,False,False
+KXJOBLESS,Economics,Initial jobless claims,3,3,0,100.0,0.07999999999999996,True,False,False,False
+KXNCAAFGAME,Sports,College Football Game,51,50,1,98.0392156862745,0.06039215686274502,True,False,True,False
+KXNFLGAME,Sports,Professional Football Game,36,35,1,97.22222222222221,0.05222222222222205,True,False,True,False
+KXATPMATCH,Sports,ATP Tennis Match,70,68,2,97.14285714285714,0.051428571428571386,True,False,False,False
+KXWTAMATCH,Sports,WTA Tennis Match,88,85,3,96.5909090909091,0.045909090909090906,True,False,False,False
+KXHIGHLAX,Climate and Weather,Highest temperature in Los Angeles,28,27,1,96.42857142857143,0.04428571428571427,True,False,False,True
+KXNCAAFTOTAL,Sports,College Football Total Points,105,101,4,96.19047619047619,0.04190476190476188,True,False,True,False
+KXSCOTTISHPREMGAME,Sports,Scottish Premiership Game,52,50,2,96.15384615384616,0.041538461538461524,True,False,False,False
+KXHIGHNY,Climate and Weather,Highest temperature in NYC,26,25,1,96.15384615384616,0.041538461538461524,True,False,False,True
+KXNHLGAME,Sports,NHL Game,75,72,3,96.0,0.03999999999999993,True,False,True,False
+KXCASED,Health,COVID daily cases,46,44,2,95.65217391304348,0.03652173913043478,True,False,False,False
+KXLOWTPHIL,Climate and Weather,Lowest temperature in Philadelphia,22,21,1,95.45454545454545,0.034545454545454546,True,False,False,False
+KXSNOWNYM,Climate and Weather,Total snow in NYC,21,20,1,95.23809523809523,0.03238095238095218,True,False,False,False
+KXNBATOTAL,Sports,Pro Basketball Total Points,84,80,4,95.23809523809523,0.03238095238095218,True,False,True,False
+KXNFLTOTAL,Sports,Pro Football Total Points,78,74,4,94.87179487179486,0.028717948717948527,True,False,True,False
+KXFIFAGAME,Sports,Fifa Game,58,55,3,94.82758620689656,0.028275862068965478,True,False,False,False
+KXLIGUE1GAME,Sports,Ligue 1 Game,57,54,3,94.73684210526315,0.027368421052631493,True,False,False,False
+KXATPCHALLENGERMATCH,Sports,Challenger ATP ,76,72,4,94.73684210526315,0.027368421052631493,True,False,False,False
+KXCPIGAS,Economics,CPI on gas,18,17,1,94.44444444444444,0.02444444444444438,True,False,False,False
+KXLEAVITTLATE,Mentions,Karoline Leavitt Late,18,17,1,94.44444444444444,0.02444444444444438,True,False,False,False
+KXEUROLEAGUEGAME,Sports,Euroleague Game,89,84,5,94.3820224719101,0.023820224719101064,True,False,True,False
+KXNFLMENTION,Mentions,NFL Mention,71,67,4,94.36619718309859,0.023661971830985846,True,False,True,True
+KXHIGHTLV,Climate and Weather,Las Vegas Max Daily Temperature,17,16,1,94.11764705882352,0.02117647058823513,True,False,False,True
+KXMLBGAME,Sports,Professional Baseball Game,65,61,4,93.84615384615384,0.018461538461538307,True,False,True,False
+KXNFLPREPACKSGP,Sports,MVE NFL Pre Pack,32,30,2,93.75,0.017499999999999953,True,False,True,False
+KXMTA,Transportation,NYC subway riders,16,15,1,93.75,0.017499999999999953,True,False,False,False
+KXNFLSPREAD,Sports,Pro Football Spread,46,43,3,93.47826086956522,0.01478260869565217,True,False,True,False
+KXINXZ,Financials,S&P 500 up,46,43,3,93.47826086956522,0.01478260869565217,True,False,False,True
+KXUFCFIGHT,Sports,UFC Fight,44,41,3,93.18181818181817,0.011818181818181728,True,False,False,False
+KXFACUPGAME,Sports,FA Cup Game,29,27,2,93.10344827586206,0.011034482758620623,True,False,True,False
+KXSAUDIPLGAME,Sports,Saudi Pro League Game,58,54,4,93.10344827586206,0.011034482758620623,True,False,False,False
+KXWTACHALLENGERMATCH,Sports,Challenger WTA,72,67,5,93.05555555555556,0.01055555555555554,True,False,False,False
+KXGDP,Economics,US GDP growth,43,40,3,93.02325581395348,0.01023255813953483,True,False,False,True
+KXCASEW,Health,New COVID-19 cases this week,14,13,1,92.85714285714286,0.008571428571428563,True,False,False,False
+KXCPIYOY,Economics,Inflation,28,26,2,92.85714285714286,0.008571428571428563,True,False,False,False
+KXBTC15M,Crypto,Bitcoin price up down,55,51,4,92.72727272727272,0.0072727272727272085,True,False,False,True
+KXHIGHMIA,Climate and Weather,Highest temperature in Miami,27,25,2,92.5925925925926,0.00592592592592589,True,False,False,True
+KXNASDAQ100Z,Financials,Nasdaq up,27,25,2,92.5925925925926,0.00592592592592589,True,False,False,False
+KXHNLGAME,Sports,Croatia HNL Game,27,25,2,92.5925925925926,0.00592592592592589,True,False,False,False
+KXAAAGASM,Economics,US gas price,27,25,2,92.5925925925926,0.00592592592592589,True,False,False,False
+KXMLBSPREAD,Sports,Pro Baseball Spread,40,37,3,92.5,0.0050000000000000044,True,False,True,False
+KXSOL15M,Crypto,Solana 15 minutes,53,49,4,92.45283018867924,0.00452830188679243,True,True,False,True
+KXUNITEDCUPMATCH,Sports,United Cup Match,39,36,3,92.3076923076923,0.003076923076922977,True,True,True,False
+KXCPIUSEDCAR,Economics,CPI on used cars,13,12,1,92.3076923076923,0.003076923076922977,True,True,False,False
+KXUCLGAME,Sports,UEFA Champions League Game,51,47,4,92.15686274509804,0.0015686274509802978,True,True,False,False
+KXFLIGHTJFK,World,JFK International Airport total flight delays and cancellations,12,11,1,91.66666666666666,-0.0033333333333335213,False,True,False,False
+KXNETFLIXRANKSHOW,Entertainment,Netflix TV ranking,12,11,1,91.66666666666666,-0.0033333333333335213,False,True,False,False
+KXUELGAME,Sports,UEFA Europa League Game,58,53,5,91.37931034482759,-0.006206896551724128,False,False,False,False
+KXEPLGAME,Sports,English Premier League Game,46,42,4,91.30434782608695,-0.006956521739130528,False,False,False,False
+KXSUPERLIGGAME,Sports,Turkish Super Lig Game,56,51,5,91.07142857142857,-0.009285714285714342,False,False,False,False
+KXCOPPAITALIAGAME,Sports,Coppa Italia Game,11,10,1,90.9090909090909,-0.01090909090909098,False,False,False,False
+KXSLGREECEGAME,Sports,Super League Greece Game,22,20,2,90.9090909090909,-0.01090909090909098,False,False,False,False
+KXAPPRANKFREE,Entertainment,Free app ranking,11,10,1,90.9090909090909,-0.01090909090909098,False,False,False,False
+KXWOWHOCKEY,Sports,Winter Olympics Women's Hockey,11,10,1,90.9090909090909,-0.01090909090909098,False,False,False,False
+KXTOPMODEL,Science and Technology,Top model,11,10,1,90.9090909090909,-0.01090909090909098,False,False,False,False
+KXCS2GAME,Sports,Counter-Strike 2 Game,65,59,6,90.76923076923077,-0.012307692307692353,False,False,False,False
+KXNHLTOTAL,Sports,NHL Goal Total,85,77,8,90.58823529411765,-0.014117647058823568,False,False,True,False
+KXHURCAT,Climate and Weather,Hurricane category,21,19,2,90.47619047619048,-0.015238095238095273,False,False,False,False
+KXFIBAECUPGAME,Sports,FIBA Europe Cup Game,21,19,2,90.47619047619048,-0.015238095238095273,False,False,True,False
+KXNBAMENTION,Mentions,NBA Mention,83,75,8,90.36144578313254,-0.016385542168674605,False,False,True,True
+KXDFBPOKALGAME,Sports,DFB Pokal Game,10,9,1,90.0,-0.020000000000000018,False,False,False,False
+KXETH15M,Crypto,ETH 15M price up down,60,54,6,90.0,-0.020000000000000018,False,False,False,True
+KXAFCCLGAME,Sports,AFC Champions League Game,10,9,1,90.0,-0.020000000000000018,False,False,False,False
+KXCPI,Economics,CPI,30,27,3,90.0,-0.020000000000000018,False,False,False,False
+KXUCLTOTAL,Sports,Champions League Total Goals,59,53,6,89.83050847457628,-0.02169491525423728,False,False,False,False
+KXU3,Economics,Unemployment,29,26,3,89.65517241379311,-0.02344827586206899,False,False,False,False
+KXBANKRUPTS,Economics,Companies going bankrupt,19,17,2,89.47368421052632,-0.025263157894736876,False,False,False,False
+KXCOUPEDEFRANCEGAME,Sports,Coupe de France Gam,19,17,2,89.47368421052632,-0.025263157894736876,False,False,False,False
+KXAFCONGAME,Sports,AFCON Game Winner,47,42,5,89.36170212765957,-0.026382978723404338,False,False,False,False
+KXCSGOGAME,Sports,Counter-Strike 2 Games,83,74,9,89.1566265060241,-0.028433734939759092,False,False,False,False
+KXEFLCHAMPIONSHIPGAME,Sports,EFL Championship Game,64,57,7,89.0625,-0.02937500000000004,False,False,False,False
+KXLOLGAME,Sports,League of Legends Game,100,89,11,89.0,-0.030000000000000027,False,False,False,False
+KXNBAPTS,Sports,Pro Basketball Player Points,9,8,1,88.88888888888889,-0.0311111111111112,False,False,True,False
+KXRAINSEA,Climate and Weather,Seattle rain,45,40,5,88.88888888888889,-0.0311111111111112,False,False,False,True
+KXCS2MAP,Sports,Counter-Strike 2 Map Winner ,27,24,3,88.88888888888889,-0.0311111111111112,False,False,False,False
+KXBOOSTER,Health,COVID boosters,9,8,1,88.88888888888889,-0.0311111111111112,False,False,False,False
+KXHIGHDEN,Climate and Weather,Highest temperature in Denver,26,23,3,88.46153846153845,-0.03538461538461546,False,False,False,True
+KXBUNDESLIGATOTAL,Sports,Bundesliga Total,52,46,6,88.46153846153845,-0.03538461538461546,False,False,False,False
+KXLOLGAMES,Sports,League of Legends Games,26,23,3,88.46153846153845,-0.03538461538461546,False,False,False,False
+KXLALIGASPREAD,Sports,La Liga Spread,17,15,2,88.23529411764706,-0.03764705882352948,False,False,False,False
+KXAAAGASW,Economics,US gas price up,25,22,3,88.0,-0.040000000000000036,False,False,False,False
+KXDOTA2GAME,Sports,Dota 2 Game,58,51,7,87.93103448275862,-0.04068965517241385,False,False,False,False
+KXLALIGAGAME,Sports,La Liga Game,57,50,7,87.71929824561403,-0.04280701754385974,False,False,False,False
+KXJLEAGUEGAME,Sports,Japan J League Game,24,21,3,87.5,-0.04500000000000004,False,False,False,False
+KXATPDOUBLES,Sports,ATP Doubles Tennis Match,8,7,1,87.5,-0.04500000000000004,False,False,False,False
+KXHIGHAUS,Climate and Weather,Highest temperature in Austin,32,28,4,87.5,-0.04500000000000004,False,False,False,True
+KXVALORANTMAP,Sports,Valorant Map Winner,16,14,2,87.5,-0.04500000000000004,False,False,False,False
+KXAPPRANKFREE2,Entertainment,Free app ranking,8,7,1,87.5,-0.04500000000000004,False,False,False,False
+KXGAS,Economics,Gas weekly,32,28,4,87.5,-0.04500000000000004,False,False,False,False
+KXNBLGAME,Sports,NBL Basketball Game,63,55,8,87.3015873015873,-0.04698412698412702,False,False,False,False
+KXNCAAFSPREAD,Sports,College Football Spread,63,55,8,87.3015873015873,-0.04698412698412702,False,False,True,False
+KXMLSGAME,Sports,Major League Soccer Game,63,55,8,87.3015873015873,-0.04698412698412702,False,False,False,False
+KXKBLGAME,Sports,Korea KBL Game,47,41,6,87.2340425531915,-0.047659574468085,False,False,False,False
+KXCBAGAME,Sports,Chinese Basketball Association Game ,108,94,14,87.03703703703704,-0.04962962962962969,False,False,False,False
+KXCONGRESSMENTION,Mentions,Congress Mention,107,93,14,86.91588785046729,-0.05084112149532716,False,False,False,True
+KXSERIEAGAME,Sports,Serie A Game,61,53,8,86.88524590163934,-0.05114754098360663,False,False,False,False
+KXARGPREMDIVGAME,Sports,Argentina Primera Division Game,60,52,8,86.66666666666667,-0.053333333333333344,False,False,False,False
+KXLOWTAUS,Climate and Weather,Lowest temperature in Austin,15,13,2,86.66666666666667,-0.053333333333333344,False,False,False,False
+KXWNBAGAME,Sports,Professional Women's Basketball Game,89,77,12,86.51685393258427,-0.05483146067415734,False,False,True,False
+KXBUNDESLIGAGAME,Sports,Bundesliga Game,58,50,8,86.20689655172413,-0.05793103448275873,False,False,False,False
+KXLNBELITEGAME,Sports,LNB Elite Game,36,31,5,86.11111111111111,-0.05888888888888888,False,False,False,False
+KXFIBACHAMPLEAGUEGAME,Sports,FIBA Champions League Game,43,37,6,86.04651162790698,-0.0595348837209302,False,False,False,False
+KXLALIGATOTAL,Sports,La Liga Total,49,42,7,85.71428571428571,-0.06285714285714294,False,False,False,False
+KXEFLCUPGAME,Sports,EFL Cup Game,14,12,2,85.71428571428571,-0.06285714285714294,False,False,True,False
+KXLIGUE1TOTAL,Sports,Ligue 1 Total,35,30,5,85.71428571428571,-0.06285714285714294,False,False,False,False
+KXLAGODAYS,Politics,Mar-a-Lago trips,7,6,1,85.71428571428571,-0.06285714285714294,False,False,False,False
+KX538APPROVEMIN,Politics,Biden 538 lowest approval rating,7,6,1,85.71428571428571,-0.06285714285714294,False,False,False,False
+KXEKSTRAKLASAGAME,Sports,Polish Ekstraklasa Game,21,18,3,85.71428571428571,-0.06285714285714294,False,False,False,False
+KXADP,Economics,ADP employment change,7,6,1,85.71428571428571,-0.06285714285714294,False,False,False,False
+KXLIGAPORTUGALGAME,Sports,Liga Portugal Game,55,47,8,85.45454545454545,-0.06545454545454554,False,False,False,False
+KXKHLGAME,Sports,KHL Game,41,35,6,85.36585365853658,-0.06634146341463422,False,False,False,False
+KXRAINNYCM,Climate and Weather,Monthly rain in New York,33,28,5,84.84848484848484,-0.07151515151515164,False,False,False,True
+KXEUROCUPGAME,Sports,Eurocup Basketball Game,85,72,13,84.70588235294117,-0.07294117647058827,False,False,True,False
+KXAFCONADVANCE,Sports,AFCON To Advance,13,11,2,84.61538461538461,-0.0738461538461539,False,False,False,False
+KXATPMIA,Sports,ATP Miami,13,11,2,84.61538461538461,-0.0738461538461539,False,False,False,False
+KXFOWOMEN,Sports,French Open Women's,45,38,7,84.44444444444444,-0.07555555555555561,False,False,False,False
+KXAHLGAME,Sports,AHL Game,45,38,7,84.44444444444444,-0.07555555555555561,False,False,False,False
+KXFOMEN,Sports,French Open Men's,38,32,6,84.21052631578947,-0.07789473684210536,False,False,False,False
+KXHIGHPHIL,Climate and Weather,Highest temperature in Philadelphia,19,16,3,84.21052631578947,-0.07789473684210536,False,False,False,True
+KXWTAIT,Sports,WTA Italian Open,19,16,3,84.21052631578947,-0.07789473684210536,False,False,False,False
+KXUECLGAME,Sports,UEFA Conference League Game,63,53,10,84.12698412698413,-0.07873015873015878,False,False,False,False
+KXCLUBWCGAME,Sports,Club World Club Game,44,37,7,84.0909090909091,-0.07909090909090909,False,False,False,False
+KXARGLNBGAME,Sports,Liga Nacional de Basquetbol Game,25,21,4,84.0,-0.08000000000000006,False,False,False,False
+KXHIGHCHI,Climate and Weather,Highest temperature in Chicago,25,21,4,84.0,-0.08000000000000006,False,False,False,True
+KXBELGIANPLGAME,Sports,Belgian Pro League Game,61,51,10,83.60655737704919,-0.08393442622950818,False,False,False,False
+KXSERIEASPREAD,Sports,Serie A Spread,12,10,2,83.33333333333334,-0.08666666666666656,False,False,False,False
+KXBOXING,Sports,Boxing Match Champion,6,5,1,83.33333333333334,-0.08666666666666656,False,False,False,False
+KXTENNISEXHIBITION,Sports,Tennis Exhibition Match,6,5,1,83.33333333333334,-0.08666666666666656,False,False,False,False
+KXWTAMIA,Sports,WTA Miami,6,5,1,83.33333333333334,-0.08666666666666656,False,False,False,False
+KXHIGHHOU,Climate and Weather,Highest temperature in Houston,24,20,4,83.33333333333334,-0.08666666666666656,False,False,False,True
+KXVALORANTGAME,Sports,Valorant game winner,65,54,11,83.07692307692308,-0.08923076923076922,False,False,False,False
+KXLIGAMXGAME,Sports,Liga MX Game,53,44,9,83.01886792452831,-0.08981132075471698,False,False,False,False
+KXVAXX,Health,COVID vaccinations,23,19,4,82.6086956521739,-0.09391304347826103,False,False,False,False
+KXRAINNYC,Climate and Weather,NYC rain,34,28,6,82.35294117647058,-0.09647058823529421,False,False,False,True
+KXHIGHTDC,Climate and Weather,Washington DC Daily Max Temp,17,14,3,82.35294117647058,-0.09647058823529421,False,False,False,True
+KXHOCHULMENTION,Mentions,Kathy Hochul,90,74,16,82.22222222222221,-0.09777777777777785,False,False,False,True
+KXEREDIVISIEGAME,Sports,Eredivisie Game,67,55,12,82.08955223880598,-0.09910447761194029,False,False,False,False
+KXAPRPOTUS,Politics,President RCP approval rating this week,11,9,2,81.81818181818183,-0.10181818181818181,False,False,False,False
+KXATPMAD,Sports,ATP Madrid,11,9,2,81.81818181818183,-0.10181818181818181,False,False,False,False
+KXTORNADO,Climate and Weather,Number of Tornadoes,11,9,2,81.81818181818183,-0.10181818181818181,False,False,False,False
+KXNCAAFPREPACKSGP,Sports,MVE NCAAF Pre Pack,11,9,2,81.81818181818183,-0.10181818181818181,False,False,True,False
+KXCRICKETT20IMATCH,Sports,Cricket T20I Match,49,40,9,81.63265306122449,-0.10367346938775514,False,False,False,False
+KXF1RACEPODIUM,Sports,F1 Race Podium Finisher,16,13,3,81.25,-0.10750000000000004,False,False,False,False
+KXLOLTOTALMAPS,Sports,League of Legends Total Maps,16,13,3,81.25,-0.10750000000000004,False,False,False,False
+KXEPLTOTAL,Sports,English Premier League Total Goals,79,64,15,81.0126582278481,-0.10987341772151892,False,False,False,False
+KXLOWTLAX,Climate and Weather,Lowest Temperature in LA,21,17,4,80.95238095238095,-0.11047619047619052,False,False,False,False
+KXLOWTNYC,Climate and Weather,Lowest temperature in NYC,21,17,4,80.95238095238095,-0.11047619047619052,False,False,False,False
+KXBRASILEIROGAME,Sports,Brasileiro Serie A Game,73,59,14,80.82191780821918,-0.11178082191780825,False,False,False,False
+KXMAMDANIMENTION,Mentions,What will Zohran Mamdani say?,87,70,17,80.45977011494253,-0.11540229885057474,False,False,False,True
+KXR6GAME,Sports,R6 Game,35,28,7,80.0,-0.12,False,False,False,False
+KXPICKLEBALL,Sports,pickleball,5,4,1,80.0,-0.12,False,False,False,False
+KXPGARYDERMATCH,Sports,PGA Ryder Cup Matchups,15,12,3,80.0,-0.12,False,False,False,False
+KXSWISSLEAGUEGAME,Sports,Swiss Super League Game,50,40,10,80.0,-0.12,False,False,False,False
+KXSPACEXSTARSHIP,Companies,SpaceX Starship launch,25,20,5,80.0,-0.12,False,False,False,False
+KXCPICORE,Economics,CPI core,15,12,3,80.0,-0.12,False,False,False,False
+KXLOWTCHI,Climate and Weather,Lowest Temperature Chicago,20,16,4,80.0,-0.12,False,False,False,False
+KXNBASTL,Sports,Pro Basketball Player Steals,5,4,1,80.0,-0.12,False,False,True,False
+KXDARTSMATCH,Sports,Darts Match,20,16,4,80.0,-0.12,False,False,False,False
+KXNFLREC,Sports,Pro Football Player Receptions,89,71,18,79.7752808988764,-0.12224719101123604,False,False,True,False
+KXNHLSPREAD,Sports,NHL Spread,29,23,6,79.3103448275862,-0.12689655172413794,False,False,True,False
+KXNCAAMENTION,Mentions,NCAA Mention,101,80,21,79.20792079207921,-0.12792079207920792,False,False,True,True
+KXALEAGUEGAME,Sports,Australian A League Game,67,53,14,79.1044776119403,-0.1289552238805971,False,False,False,False
+KXJBLEAGUEGAME,Sports,Japan B League Game,66,52,14,78.78787878787878,-0.1321212121212122,False,False,False,False
+KXRAINNY,World,NYC rain,9,7,2,77.77777777777779,-0.14222222222222214,False,False,False,True
+KXNFLANYTD,Sports,Pro Football Anytime Touchdown,18,14,4,77.77777777777779,-0.14222222222222214,False,False,True,False
+KXBUNDESLIGASPREAD,Sports,Bundesliga Spread,9,7,2,77.77777777777779,-0.14222222222222214,False,False,False,False
+KXHIGHTSEA,Climate and Weather,Seattle Maximum Temperature Daily,18,14,4,77.77777777777779,-0.14222222222222214,False,False,False,True
+KXSERIEATOTAL,Sports,Serie A Total,49,38,11,77.55102040816327,-0.14448979591836741,False,False,False,False
+KXCODGAME,Sports,Call of Duty Games,35,27,8,77.14285714285715,-0.14857142857142847,False,False,False,False
+KXNFLPREPACK2ML,Sports,MVE NFL Pre Pack,35,27,8,77.14285714285715,-0.14857142857142847,False,False,True,False
+KXTACAPORTGAME,Sports,Taca de Portugal Game,13,10,3,76.92307692307693,-0.15076923076923066,False,False,False,False
+KXTSAW,Science and Technology,TSA check-ins this week,13,10,3,76.92307692307693,-0.15076923076923066,False,False,False,False
+KXATPSETWINNER,Sports,ATP Set Winner,47,36,11,76.59574468085107,-0.1540425531914893,False,False,False,False
+KXCOPADELREYADVANCE,Sports,Copa Del Rey To Advance,17,13,4,76.47058823529412,-0.15529411764705892,False,False,False,False
+KXNFLTEAMTOTAL,Sports,Pro Football Team Total Points,101,77,24,76.23762376237624,-0.15762376237623754,False,False,True,False
+KXMLBTOTAL,Sports,Pro Baseball Total Points,20,15,5,75.0,-0.17000000000000004,False,False,True,False
+KXXRP15M,Crypto,XRP 15 Minute,32,24,8,75.0,-0.17000000000000004,False,False,False,False
+KXSURVIVORELIMINATION,Entertainment,WHO WILL BE ELIMINATED FROM SURVIVOR,4,3,1,75.0,-0.17000000000000004,False,False,False,False
+KXUNRIVALEDGAME,Sports,Unrivaled Basketball Game,12,9,3,75.0,-0.17000000000000004,False,False,False,False
+KXSPOTIFY2D,Entertainment,Daily US Spotify chart Runner-up,4,3,1,75.0,-0.17000000000000004,False,False,False,False
+KXTRUMPMENTION,Mentions,What will Trump say?,66,49,17,74.24242424242425,-0.1775757575757575,False,False,False,True
+KXTRUMPMENTIONB,Mentions,Trump Mention B,108,80,28,74.07407407407408,-0.17925925925925923,False,False,False,True
+KXVANCEMENTION,Mentions,Vance Says,76,56,20,73.68421052631578,-0.1831578947368422,False,False,False,True
+KXCPICOREYOY,Economics,Core inflation,19,14,5,73.68421052631578,-0.1831578947368422,False,False,False,False
+KXMRBEASTMENTION,Mentions,What Will Mr Beast say in his next video,90,66,24,73.33333333333333,-0.18666666666666676,False,False,False,True
+KXPAYROLLS,Economics,Jobs numbers,11,8,3,72.72727272727273,-0.19272727272727275,False,False,False,False
+KXCOPADELREYGAME,Sports,Copa Del Rey Game,32,23,9,71.875,-0.20125000000000007,False,False,False,False
+KXCFPSEED,Sports,College Football Playoff Seed,7,5,2,71.42857142857143,-0.20571428571428574,False,False,False,False
+KXFLIGHTLAX,World,Los Angeles International Airport total delays and cancellations,7,5,2,71.42857142857143,-0.20571428571428574,False,False,False,False
+KXNFLRECYDS,Sports,Pro Football player Receiving Yards,80,57,23,71.25,-0.20750000000000005,False,False,True,False
+KXKIMMELMENTION,Mentions,Jimmy Kimmel Mention,52,37,15,71.15384615384616,-0.20846153846153848,False,False,False,True
+KXLOLMAP,Sports,League of Legends Map Winner,41,29,12,70.73170731707317,-0.21268292682926826,False,False,False,False
+KXEPLSPREAD,Sports,English Premier League Spread,10,7,3,70.0,-0.2200000000000001,False,False,False,False
+KXHIGHTSFO,Climate and Weather,San Francisco High Temperature Daily,23,16,7,69.56521739130434,-0.22434782608695658,False,False,False,True
+KXJOBLESSCLAIMS,Economics,Weekly initial jobless claims,23,16,7,69.56521739130434,-0.22434782608695658,False,False,False,False
+KXNFLPASSTDS,Sports,Pro Football player Passing Touchdowns,48,33,15,68.75,-0.23250000000000007,False,False,True,False
+KXNFLPASSYDS,Sports,Pro Football player Passing Yards,114,77,37,67.54385964912281,-0.24456140350877198,False,False,True,False
+KXTOPSONG,Entertainment,Billboard Hot 100 #1,15,10,5,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXHMONTHRANGE,Climate and Weather,Monthly Temperature Increase (ºC),6,4,2,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXCPIAPPAREL,Economics,CPI on apparel,3,2,1,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXEURO,Financials,EURO/USD exchange rate,6,4,2,66.66666666666666,-0.2533333333333335,False,False,True,False
+KXNFL2TD,Sports,Pro Football Multiple Touchdowns,12,8,4,66.66666666666666,-0.2533333333333335,False,False,True,False
+KX538APPROVE,Politics,President 538 approval rating this week,12,8,4,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXTSA,Transportation,TSA daily check-ins,6,4,2,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXSPOTIFYARTISTD,Entertainment,Daily US Spotify artist chart,3,2,1,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXIIHFGAME,Sports,IIHF Game,6,4,2,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXUCLSPREAD,Sports,Champions League Spread,12,8,4,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXCS2TOTALMAPS,Sports,CS2 Total Maps,12,8,4,66.66666666666666,-0.2533333333333335,False,False,False,False
+KXNCAABMENTION,Mentions,College Basketball,86,57,29,66.27906976744185,-0.2572093023255815,False,False,True,True
+KXKLEAGUEGAME,Sports,Korea K League Game,17,11,6,64.70588235294117,-0.27294117647058835,False,False,False,False
+KXLOWTDEN,Climate and Weather,Lowest temperature in Denver,17,11,6,64.70588235294117,-0.27294117647058835,False,False,False,False
+KXBILLBOARDRUNNERUPSONG,Entertainment,Will Song be number 2 on Billboard 100?,11,7,4,63.63636363636363,-0.2836363636363637,False,False,False,False
+KXLIGUE1SPREAD,Sports,Ligue 1 Spread,8,5,3,62.5,-0.29500000000000004,False,False,False,False
+KXNBA2D,Sports,Pro Basketball Double Double,8,5,3,62.5,-0.29500000000000004,False,False,True,False
+KXASYLUMCASES,Politics,New asylum cases,8,5,3,62.5,-0.29500000000000004,False,False,False,False
+KXNFLPREPACK,Sports,MVE NFL Pre Pack,21,13,8,61.904761904761905,-0.30095238095238097,False,False,True,False
+KXNETFLIXRANKMOVIE,Entertainment,Netflix movie ranking,18,11,7,61.111111111111114,-0.3088888888888889,False,False,False,False
+KXATPTOTALSETS,Sports,ATP Total Sets,30,18,12,60.0,-0.32000000000000006,False,False,False,False
+KXCOLBERTMENTION,Mentions,Colbert Mention,51,30,21,58.82352941176471,-0.33176470588235296,False,False,False,True
+KXSTARMERMENTION,Mentions,Starmer mentions,51,29,22,56.86274509803921,-0.3513725490196079,False,False,False,True
+KXSURVIVORMENTION,Mentions,Survivor Mention,62,35,27,56.451612903225815,-0.3554838709677419,False,False,False,True
+KXNFLPREPACK3ML,Sports,MVE NFL Pre Pack,16,9,7,56.25,-0.35750000000000004,False,False,True,False
+KXNFLRSHYDS,Sports,Pro Football player Rushing Yards,126,69,57,54.761904761904766,-0.37238095238095237,False,False,True,False
+KXNETFLIXRANKMOVIERUNNERUP,Entertainment,RUNNER UP NETFLIX MOVIE,11,6,5,54.54545454545454,-0.3745454545454546,False,False,False,False
+KXATPEXACTMATCH,Sports,ATP Exact Match Score,22,12,10,54.54545454545454,-0.3745454545454546,False,False,False,False
+KXNCAAHOCKEYGAME,Sports,College Hockey Game,13,7,6,53.84615384615385,-0.3815384615384616,False,False,True,False
+KXLATENIGHTMENTION,Mentions,Late Night Mention,57,30,27,52.63157894736842,-0.39368421052631586,False,False,False,True
+KXSPOTIFYD,Entertainment,Daily US Spotify chart,2,1,1,50.0,-0.42000000000000004,False,False,False,False
+KXNETFLIXRANKSHOWRUNNERUP,Entertainment,RUNNER UP NETFLIX SHOW,14,7,7,50.0,-0.42000000000000004,False,False,False,False
+KXWOLUGE,Sports,Winter Olympics Luge,6,3,3,50.0,-0.42000000000000004,False,False,False,False
+KXWTAMOA,Sports,WTA Tour Merida Open Akron,4,2,2,50.0,-0.42000000000000004,False,False,False,False
+KXSNLMENTION,Mentions,SNL Mention,46,23,23,50.0,-0.42000000000000004,False,False,False,True
+KXCPISHELTER,Economics,CPI on shelter,4,2,2,50.0,-0.42000000000000004,False,False,False,False
+KXOILW,Economics,Price of oil weekly,2,1,1,50.0,-0.42000000000000004,False,False,False,False
+KXUFCMOF,Sports,UFC Method of Finish,5,2,3,40.0,-0.52,False,False,False,False
+KXNBAAST,Sports,Pro Basketball Player Assists,5,2,3,40.0,-0.52,False,False,True,False
+KXLEAVITTMENTIONDURATION,Mentions,Leavitt Duration,19,7,12,36.84210526315789,-0.5515789473684211,False,False,False,True
+KXUFCMOV,Sports,UFC Method of Victory,32,11,21,34.375,-0.57625,False,False,False,False
+KXNHLGOAL,Sports,Pro Hockey Goalscorer,3,1,2,33.33333333333333,-0.5866666666666668,False,False,True,False
+KXSPOTIFYALBUMW,Entertainment,Weekly US Spotify album chart,4,1,3,25.0,-0.67,False,False,False,False
+KXDGAAWARDS,Entertainment,DGA Awards,4,1,3,25.0,-0.67,False,False,False,False
+KXWTIW,Financials,WTI oil weekly range,9,2,7,22.22222222222222,-0.6977777777777778,False,False,False,False
+KXNBA3D,Sports,Pro Basketball Triple Double,6,1,5,16.666666666666664,-0.7533333333333334,False,False,True,False
+KXEURUSD,Financials,EUR/USD daily range,2,0,2,0.0,-0.92,False,False,False,False
+KXPICKLEBALLGAMES,Sports,Pickle Ball Games,1,0,1,0.0,-0.92,False,False,False,False
