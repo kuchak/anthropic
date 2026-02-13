@@ -236,7 +236,8 @@ class KalshiClient:
         category: Optional[str] = None,
         limit: int = 1000,
         max_total: Optional[int] = None,
-        min_volume: Optional[int] = None
+        min_volume: Optional[int] = None,
+        max_expected_expiration_time: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
         Get list of markets with optional filters (with automatic pagination)
@@ -246,7 +247,8 @@ class KalshiClient:
             category: Filter by series ticker
             limit: Number of markets per page (max 1000)
             max_total: Maximum total markets to fetch across all pages (None = fetch all)
-            min_volume: Minimum 24h volume (server-side filter to reduce API calls)
+            min_volume: Minimum 24h volume (server-side filter)
+            max_expected_expiration_time: ISO timestamp for max expected expiration (e.g., '2026-02-13T15:00:00Z')
 
         Returns:
             List of market dictionaries
@@ -264,6 +266,8 @@ class KalshiClient:
                 params['series_ticker'] = category
             if min_volume is not None:
                 params['min_volume'] = min_volume
+            if max_expected_expiration_time:
+                params['max_expected_expiration_time'] = max_expected_expiration_time
             if cursor:
                 params['cursor'] = cursor
 

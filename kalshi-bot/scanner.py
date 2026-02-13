@@ -3,7 +3,7 @@ Market Scanner
 Discovers markets, filters by criteria, and maintains active watchlist
 """
 from typing import List, Dict, Any, Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from logger_setup import get_logger
 from models import Market
 from kalshi_client import KalshiClient
@@ -65,10 +65,17 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get ALL open markets with active trading (server-side volume filter)
-        # Reduces from ~110 pages to ~20 pages (10x faster scans)
-        logger.info(f"  Querying active markets from Kalshi (min_volume=1)...")
-        all_markets = self.client.get_markets(status='open', limit=1000, max_total=None, min_volume=1)
+        # Get markets expiring within 4 hours with active trading (server-side filters)
+        # Reduces from ~110 pages (110k markets) to ~5 pages (5k markets) = 20x faster!
+        four_hours_from_now = (datetime.now(timezone.utc) + timedelta(hours=4)).strftime('%Y-%m-%dT%H:%M:%SZ')
+        logger.info(f"  Querying markets expiring before {four_hours_from_now} (min_volume=1)...")
+        all_markets = self.client.get_markets(
+            status='open',
+            limit=1000,
+            max_total=None,
+            min_volume=1,
+            max_expected_expiration_time=four_hours_from_now
+        )
         logger.info(f"  Retrieved {len(all_markets)} total open markets")
 
         # Debug counters
