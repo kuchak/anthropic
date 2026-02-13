@@ -102,6 +102,7 @@ class Scanner:
             'wrong_price': 0,
             'wrong_settlement': 0,
             'wrong_status': 0,
+            'not_live': 0,
             'passed': 0
         }
 
@@ -154,6 +155,7 @@ class Scanner:
         logger.info(f"    Wrong price: {filter_stats['wrong_price']}")
         logger.info(f"    Wrong settlement time: {filter_stats['wrong_settlement']}")
         logger.info(f"    Wrong status: {filter_stats['wrong_status']}")
+        logger.info(f"    Not live (no volume or >6h away): {filter_stats['not_live']}")
         logger.info(f"    ✅ PASSED: {filter_stats['passed']}")
 
         return len(self.watchlist)
@@ -256,6 +258,9 @@ class Scanner:
             ticker = market_data['ticker']
             series_ticker = ticker.split('-')[0] if '-' in ticker else ticker
 
+            # Get volume (use volume_24h_fp if available, otherwise volume_24h)
+            volume_24h = float(market_data.get('volume_24h_fp', 0) or market_data.get('volume_24h', 0) or 0)
+
             return Market(
                 ticker=ticker,
                 title=market_data['title'],
@@ -265,7 +270,8 @@ class Scanner:
                 best_yes_price=yes_price,
                 best_no_price=no_price,
                 best_yes_size=0,  # Size not critical for scanning
-                best_no_size=0
+                best_no_size=0,
+                volume_24h=volume_24h
             )
 
         except Exception as e:
@@ -359,6 +365,15 @@ class Scanner:
         if market.status not in ['open', 'active']:
             filter_stats['wrong_status'] += 1
             return False
+
+        # Check if market is LIVE (event happening now)
+        # Proxy: close_time within 6 hours AND volume_24h > 0
+        time_to_close_hours = time_to_settlement_minutes / 60
+        is_live = (time_to_close_hours <= 6.0) and (market.volume_24h > 0)
+
+        if not is_live:
+            filter_stats['not_live'] += 1
+            return False  # Not a live market (future event or no active trading)
 
         return True
 

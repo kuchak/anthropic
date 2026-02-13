@@ -33,6 +33,7 @@ class Market:
     best_no_price: float
     best_yes_size: int = 0
     best_no_size: int = 0
+    volume_24h: float = 0.0  # 24-hour trading volume
 
     @property
     def time_to_settlement_minutes(self) -> float:
