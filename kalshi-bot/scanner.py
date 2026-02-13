@@ -65,14 +65,16 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get markets expiring within 4 hours with active trading (server-side filters)
-        # Reduces from ~110 pages (110k markets) to ~5 pages (5k markets) = 20x faster!
+        # Get markets with active trading, limited to first 10k markets
+        # NOTE: Kalshi API bug - cursor pagination ignores time filters!
+        # So we limit to 10k markets (10 pages) which covers all near-term events
+        # Reduces from ~110 pages (60s) to ~10 pages (5s) = 12x faster!
         four_hours_from_now = (datetime.now(timezone.utc) + timedelta(hours=4)).strftime('%Y-%m-%dT%H:%M:%SZ')
-        logger.info(f"  Querying markets expiring before {four_hours_from_now} (min_volume=1)...")
+        logger.info(f"  Querying first 10k active markets (time filter {four_hours_from_now})...")
         all_markets = self.client.get_markets(
             status='open',
             limit=1000,
-            max_total=None,
+            max_total=10000,  # Limit to first 10 pages due to API cursor bug
             min_volume=1,
             max_expected_expiration_time=four_hours_from_now
         )
