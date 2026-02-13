@@ -62,6 +62,12 @@ class Allocator:
         self.config = config
         self.current_balance = current_balance
 
+        # Ticker-specific Kelly fractions (data-driven from backtest)
+        self.series_ticker_kelly_fractions = config.get('series_ticker_kelly_fractions', {})
+
+        # Default Kelly fraction for unknown tickers (conservative 10%)
+        self.default_kelly_fraction = 0.10
+
         self.kelly_fraction = config.get('kelly_fraction', 0.25)
         self.max_position_size_pct = config.get('max_position_size_pct', 0.20)
         self.max_total_exposure_pct = config.get('max_total_exposure_pct', 0.80)
@@ -69,7 +75,8 @@ class Allocator:
 
         logger.info("Allocator initialized")
         logger.info(f"  Current balance: ${current_balance:.2f}")
-        logger.info(f"  Kelly fraction: {self.kelly_fraction * 100:.0f}%")
+        logger.info(f"  Ticker-specific Kelly fractions: {len(self.series_ticker_kelly_fractions)} tickers")
+        logger.info(f"  Default Kelly fraction (unknown tickers): {self.default_kelly_fraction * 100:.0f}%")
         logger.info(f"  Max position size: {self.max_position_size_pct * 100:.0f}% of balance")
         logger.info(f"  Max total exposure: {self.max_total_exposure_pct * 100:.0f}% of balance")
 
@@ -148,8 +155,14 @@ class Allocator:
             logger.debug(f"  {opportunity.market.ticker}: Kelly fraction non-positive ({kelly_fraction:.4f})")
             return None
 
-        # Apply fractional Kelly (e.g., 25% of full Kelly)
-        adjusted_fraction = kelly_fraction * self.kelly_fraction
+        # Get series ticker (e.g., "KXNBAGAME" from "KXNBAGAME-...")
+        series_ticker = opportunity.market.category  # category stores series_ticker
+
+        # Use ticker-specific Kelly fraction if available, otherwise default to 10%
+        ticker_kelly = self.series_ticker_kelly_fractions.get(series_ticker, self.default_kelly_fraction)
+
+        # Apply ticker-specific Kelly fraction
+        adjusted_fraction = kelly_fraction * ticker_kelly
 
         # Calculate position size
         position_size_dollars = self.current_balance * adjusted_fraction
@@ -159,8 +172,10 @@ class Allocator:
         if position_size_dollars > max_position:
             position_size_dollars = max_position
             reasoning = f"Capped at {self.max_position_size_pct * 100:.0f}% of balance"
+        elif series_ticker in self.series_ticker_kelly_fractions:
+            reasoning = f"{ticker_kelly * 100:.0f}% Kelly (ticker-specific)"
         else:
-            reasoning = f"{self.kelly_fraction * 100:.0f}% Kelly"
+            reasoning = f"{ticker_kelly * 100:.0f}% Kelly (default - unknown ticker)"
 
         # Check available capital
         if position_size_dollars > available_capital:

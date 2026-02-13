@@ -33,17 +33,10 @@ class Scanner:
 
         logger.info("Scanner initialized")
 
-        # Check if whitelist is configured
-        whitelist = config.get('series_ticker_whitelist')
-        if whitelist:
-            logger.info(f"  WHITELIST MODE: Only trading {len(whitelist)} series tickers:")
-            for ticker in whitelist:
-                logger.info(f"    - {ticker}")
-        else:
-            logger.info(f"  NO CATEGORY FILTERING - evaluating ALL markets")
-
+        logger.info(f"  SCANNING ALL MARKETS ON KALSHI (no whitelist)")
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
-        logger.info(f"  Volume filter: volume_24h > 0 (no time filters)")
+        logger.info(f"  Time window: Events within 4 hours")
+        logger.info(f"  Volume filter: volume_24h > 0")
 
     def slow_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
         """
@@ -72,25 +65,9 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get markets - if whitelist configured, query each series separately
-        # This avoids getting multi-leg markets that have no series_ticker
-        whitelist = self.config.get('series_ticker_whitelist')
-        all_markets = []
-
-        if whitelist:
-            logger.info(f"  Querying {len(whitelist)} whitelisted series tickers...")
-            for series_ticker in whitelist:
-                series_markets = self.client.get_markets(
-                    category=series_ticker,
-                    status='open',
-                    limit=1000
-                )
-                all_markets.extend(series_markets)
-                if series_markets:
-                    logger.debug(f"    {series_ticker}: {len(series_markets)} markets")
-        else:
-            all_markets = self.client.get_markets(status='open', limit=1000)
-
+        # Get ALL open markets from Kalshi (no whitelist filtering)
+        logger.info(f"  Querying ALL open markets from Kalshi...")
+        all_markets = self.client.get_markets(status='open', limit=5000)
         logger.info(f"  Retrieved {len(all_markets)} total open markets")
 
         # Debug counters
@@ -323,12 +300,7 @@ class Scanner:
         Returns:
             True if market meets all criteria
         """
-        # Check series ticker whitelist (if configured)
-        whitelist = self.config.get('series_ticker_whitelist')
-        if whitelist:
-            # market.category stores the series_ticker
-            if market.category not in whitelist:
-                return False  # Not in whitelist
+        # NO WHITELIST - scan all markets
 
         # Check settlement time window
         time_to_settlement_minutes = market.time_to_settlement_minutes
@@ -366,13 +338,7 @@ class Scanner:
         Returns:
             True if market meets all criteria
         """
-        # Check series ticker whitelist (if configured)
-        whitelist = self.config.get('series_ticker_whitelist')
-        if whitelist:
-            # market.category stores the series_ticker
-            if market.category not in whitelist:
-                filter_stats['not_whitelisted'] += 1
-                return False  # Not in whitelist
+        # NO WHITELIST - scan all markets
 
         # Check settlement time window
         time_to_settlement_minutes = market.time_to_settlement_minutes
