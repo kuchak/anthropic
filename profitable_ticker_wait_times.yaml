@@ -1,0 +1,185 @@
+series_ticker_wait_times:
+  KXBTC15M:
+    wait_minutes: 1
+    median_gap_minutes: 3.358754283333333
+    category: Bitcoin
+    sample_size: 55
+    accuracy: 92.72727272727272
+  KXSOL15M:
+    wait_minutes: 1
+    median_gap_minutes: 3.4165898833333337
+    category: Solana
+    sample_size: 53
+    accuracy: 92.45283018867924
+  KXUCLGAME:
+    wait_minutes: 1
+    median_gap_minutes: 3.7912596833333336
+    category: Soccer
+    sample_size: 51
+    accuracy: 92.15686274509804
+  KXEPLGAME:
+    wait_minutes: 1
+    median_gap_minutes: 2.5487093
+    category: Soccer
+    sample_size: 46
+    accuracy: 91.30434782608695
+  KXSUPERLIGGAME:
+    wait_minutes: 1
+    median_gap_minutes: 4.587217058333334
+    category: Soccer
+    sample_size: 56
+    accuracy: 91.07142857142857
+  KXNCAAFGAME:
+    wait_minutes: 3
+    median_gap_minutes: 11.733984066666666
+    category: Football
+    sample_size: 51
+    accuracy: 98.0392156862745
+  KXWTAMATCH:
+    wait_minutes: 3
+    median_gap_minutes: 11.863803216666668
+    category: Tennis
+    sample_size: 88
+    accuracy: 96.5909090909091
+  KXSCOTTISHPREMGAME:
+    wait_minutes: 3
+    median_gap_minutes: 6.593384599999999
+    category: Soccer
+    sample_size: 52
+    accuracy: 96.15384615384616
+  KXNHLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.574111683333333
+    category: Hockey
+    sample_size: 75
+    accuracy: 96.0
+  KXLIGUE1GAME:
+    wait_minutes: 3
+    median_gap_minutes: 5.96295915
+    category: Soccer
+    sample_size: 57
+    accuracy: 94.73684210526315
+  KXATPCHALLENGERMATCH:
+    wait_minutes: 3
+    median_gap_minutes: 12.455084708333334
+    category: Tennis
+    sample_size: 76
+    accuracy: 94.73684210526315
+  KXEUROLEAGUEGAME:
+    wait_minutes: 3
+    median_gap_minutes: 8.55334455
+    category: Other Sports
+    sample_size: 89
+    accuracy: 94.3820224719101
+  KXNFLPREPACKSGP:
+    wait_minutes: 3
+    median_gap_minutes: 12.562076783333334
+    category: Football
+    sample_size: 32
+    accuracy: 93.75
+  KXNFLSPREAD:
+    wait_minutes: 3
+    median_gap_minutes: 7.714590558333333
+    category: Football
+    sample_size: 46
+    accuracy: 93.47826086956522
+  KXUFCFIGHT:
+    wait_minutes: 3
+    median_gap_minutes: 5.3357057
+    category: MMA
+    sample_size: 44
+    accuracy: 93.18181818181817
+  KXSAUDIPLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 8.340808266666667
+    category: Soccer
+    sample_size: 58
+    accuracy: 93.10344827586206
+  KXFACUPGAME:
+    wait_minutes: 3
+    median_gap_minutes: 9.824646
+    category: Soccer
+    sample_size: 29
+    accuracy: 93.10344827586206
+  KXHNLGAME:
+    wait_minutes: 3
+    median_gap_minutes: 7.575739216666666
+    category: Soccer
+    sample_size: 27
+    accuracy: 92.5925925925926
+  KXUNITEDCUPMATCH:
+    wait_minutes: 3
+    median_gap_minutes: 12.006374633333332
+    category: Tennis
+    sample_size: 39
+    accuracy: 92.3076923076923
+  KXUELGAME:
+    wait_minutes: 3
+    median_gap_minutes: 5.626678066666667
+    category: Soccer
+    sample_size: 58
+    accuracy: 91.37931034482759
+  KXATPMATCH:
+    wait_minutes: 5
+    median_gap_minutes: 18.31726313333333
+    category: Tennis
+    sample_size: 70
+    accuracy: 97.14285714285714
+  KXHIGHLAX:
+    wait_minutes: 5
+    median_gap_minutes: 52.71860614166667
+    category: Temperature
+    sample_size: 28
+    accuracy: 96.42857142857143
+  KXNCAAFTOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 45.104683
+    category: Football
+    sample_size: 105
+    accuracy: 96.19047619047619
+  KXNBATOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 25.46696495
+    category: Basketball
+    sample_size: 84
+    accuracy: 95.23809523809523
+  KXNFLTOTAL:
+    wait_minutes: 5
+    median_gap_minutes: 26.497942625
+    category: Football
+    sample_size: 78
+    accuracy: 94.87179487179486
+  KXFIFAGAME:
+    wait_minutes: 5
+    median_gap_minutes: 16.774749183333334
+    category: Esports
+    sample_size: 58
+    accuracy: 94.82758620689656
+  KXMLBGAME:
+    wait_minutes: 5
+    median_gap_minutes: 29.586657683333332
+    category: Baseball
+    sample_size: 65
+    accuracy: 93.84615384615384
+  KXINXZ:
+    wait_minutes: 5
+    median_gap_minutes: 49.976666083333335
+    category: Stock Indices
+    sample_size: 46
+    accuracy: 93.47826086956522
+  KXWTACHALLENGERMATCH:
+    wait_minutes: 5
+    median_gap_minutes: 28.61217543333333
+    category: Tennis
+    sample_size: 72
+    accuracy: 93.05555555555556
+  KXMLBSPREAD:
+    wait_minutes: 5
+    median_gap_minutes: 30.257464683333332
+    category: Baseball
+    sample_size: 40
+    accuracy: 92.5
+metadata:
+  total_tickers: 30
+  accuracy_threshold: 91.0
+  description: "Only includes tickers with >91% accuracy at 90-92\xA2 entry"
