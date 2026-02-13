@@ -234,33 +234,59 @@ class KalshiClient:
         self,
         status: Optional[str] = None,
         category: Optional[str] = None,
-        limit: int = 1000
+        limit: int = 1000,
+        max_total: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """
-        Get list of markets with optional filters
+        Get list of markets with optional filters (with automatic pagination)
 
         Args:
             status: Filter by status (e.g., 'open', 'closed', 'settled')
             category: Filter by series ticker
-            limit: Max number of markets to return
+            limit: Number of markets per page (max 1000)
+            max_total: Maximum total markets to fetch across all pages (None = fetch all)
 
         Returns:
             List of market dictionaries
         """
-        params = {'limit': limit}
-        if status:
-            params['status'] = status
-        if category:
-            params['series_ticker'] = category
+        all_markets = []
+        cursor = None
+        page = 0
 
-        try:
-            response = self._request('GET', '/markets', params=params)
-            markets = response.get('markets', [])
-            logger.debug(f"Retrieved {len(markets)} markets")
-            return markets
-        except Exception as e:
-            logger.error(f"Failed to get markets: {e}")
-            return []
+        while True:
+            page += 1
+            params = {'limit': limit}
+            if status:
+                params['status'] = status
+            if category:
+                params['series_ticker'] = category
+            if cursor:
+                params['cursor'] = cursor
+
+            try:
+                response = self._request('GET', '/markets', params=params)
+                markets = response.get('markets', [])
+                all_markets.extend(markets)
+
+                logger.debug(f"Page {page}: Retrieved {len(markets)} markets (total so far: {len(all_markets)})")
+
+                # Check if we've hit max_total limit
+                if max_total and len(all_markets) >= max_total:
+                    all_markets = all_markets[:max_total]
+                    logger.debug(f"Reached max_total limit of {max_total} markets")
+                    break
+
+                # Check if there's another page
+                cursor = response.get('cursor')
+                if not cursor or not markets:
+                    logger.debug(f"No more pages. Total markets retrieved: {len(all_markets)}")
+                    break
+
+            except Exception as e:
+                logger.error(f"Failed to get markets on page {page}: {e}")
+                break
+
+        return all_markets
 
     def get_market(self, ticker: str) -> Optional[Dict[str, Any]]:
         """

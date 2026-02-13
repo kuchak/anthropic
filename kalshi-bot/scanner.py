@@ -65,10 +65,10 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get ALL open markets from Kalshi (no whitelist filtering)
-        # API limit is 1000 - should cover most active markets
-        logger.info(f"  Querying ALL open markets from Kalshi...")
-        all_markets = self.client.get_markets(status='open', limit=1000)
+        # Get ALL open markets from Kalshi using pagination (no whitelist filtering)
+        # Will fetch all pages using cursor-based pagination
+        logger.info(f"  Querying ALL open markets from Kalshi (with pagination)...")
+        all_markets = self.client.get_markets(status='open', limit=1000, max_total=None)
         logger.info(f"  Retrieved {len(all_markets)} total open markets")
 
         # Debug counters
