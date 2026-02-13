@@ -121,6 +121,33 @@ class Allocator:
 
         return allocations
 
+    def _get_price_multiplier(self, entry_price: float) -> float:
+        """
+        Get Kelly multiplier based on entry price range
+
+        Backtest showed 90-93¢ range has best accuracy/ROI.
+        Use smaller positions at range edges where performance is less proven.
+
+        90-93¢: 1.0x (sweet spot - best backtest accuracy)
+        85-89¢: 0.5x (edge range - less proven)
+        94-97¢: 0.5x (edge range - less proven)
+
+        Args:
+            entry_price: Entry price (0.0 - 1.0)
+
+        Returns:
+            Multiplier to apply to Kelly fraction
+        """
+        if 0.90 <= entry_price <= 0.93:
+            return 1.0  # Full Kelly - sweet spot
+        elif 0.85 <= entry_price <= 0.89:
+            return 0.5  # Half Kelly - lower confidence edge
+        elif 0.94 <= entry_price <= 0.97:
+            return 0.5  # Half Kelly - higher confidence edge
+        else:
+            # Outside expected range (should be rare with 85-97¢ filter)
+            return 0.25  # Quarter Kelly - very conservative
+
     def _calculate_allocation(
         self,
         opportunity: ScoredOpportunity,
@@ -164,6 +191,10 @@ class Allocator:
         # Apply ticker-specific Kelly fraction
         adjusted_fraction = kelly_fraction * ticker_kelly
 
+        # Apply price-based multiplier (bigger bets at 90-93¢, smaller at edges)
+        price_multiplier = self._get_price_multiplier(entry_price)
+        adjusted_fraction = adjusted_fraction * price_multiplier
+
         # Calculate position size
         position_size_dollars = self.current_balance * adjusted_fraction
 
@@ -173,9 +204,15 @@ class Allocator:
             position_size_dollars = max_position
             reasoning = f"Capped at {self.max_position_size_pct * 100:.0f}% of balance"
         elif series_ticker in self.series_ticker_kelly_fractions:
-            reasoning = f"{ticker_kelly * 100:.0f}% Kelly (ticker-specific)"
+            if price_multiplier < 1.0:
+                reasoning = f"{ticker_kelly * 100:.0f}% Kelly × {price_multiplier:.1f} price adj (ticker-specific)"
+            else:
+                reasoning = f"{ticker_kelly * 100:.0f}% Kelly (ticker-specific)"
         else:
-            reasoning = f"{ticker_kelly * 100:.0f}% Kelly (default - unknown ticker)"
+            if price_multiplier < 1.0:
+                reasoning = f"{ticker_kelly * 100:.0f}% Kelly × {price_multiplier:.1f} price adj (default)"
+            else:
+                reasoning = f"{ticker_kelly * 100:.0f}% Kelly (default - unknown ticker)"
 
         # Check available capital
         if position_size_dollars > available_capital:
