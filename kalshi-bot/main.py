@@ -1,10 +1,11 @@
 """
-Kalshi Trading Bot - Main Orchestration Loop
+Kalshi Trading Bot - Main Orchestration Loop WITH STABILITY TRACKING
 
-High-level strategy backed by 90%+ accuracy backtests:
-- Scan for 85-98¢ contracts in approved categories
+High-level strategy backed by 94%+ accuracy backtests:
+- Scan for 90-93¢ contracts in approved categories
 - Score by expected profit using empirical win rates
-- Size positions using Kelly criterion (25% Kelly)
+- Wait 1-5 minutes for price stability (prevents 58% drop-back rate)
+- Size positions using Kelly criterion (ticker-specific)
 - Execute in dry-run or live mode
 - Track settlements and P&L
 
@@ -29,21 +30,23 @@ from executor import Executor
 from tracker import Tracker
 from decision_logger import DecisionLogger
 from report_generator import ReportGenerator
+from stability_tracker import StabilityTracker
 
 logger = setup_logger("main")
 
 
 class TradingBot:
     """
-    Main trading bot orchestrator
+    Main trading bot orchestrator with stability tracking
 
     Coordinates all modules in a continuous loop:
     1. Scan for markets
     2. Score opportunities
-    3. Allocate positions
-    4. Execute trades
-    5. Track portfolio
-    6. Monitor settlements
+    3. Check stability (wait for price to hold)
+    4. Allocate positions
+    5. Execute trades
+    6. Track portfolio
+    7. Monitor settlements
     """
 
     def __init__(self, config: dict, dry_run: bool = True):
@@ -77,6 +80,12 @@ class TradingBot:
         logger.info("\n🎯 Initializing scorer...")
         self.scorer = Scorer(config)
         logger.info("✅ Scorer ready")
+
+        # Stability Tracker
+        logger.info("\n⏱️  Initializing stability tracker...")
+        self.stability_tracker = StabilityTracker(config)
+        logger.info("✅ Stability tracker ready")
+        logger.info(f"   Ticker-specific wait times: {len(config.get('series_ticker_wait_times', {}))} tickers")
 
         # Get initial balance
         logger.info("\n💰 Fetching account balance...")
@@ -113,7 +122,7 @@ class TradingBot:
         logger.info("✅ Decision logger ready")
 
         logger.info("\n" + "=" * 80)
-        logger.info("✅ ALL SYSTEMS INITIALIZED")
+        logger.info("✅ ALL SYSTEMS INITIALIZED (WITH STABILITY TRACKING)")
         logger.info("=" * 80)
 
     def run_once(self) -> None:
@@ -190,9 +199,54 @@ class TradingBot:
             self.decision_logger.end_cycle()
             return
 
-        # Show top opportunities
-        top_5 = opportunities[:5]
-        logger.info("\n📊 Top 5 Opportunities:")
+        # Step 2.5: Stability Check
+        logger.info("\n⏱️  Step 2.5: Stability Check")
+        logger.info("-" * 80)
+        logger.info("Checking if markets have held price >= 90¢ for required wait time...")
+
+        stable_opportunities = []
+        for opp in opportunities:
+            # Check if market is stable (held >= 90¢ for required wait time)
+            is_stable = self.stability_tracker.check_market(
+                ticker=opp.market.ticker,
+                current_price=opp.entry_price
+            )
+
+            if is_stable:
+                stable_opportunities.append(opp)
+            else:
+                # Log why we're not betting yet
+                status = self.stability_tracker.get_wait_status(opp.market.ticker)
+                if status:
+                    reason = f"waiting {status['remaining_minutes']:.1f}m more (required: {status['required_wait_minutes']}m)"
+                else:
+                    reason = "just started waiting"
+
+                self.decision_logger.log_skipped(
+                    ticker=opp.market.ticker,
+                    title=opp.market.title,
+                    category=opp.market.category,
+                    yes_price=opp.market.best_yes_price,
+                    no_price=opp.market.best_no_price,
+                    time_to_settlement_hours=opp.time_to_settlement_hours,
+                    skip_reason=f"price not stable ({reason})"
+                )
+
+        logger.info(f"✅ {len(stable_opportunities)}/{len(opportunities)} opportunities passed stability check")
+
+        # Show stability summary
+        summary = self.stability_tracker.get_summary()
+        logger.info(f"   Tracking {summary['tracked_markets']} markets total")
+        logger.info(f"   {summary['ready_markets']} ready, {summary['waiting_markets']} still waiting")
+
+        if not stable_opportunities:
+            logger.info("⚠️  No stable opportunities yet, will check again next cycle")
+            self.decision_logger.end_cycle()
+            return
+
+        # Show top stable opportunities
+        top_5 = stable_opportunities[:5]
+        logger.info("\n📊 Top 5 Stable Opportunities:")
         for i, opp in enumerate(top_5, 1):
             logger.info(f"   {i}. {opp.market.ticker}")
             logger.info(f"      {opp.side} @ ${opp.entry_price:.2f} - ROI: {opp.expected_roi:.1f}%")
@@ -204,12 +258,12 @@ class TradingBot:
         current_exposure = self.tracker.get_total_exposure()
         logger.info(f"Current exposure: ${current_exposure:.2f}")
 
-        allocations = self.allocator.allocate_positions(opportunities, current_exposure)
+        allocations = self.allocator.allocate_positions(stable_opportunities, current_exposure)
         logger.info(f"✅ Allocated {len(allocations)} positions")
 
         # Log opportunities that were scored but not allocated
         allocated_tickers = {alloc.opportunity.market.ticker for alloc in allocations}
-        for opp in opportunities:
+        for opp in stable_opportunities:
             if opp.market.ticker not in allocated_tickers:
                 # This opportunity was scored but not allocated (capital constraints)
                 self.decision_logger.log_skipped(
@@ -264,11 +318,20 @@ class TradingBot:
                         score=alloc.opportunity.expected_roi
                     )
 
+                # Reset stability tracking after successful execution
+                self.stability_tracker.reset_market(execution.ticker)
+                logger.debug(f"🔄 Reset stability tracking for {execution.ticker}")
+
         # Add to tracker
         self.tracker.add_executions(executions)
 
         # Step 5: Update portfolio
         self._update_portfolio()
+
+        # Cleanup old stability tracking (once per cycle)
+        cleaned = self.stability_tracker.cleanup_old_tracking(max_age_hours=6)
+        if cleaned > 0:
+            logger.debug(f"🧹 Cleaned up {cleaned} old stability tracking records")
 
         # End decision logging cycle
         self.decision_logger.end_cycle()
@@ -303,7 +366,8 @@ class TradingBot:
     def run_continuous(self) -> None:
         """Run continuous trading loop"""
 
-        logger.info("\n🚀 Starting continuous trading loop")
+        logger.info("\n🚀 Starting continuous trading loop WITH STABILITY TRACKING")
+        logger.info("   Markets must hold >= 90¢ for 1-5 minutes before betting")
         logger.info("   Press Ctrl+C to stop\n")
 
         cycle_count = 0
