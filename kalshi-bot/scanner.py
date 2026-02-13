@@ -108,6 +108,7 @@ class Scanner:
 
         # Filter markets
         new_watchlist = []
+        seen_events = {}  # Track events to prevent dual-side betting
 
         for market_data in all_markets:
             ticker = market_data.get('ticker', '')
@@ -115,6 +116,17 @@ class Scanner:
             # CRITICAL: Skip markets where we already have positions
             if ticker in existing_set:
                 logger.debug(f"  Skipping {ticker} - already have position")
+                filter_stats['existing_position'] += 1
+                continue
+
+            # Extract event identifier (everything except the last outcome part)
+            # E.g., "KXATPMATCH-26FEB13SIMBAR-SIM" -> "KXATPMATCH-26FEB13SIMBAR"
+            # This prevents betting YES and NO on the same event
+            event_id = '-'.join(ticker.split('-')[:-1]) if ticker.count('-') >= 2 else ticker
+
+            # Skip if we've already added a market for this event
+            if event_id in seen_events:
+                logger.debug(f"  Skipping {ticker} - already have {seen_events[event_id]} for this event")
                 filter_stats['existing_position'] += 1
                 continue
 
@@ -134,6 +146,8 @@ class Scanner:
 
                 new_watchlist.append(market)
                 filter_stats['passed'] += 1
+                # Mark this event as seen to prevent dual-side betting
+                seen_events[event_id] = ticker
 
             except Exception as e:
                 logger.debug(f"  Failed to parse market {market_data.get('ticker')}: {e}")
