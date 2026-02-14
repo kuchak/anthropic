@@ -71,30 +71,10 @@ class TradingBot:
 
         logger.info("✅ API client connected")
 
-        # HOTFIX: Monkey-patch client.get_markets to add time filter BEFORE creating scanner
-        from datetime import datetime, timedelta, timezone
-        original_get_markets = self.client.get_markets
-
-        def get_markets_with_time_filter(*args, **kwargs):
-            # Log when this wrapper is called and show time filter value
-            time_filter = kwargs.get('max_expected_expiration_time', 'NOT_SET')
-            logger.info(f"[HOTFIX] get_markets called. max_expected_expiration_time={time_filter}")
-
-            # Add 4-hour time filter if not already specified or is None
-            if 'max_expected_expiration_time' not in kwargs or kwargs.get('max_expected_expiration_time') is None:
-                four_hours = (datetime.now(timezone.utc) + timedelta(hours=4)).strftime('%Y-%m-%dT%H:%M:%SZ')
-                kwargs['max_expected_expiration_time'] = four_hours
-                logger.info(f"[HOTFIX] SET time filter to: {four_hours}")
-
-            return original_get_markets(*args, **kwargs)
-
-        self.client.get_markets = get_markets_with_time_filter
-        logger.info("✅ Monkey-patch applied to client.get_markets")
-
         # Scanner
         logger.info("\n🔍 Initializing scanner...")
         self.scanner = Scanner(self.client, config)
-        logger.info(f"✅ Scanner ready (scanner.client.get_markets is patched: {self.scanner.client.get_markets == get_markets_with_time_filter})")
+        logger.info("✅ Scanner ready")
 
         # Scorer
         logger.info("\n🎯 Initializing scorer...")
