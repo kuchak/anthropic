@@ -33,10 +33,10 @@ class Scanner:
 
         logger.info("Scanner initialized")
 
-        logger.info(f"  SCANNING ALL MARKETS ON KALSHI (no whitelist)")
+        logger.info(f"  SCANNING LIVE MARKETS (is_live=true filter)")
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
-        logger.info(f"  Time window: Events within 4 hours")
         logger.info(f"  Volume filter: volume_24h > 0")
+        logger.info(f"  Live event check: Event happening now or within 4 hours")
 
     def slow_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
         """
@@ -65,20 +65,19 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get markets with active trading, limited to first 10k markets
-        # NOTE: Kalshi API bug - cursor pagination ignores time filters!
-        # So we limit to 10k markets (10 pages) which covers all near-term events
-        # Reduces from ~110 pages (60s) to ~10 pages (5s) = 12x faster!
-        four_hours_from_now = (datetime.now(timezone.utc) + timedelta(hours=4)).strftime('%Y-%m-%dT%H:%M:%SZ')
-        logger.info(f"  Querying first 10k active markets (time filter {four_hours_from_now})...")
+        # Get all LIVE markets (events currently happening)
+        # Using is_live=true returns only markets for live events (~1000-2000 markets)
+        # This is MUCH faster than scanning all 110k+ markets
+        # We filter client-side for price (85-97¢) and volume (>0)
+        logger.info(f"  Querying live markets (is_live=true)...")
         all_markets = self.client.get_markets(
-            status='open',
+            is_live='true',
             limit=1000,
-            max_total=10000,  # Limit to first 10 pages due to API cursor bug
-            min_volume=1,
-            max_expected_expiration_time=four_hours_from_now
+            min_volume=1
+            # No max_total limit - live markets fit in 1-2 pages
+            # No expiration filter - is_live already means event is happening now
         )
-        logger.info(f"  Retrieved {len(all_markets)} total open markets")
+        logger.info(f"  Retrieved {len(all_markets)} live markets")
 
         # Debug counters
         filter_stats = {
