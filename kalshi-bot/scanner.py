@@ -380,6 +380,9 @@ class Scanner:
         # Check if market has active trading (volume_24h > 0)
         if market.volume_24h <= 0:
             filter_stats['not_live'] += 1
+            # DEBUG: Log first 10 markets with no volume
+            if filter_stats['not_live'] <= 10:
+                print(f"❌ FILTERED (no volume): {market.ticker} | yes={market.best_yes_price}¢ no={market.best_no_price}¢ | vol_24h={market.volume_24h}")
             return False  # No active trading
 
         # CRITICAL: Check if this is a LIVE event happening NOW (not a future event)
@@ -404,21 +407,22 @@ class Scanner:
 
         if not is_live_event:
             filter_stats['not_live'] += 1
-            # DEBUG: Log markets that failed live event check
-            if hasattr(market, '_raw_data'):
+            # DEBUG: Log first 10 markets that failed live event check
+            if filter_stats['not_live'] <= 10 and hasattr(market, '_raw_data'):
                 exp_time = market._raw_data.get('expected_expiration_time', 'N/A')
                 vol_24h = market.volume_24h
                 yes_price = market.best_yes_price
                 no_price = market.best_no_price
-                logger.info(f"  ❌ FILTERED (not live): {market.ticker}")
-                logger.info(f"     Price: yes={yes_price}¢ no={no_price}¢ | Vol24h: {vol_24h} | Exp: {exp_time}")
+                print(f"❌ FILTERED (not live): {market.ticker}")
+                print(f"   Price: yes={yes_price}¢ no={no_price}¢ | Vol24h: {vol_24h}")
+                print(f"   Exp time: {exp_time}")
                 if market._raw_data.get('expected_expiration_time'):
                     try:
                         expected_exp = parse_datetime(market._raw_data['expected_expiration_time'])
                         time_until_event = (expected_exp - now).total_seconds() / 3600
-                        logger.info(f"     Time until event: {time_until_event:.1f}h (need -1 to 4h)")
+                        print(f"   Time until event: {time_until_event:.1f}h (need -1 to 4h)")
                     except:
-                        logger.info(f"     Time until event: PARSE ERROR")
+                        print(f"   Time until event: PARSE ERROR")
             return False  # Not a live event (future market)
 
         return True
