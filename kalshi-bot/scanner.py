@@ -73,8 +73,7 @@ class Scanner:
         all_markets = self.client.get_markets(
             is_live='true',
             limit=1000,
-            min_volume=1
-            # No max_total limit - live markets fit in 1-2 pages
+            max_total=5000  # Limit to prevent timeout (there can be 10k+ "live" markets with 0 volume)
             # No expiration filter - is_live already means event is happening now
         )
         logger.info(f"  Retrieved {len(all_markets)} live markets")
