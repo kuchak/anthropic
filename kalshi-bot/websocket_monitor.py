@@ -93,12 +93,12 @@ class WebSocketMonitor:
         # Message format: timestamp + "GET" + "/trade-api/ws/v2"
         message = f"{timestamp}GET/trade-api/ws/v2"
 
-        # Sign with RSA-PSS
+        # Sign with RSA-PSS (using digest-length salt as per Kalshi docs)
         signature = self.private_key.sign(
             message.encode('utf-8'),
             padding.PSS(
                 mgf=padding.MGF1(hashes.SHA256()),
-                salt_length=padding.PSS.MAX_LENGTH
+                salt_length=padding.PSS.DIGEST_LENGTH
             ),
             hashes.SHA256()
         )
@@ -124,6 +124,10 @@ class WebSocketMonitor:
             auth_headers = self._get_auth_headers()
 
             logger.info(f"Connecting to {self.ws_url}...")
+            logger.debug(f"Auth headers: KEY={auth_headers.get('KALSHI-ACCESS-KEY')[:10]}...")
+            logger.debug(f"             TIMESTAMP={auth_headers.get('KALSHI-ACCESS-TIMESTAMP')}")
+            logger.debug(f"             SIGNATURE={auth_headers.get('KALSHI-ACCESS-SIGNATURE')[:20]}...")
+
             self.ws = await websockets.connect(
                 self.ws_url,
                 additional_headers=auth_headers,
