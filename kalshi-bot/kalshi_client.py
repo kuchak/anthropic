@@ -238,7 +238,8 @@ class KalshiClient:
         max_total: Optional[int] = None,
         min_volume: Optional[int] = None,
         max_expected_expiration_time: Optional[str] = None,
-        is_live: Optional[str] = None
+        is_live: Optional[str] = None,
+        mve_filter: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
         Get list of markets with optional filters (with automatic pagination)
@@ -251,6 +252,7 @@ class KalshiClient:
             min_volume: Minimum 24h volume (server-side filter)
             max_expected_expiration_time: ISO timestamp for max expected expiration (e.g., '2026-02-13T15:00:00Z')
             is_live: Filter for live markets (e.g., 'true')
+            mve_filter: Multivariate event filter ('only' or 'exclude' MULTIGAME parlays)
 
         Returns:
             List of market dictionaries
@@ -272,6 +274,8 @@ class KalshiClient:
                 params['max_expected_expiration_time'] = max_expected_expiration_time
             if is_live:
                 params['is_live'] = is_live
+            if mve_filter:
+                params['mve_filter'] = mve_filter
             if cursor:
                 params['cursor'] = cursor
 

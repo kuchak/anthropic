@@ -33,9 +33,9 @@ class Scanner:
 
         logger.info("Scanner initialized")
 
-        logger.info(f"  FILTERS: (1) is_live=true, (2) not MULTIGAME, (3) price 85-97¢")
+        logger.info(f"  FILTERS: (1) is_live=true, (2) mve_filter=exclude (no parlays), (3) price 85-97¢")
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
-        logger.info(f"  Filtering out: Synthetic MULTIGAME parlays")
+        logger.info(f"  Filtering out: MULTIGAME parlays (server-side via mve_filter)")
         logger.info(f"  Volume filter: REMOVED (API doesn't report correctly)")
 
     def slow_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
@@ -65,12 +65,13 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get live markets - filter out synthetic parlays client-side
-        # is_live=true returns ~5000 markets including live sports
-        # We filter out MULTIGAME parlays and rely on price filter
-        logger.info(f"  Querying live markets (is_live=true)...")
+        # Get live markets - EXCLUDE MULTIGAME parlays server-side using mve_filter
+        # This ensures we get 5000 REAL markets, not 5000 markets with 90% parlays
+        # Server-side filtering is critical: without it, NCAA basketball is beyond page 5
+        logger.info(f"  Querying live markets (is_live=true, mve_filter=exclude)...")
         all_markets = self.client.get_markets(
             is_live='true',
+            mve_filter='exclude',  # Exclude multivariate events (MULTIGAME parlays)
             limit=1000,
             max_total=5000
         )
@@ -102,11 +103,8 @@ class Scanner:
                 filter_stats['existing_position'] += 1
                 continue
 
-            # Skip synthetic parlay markets (MULTIGAME) - they have no real trading
-            if 'MULTIGAME' in ticker:
-                logger.debug(f"  Skipping {ticker} - synthetic parlay")
-                filter_stats['parse_failed'] += 1  # Count as parse failed
-                continue
+            # NOTE: MULTIGAME parlays now filtered server-side via mve_filter='exclude'
+            # No need for client-side filtering anymore
 
             # Extract event identifier (everything except the last outcome part)
             # E.g., "KXATPMATCH-26FEB13SIMBAR-SIM" -> "KXATPMATCH-26FEB13SIMBAR"
@@ -387,7 +385,8 @@ class Scanner:
 
         # REMOVED volume check - API doesn't report volume correctly (always 0)
         # REMOVED time check - is_live=true already filters for live events
-        # Only filters: (1) is_live=true, (2) not MULTIGAME, (3) price 85-97¢
+        # Server-side filters: (1) is_live=true, (2) mve_filter=exclude (no MULTIGAME parlays)
+        # Client-side filters: (3) price 85-97¢, (4) settlement time window, (5) status=open/active
 
         return True
 
