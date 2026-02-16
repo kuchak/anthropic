@@ -33,10 +33,10 @@ class Scanner:
 
         logger.info("Scanner initialized")
 
-        logger.info(f"  SCANNING ALL OPEN MARKETS (is_live filter removed - it's broken)")
+        logger.info(f"  FILTERS: (1) is_live=true, (2) not MULTIGAME, (3) price 85-97¢")
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
         logger.info(f"  Filtering out: Synthetic MULTIGAME parlays")
-        logger.info(f"  Live event check: Event happening within next 4 hours")
+        logger.info(f"  Volume filter: REMOVED (API doesn't report correctly)")
 
     def slow_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
         """
@@ -65,16 +65,16 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get all open markets - filter out synthetic parlays client-side
-        # The is_live=true filter is BROKEN - it returns only synthetic MULTIGAME parlays
-        # Instead, we scan all open markets and filter for real series tickers
-        logger.info(f"  Querying all open markets...")
+        # Get live markets - filter out synthetic parlays client-side
+        # is_live=true returns ~5000 markets including live sports
+        # We filter out MULTIGAME parlays and rely on price filter
+        logger.info(f"  Querying live markets (is_live=true)...")
         all_markets = self.client.get_markets(
-            status='open',
+            is_live='true',
             limit=1000,
-            max_total=10000  # Scan more markets since we're not filtering server-side
+            max_total=5000
         )
-        logger.info(f"  Retrieved {len(all_markets)} open markets")
+        logger.info(f"  Retrieved {len(all_markets)} live markets")
 
         # Debug counters
         filter_stats = {
@@ -380,47 +380,8 @@ class Scanner:
             return False
 
         # REMOVED volume check - API doesn't report volume correctly (always 0)
-        # Instead, rely on expected_expiration_time to find live events
-
-        # CRITICAL: Check if this is a LIVE event happening NOW (not a future event)
-        # ONLY use expected_expiration_time - the actual event time
-        # DO NOT use updated_time - recent trades don't mean the event is happening now
-        from datetime import datetime, timezone
-        from dateutil.parser import parse as parse_datetime
-
-        now = datetime.now(timezone.utc)
-        is_live_event = False
-
-        # Check expected_expiration_time (event happening within next 4 hours)
-        if hasattr(market, '_raw_data') and market._raw_data.get('expected_expiration_time'):
-            try:
-                expected_exp = parse_datetime(market._raw_data['expected_expiration_time'])
-                time_until_event = (expected_exp - now).total_seconds() / 3600  # hours
-                # Event is LIVE if it's happening within next 4 hours (or currently in progress)
-                if -1 <= time_until_event <= 4:  # -1 to 4 hours
-                    is_live_event = True
-            except:
-                pass
-
-        if not is_live_event:
-            filter_stats['not_live'] += 1
-            # DEBUG: Log first 10 markets that failed live event check
-            if filter_stats['not_live'] <= 10 and hasattr(market, '_raw_data'):
-                exp_time = market._raw_data.get('expected_expiration_time', 'N/A')
-                vol_24h = market.volume_24h
-                yes_price = market.best_yes_price
-                no_price = market.best_no_price
-                print(f"❌ FILTERED (not live): {market.ticker}")
-                print(f"   Price: yes={yes_price}¢ no={no_price}¢ | Vol24h: {vol_24h}")
-                print(f"   Exp time: {exp_time}")
-                if market._raw_data.get('expected_expiration_time'):
-                    try:
-                        expected_exp = parse_datetime(market._raw_data['expected_expiration_time'])
-                        time_until_event = (expected_exp - now).total_seconds() / 3600
-                        print(f"   Time until event: {time_until_event:.1f}h (need -1 to 4h)")
-                    except:
-                        print(f"   Time until event: PARSE ERROR")
-            return False  # Not a live event (future market)
+        # REMOVED time check - is_live=true already filters for live events
+        # Only filters: (1) is_live=true, (2) not MULTIGAME, (3) price 85-97¢
 
         return True
 
