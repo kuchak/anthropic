@@ -27,7 +27,8 @@ from executor import Executor
 from tracker import Tracker
 from decision_logger import DecisionLogger
 from report_generator import ReportGenerator
-from stability_tracker import StabilityTracker  # NEW IMPORT
+from stability_tracker import StabilityTracker
+from series_discovery import SeriesDiscovery  # Dynamic series discovery
 
 logger = setup_logger("main")
 
@@ -67,6 +68,19 @@ class TradingBot:
             raise Exception("Failed to connect to Kalshi API")
 
         logger.info("✅ API client connected")
+
+        # Series Discovery (NEW!)
+        logger.info("\n🔬 Initializing series discovery...")
+        self.series_discovery = SeriesDiscovery()
+        logger.info("✅ Series discovery ready")
+
+        # Run initial discovery
+        logger.info("\n🔍 Running initial series discovery...")
+        discovery_pages = config.get('series_discovery_pages', 20)  # Default 20 pages for good coverage
+        self.series_discovery.discover_series(max_pages=discovery_pages)
+        stats = self.series_discovery.get_stats()
+        logger.info(f"✅ Discovered {stats['total_series']} series across {stats['total_categories']} categories")
+        logger.info(f"   Sports series: {stats['sports_series_count']}")
 
         # Scanner
         logger.info("\n🔍 Initializing scanner...")
@@ -131,15 +145,32 @@ class TradingBot:
         logger.info(f"Cycle ID: {cycle_id}")
         logger.info("=" * 80)
 
+        # Step 0: Check if we need to rediscover series (every hour)
+        from datetime import timezone
+        if self.series_discovery.last_discovery_time:
+            hours_since_discovery = (datetime.now(timezone.utc) - self.series_discovery.last_discovery_time).total_seconds() / 3600
+            if hours_since_discovery >= 1.0:
+                logger.info("\n🔬 Step 0: Series Rediscovery (hourly)")
+                logger.info("-" * 80)
+                logger.info("Rediscovering series (1 hour elapsed)...")
+                discovery_pages = self.config.get('series_discovery_pages', 20)
+                self.series_discovery.discover_series(max_pages=discovery_pages)
+                stats = self.series_discovery.get_stats()
+                logger.info(f"✅ Rediscovered {stats['total_series']} series, {stats['sports_series_count']} sports")
+
         # Step 1: Scan for markets
         logger.info("\n📡 Step 1: Market Discovery")
         logger.info("-" * 80)
 
         existing_tickers = list(self.tracker.positions.keys())
 
+        # Get sports series from discovery
+        sports_series = self.series_discovery.get_sports_series()
+        logger.info(f"Using {len(sports_series)} discovered sports series")
+
         if self.scanner.should_run_slow_scan():
-            logger.info("Running slow scan (full discovery)...")
-            self.scanner.slow_scan(existing_position_tickers=existing_tickers)
+            logger.info("Running slow scan (querying discovered series)...")
+            self.scanner.slow_scan(existing_position_tickers=existing_tickers, series_list=sports_series)
         elif self.scanner.should_run_fast_scan():
             logger.info("Running fast scan (price updates)...")
             self.scanner.fast_scan(existing_position_tickers=existing_tickers)
@@ -364,7 +395,7 @@ class TradingBot:
                     import traceback
                     traceback.print_exc()
 
-                sleep_time = self.config.get('cycle_interval_seconds', 180)
+                sleep_time = self.config.get('cycle_interval_seconds', 30)  # Changed from 180s to 30s
                 logger.info(f"\n💤 Sleeping {sleep_time}s until next cycle...\n")
                 time.sleep(sleep_time)
 

@@ -38,20 +38,17 @@ class Scanner:
         logger.info(f"  Filtering out: MULTIGAME parlays (server-side via mve_filter)")
         logger.info(f"  Volume filter: REMOVED (API doesn't report correctly)")
 
-    def slow_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
+    def slow_scan(self, existing_position_tickers: Optional[List[str]] = None,
+                  series_list: Optional[List[str]] = None) -> int:
         """
         Full market discovery scan
 
-        Evaluates ALL active markets (no category filtering):
-        - Settlement time within window
-        - Price in target range
-        - NOT in existing positions (prevents duplicate positions)
-
-        Decision making is purely based on scoring: model accuracy by price range,
-        expected profit after fees, and time to settlement.
+        Queries discovered series for active markets expiring within 3 hours.
+        Filters by price range and applies stability tracking criteria.
 
         Args:
             existing_position_tickers: List of tickers we already have positions in
+            series_list: List of series tickers to query (from dynamic discovery)
 
         Returns:
             Number of markets added to watchlist
@@ -59,57 +56,69 @@ class Scanner:
         if existing_position_tickers is None:
             existing_position_tickers = []
 
+        if series_list is None:
+            series_list = []
+
         existing_set = set(existing_position_tickers)
 
-        logger.info("🔍 Starting slow scan (full market discovery)...")
+        logger.info("🔍 Starting slow scan (dynamic series discovery)...")
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get active markets - EXCLUDE MULTIGAME parlays server-side using mve_filter
-        # CRITICAL: Generic query misses many markets due to API sorting by volume/liquidity
-        # Solution: Query high-priority series tickers directly, then supplement with generic query
-        logger.info(f"  Querying high-priority series tickers + generic markets...")
-
-        # Priority series to query directly (markets that often get buried in generic results)
-        priority_series = [
-            'KXNCAAMBGAME',  # NCAA Men's Basketball - often has low volume markets
-            'KXNCAAMBSPREAD',
-            'KXNCAAMBTOTAL'
-        ]
+        logger.info(f"  Querying {len(series_list)} discovered series...")
 
         all_markets = []
         seen_tickers = set()
 
-        # Query priority series first
-        for series in priority_series:
+        # Query each discovered series
+        for series in series_list:
             logger.debug(f"  Querying {series}...")
-            series_markets = self.client.get_markets(
-                category=series,
-                mve_filter='exclude',
-                limit=1000,
-                max_total=10000  # Get all markets for this series
-            )
-            # Deduplicate
-            for m in series_markets:
-                ticker = m.get('ticker', '')
-                if ticker not in seen_tickers:
-                    all_markets.append(m)
-                    seen_tickers.add(ticker)
-
-        # Then supplement with generic query for other markets
-        logger.debug(f"  Querying generic markets...")
-        generic_markets = self.client.get_markets(
-            mve_filter='exclude',
-            limit=1000,
-            max_total=5000
-        )
-        for m in generic_markets:
-            ticker = m.get('ticker', '')
-            if ticker not in seen_tickers:
-                all_markets.append(m)
-                seen_tickers.add(ticker)
+            try:
+                series_markets = self.client.get_markets(
+                    category=series,
+                    mve_filter='exclude',
+                    limit=1000,
+                    max_total=3000  # Reasonable limit per series
+                )
+                # Deduplicate
+                for m in series_markets:
+                    ticker = m.get('ticker', '')
+                    if ticker not in seen_tickers:
+                        all_markets.append(m)
+                        seen_tickers.add(ticker)
+            except Exception as e:
+                logger.debug(f"  Error querying {series}: {e}")
+                continue
 
         logger.info(f"  Retrieved {len(all_markets)} markets total")
+
+        # Filter for markets expiring within 3 hours (live events)
+        from datetime import timezone
+        now = datetime.now(timezone.utc)
+        cutoff_time = now + timedelta(hours=3)
+
+        markets_expiring_soon = []
+        for m in all_markets:
+            exp_time = m.get('expected_expiration_time')
+            status = m.get('status', '')
+
+            # Only include active markets (not finalized/closed/settled)
+            if status not in ['active', 'initialized', 'open']:
+                continue
+
+            if exp_time:
+                try:
+                    from dateutil.parser import parse as parse_datetime
+                    exp_dt = parse_datetime(exp_time)
+
+                    # Only include markets expiring within 3 hours
+                    if now < exp_dt <= cutoff_time:
+                        markets_expiring_soon.append(m)
+                except:
+                    pass
+
+        logger.info(f"  {len(markets_expiring_soon)} markets expiring within 3 hours")
+        all_markets = markets_expiring_soon
 
         # Debug counters
         filter_stats = {
