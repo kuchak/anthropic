@@ -66,16 +66,50 @@ class Scanner:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
         # Get active markets - EXCLUDE MULTIGAME parlays server-side using mve_filter
-        # This ensures we get 5000 REAL markets, not 5000 markets with 90% parlays
-        # Server-side filtering is critical: without it, NCAA basketball is beyond page 5
-        # NOTE: is_live='true' filters out NCAA basketball! Use mve_filter='exclude' only
-        logger.info(f"  Querying markets (mve_filter=exclude)...")
-        all_markets = self.client.get_markets(
-            mve_filter='exclude',  # Exclude multivariate events (MULTIGAME parlays)
+        # CRITICAL: Generic query misses many markets due to API sorting by volume/liquidity
+        # Solution: Query high-priority series tickers directly, then supplement with generic query
+        logger.info(f"  Querying high-priority series tickers + generic markets...")
+
+        # Priority series to query directly (markets that often get buried in generic results)
+        priority_series = [
+            'KXNCAAMBGAME',  # NCAA Men's Basketball - often has low volume markets
+            'KXNCAAMBSPREAD',
+            'KXNCAAMBTOTAL'
+        ]
+
+        all_markets = []
+        seen_tickers = set()
+
+        # Query priority series first
+        for series in priority_series:
+            logger.debug(f"  Querying {series}...")
+            series_markets = self.client.get_markets(
+                category=series,
+                mve_filter='exclude',
+                limit=1000,
+                max_total=10000  # Get all markets for this series
+            )
+            # Deduplicate
+            for m in series_markets:
+                ticker = m.get('ticker', '')
+                if ticker not in seen_tickers:
+                    all_markets.append(m)
+                    seen_tickers.add(ticker)
+
+        # Then supplement with generic query for other markets
+        logger.debug(f"  Querying generic markets...")
+        generic_markets = self.client.get_markets(
+            mve_filter='exclude',
             limit=1000,
             max_total=5000
         )
-        logger.info(f"  Retrieved {len(all_markets)} live markets")
+        for m in generic_markets:
+            ticker = m.get('ticker', '')
+            if ticker not in seen_tickers:
+                all_markets.append(m)
+                seen_tickers.add(ticker)
+
+        logger.info(f"  Retrieved {len(all_markets)} markets total")
 
         # Debug counters
         filter_stats = {
