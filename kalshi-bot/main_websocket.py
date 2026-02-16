@@ -29,7 +29,9 @@ from decision_logger import DecisionLogger
 from report_generator import ReportGenerator
 from stability_tracker import StabilityTracker
 from series_discovery import SeriesDiscovery
-from websocket_monitor import WebSocketMonitor
+# Using kalshi-python-unofficial library for reliable WebSocket streaming
+from websocket_monitor_kalshi_lib import KalshiWebSocketMonitor
+# Alternative implementation available in websocket_monitor_alt.py
 
 logger = setup_logger("main")
 
@@ -80,10 +82,10 @@ class TradingBotWebSocket:
         logger.info(f"✅ Discovered {stats['total_series']} series across {stats['total_categories']} categories")
         logger.info(f"   Sports series: {stats['sports_series_count']}")
 
-        # WebSocket Monitor
+        # WebSocket Monitor (using kalshi-python-unofficial library)
         logger.info("\n🌐 Initializing WebSocket monitor...")
-        self.ws_monitor = WebSocketMonitor(config, self.series_discovery)
-        logger.info("✅ WebSocket monitor ready")
+        self.ws_monitor = KalshiWebSocketMonitor(config, self.series_discovery)
+        logger.info("✅ WebSocket monitor ready (kalshi-python-unofficial)")
 
         # Scorer
         logger.info("\n🎯 Initializing scorer...")
@@ -164,7 +166,7 @@ class TradingBotWebSocket:
 
             try:
                 loop.run_until_complete(
-                    self.ws_monitor.run(self.on_market_triggered)
+                    self.ws_monitor.run_monitor(self.on_market_triggered)
                 )
             except Exception as e:
                 logger.error(f"WebSocket thread error: {e}")

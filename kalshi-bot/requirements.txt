@@ -4,3 +4,5 @@ python-dateutil>=2.8.0
 aiohttp>=3.9.0
 cryptography>=42.0.0
 websockets>=12.0
+kalshi-python-unofficial>=0.1.0
+websocket-client>=1.6.0
