@@ -33,10 +33,10 @@ class Scanner:
 
         logger.info("Scanner initialized")
 
-        logger.info(f"  SCANNING LIVE MARKETS (is_live=true filter)")
+        logger.info(f"  SCANNING ALL OPEN MARKETS (is_live filter removed - it's broken)")
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
-        logger.info(f"  Volume filter: volume_24h > 0")
-        logger.info(f"  Live event check: Event happening now or within 4 hours")
+        logger.info(f"  Filtering out: Synthetic MULTIGAME parlays")
+        logger.info(f"  Live event check: Event happening within next 4 hours")
 
     def slow_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
         """
@@ -65,18 +65,16 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get all LIVE markets (events currently happening)
-        # Using is_live=true returns only markets for live events (~1000-2000 markets)
-        # This is MUCH faster than scanning all 110k+ markets
-        # We filter client-side for price (85-97¢) and volume (>0)
-        logger.info(f"  Querying live markets (is_live=true)...")
+        # Get all open markets - filter out synthetic parlays client-side
+        # The is_live=true filter is BROKEN - it returns only synthetic MULTIGAME parlays
+        # Instead, we scan all open markets and filter for real series tickers
+        logger.info(f"  Querying all open markets...")
         all_markets = self.client.get_markets(
-            is_live='true',
+            status='open',
             limit=1000,
-            max_total=5000  # Limit to prevent timeout (there can be 10k+ "live" markets with 0 volume)
-            # No expiration filter - is_live already means event is happening now
+            max_total=10000  # Scan more markets since we're not filtering server-side
         )
-        logger.info(f"  Retrieved {len(all_markets)} live markets")
+        logger.info(f"  Retrieved {len(all_markets)} open markets")
 
         # Debug counters
         filter_stats = {
@@ -102,6 +100,12 @@ class Scanner:
             if ticker in existing_set:
                 logger.debug(f"  Skipping {ticker} - already have position")
                 filter_stats['existing_position'] += 1
+                continue
+
+            # Skip synthetic parlay markets (MULTIGAME) - they have no real trading
+            if 'MULTIGAME' in ticker:
+                logger.debug(f"  Skipping {ticker} - synthetic parlay")
+                filter_stats['parse_failed'] += 1  # Count as parse failed
                 continue
 
             # Extract event identifier (everything except the last outcome part)
@@ -375,13 +379,8 @@ class Scanner:
             filter_stats['wrong_status'] += 1
             return False
 
-        # Check if market has active trading (volume_24h > 0)
-        if market.volume_24h <= 0:
-            filter_stats['not_live'] += 1
-            # DEBUG: Log first 10 markets with no volume
-            if filter_stats['not_live'] <= 10:
-                print(f"❌ FILTERED (no volume): {market.ticker} | yes={market.best_yes_price}¢ no={market.best_no_price}¢ | vol_24h={market.volume_24h}")
-            return False  # No active trading
+        # REMOVED volume check - API doesn't report volume correctly (always 0)
+        # Instead, rely on expected_expiration_time to find live events
 
         # CRITICAL: Check if this is a LIVE event happening NOW (not a future event)
         # ONLY use expected_expiration_time - the actual event time
