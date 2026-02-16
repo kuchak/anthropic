@@ -80,18 +80,19 @@ class WebSocketMonitor:
             logger.error(f"Failed to load private key: {e}")
             raise
 
-    def _create_signature(self, timestamp: int) -> str:
+    def _create_signature(self, timestamp_ms: str) -> str:
         """
         Create RSA-PSS signature for WebSocket authentication.
 
         Args:
-            timestamp: Unix timestamp in milliseconds
+            timestamp_ms: Unix timestamp in milliseconds (as string)
 
         Returns:
             Base64-encoded signature
         """
-        # Message format: timestamp + "GET" + "/trade-api/ws/v2"
-        message = f"{timestamp}GET/trade-api/ws/v2"
+        # Message format: timestamp + method + path (exactly like REST API)
+        # Use string concatenation, not f-string
+        message = timestamp_ms + "GET" + "/trade-api/ws/v2"
 
         # Sign with RSA-PSS (using digest-length salt as per Kalshi docs)
         signature = self.private_key.sign(
@@ -109,13 +110,14 @@ class WebSocketMonitor:
 
     def _get_auth_headers(self) -> Dict[str, str]:
         """Generate authentication headers for WebSocket connection"""
-        timestamp = int(time.time() * 1000)  # milliseconds
-        signature = self._create_signature(timestamp)
+        # Create timestamp as STRING (exactly like REST API)
+        timestamp_ms = str(int(time.time() * 1000))
+        signature = self._create_signature(timestamp_ms)
 
         return {
             'KALSHI-ACCESS-KEY': self.api_key_id,
             'KALSHI-ACCESS-SIGNATURE': signature,
-            'KALSHI-ACCESS-TIMESTAMP': str(timestamp)
+            'KALSHI-ACCESS-TIMESTAMP': timestamp_ms
         }
 
     async def connect(self):
@@ -123,10 +125,21 @@ class WebSocketMonitor:
         try:
             auth_headers = self._get_auth_headers()
 
+            # Log full details for debugging
+            timestamp_ms = auth_headers['KALSHI-ACCESS-TIMESTAMP']
+            message = timestamp_ms + "GET" + "/trade-api/ws/v2"
+
             logger.info(f"Connecting to {self.ws_url}...")
-            logger.debug(f"Auth headers: KEY={auth_headers.get('KALSHI-ACCESS-KEY')[:10]}...")
-            logger.debug(f"             TIMESTAMP={auth_headers.get('KALSHI-ACCESS-TIMESTAMP')}")
-            logger.debug(f"             SIGNATURE={auth_headers.get('KALSHI-ACCESS-SIGNATURE')[:20]}...")
+            print(f"\n🔍 DEBUG: WebSocket Authentication Details")
+            print(f"  URL: {self.ws_url}")
+            print(f"  Timestamp: {timestamp_ms}")
+            print(f"  Signed message: '{message}'")
+            print(f"  Headers:")
+            for key, value in auth_headers.items():
+                if len(value) > 50:
+                    print(f"    {key}: {value[:50]}...")
+                else:
+                    print(f"    {key}: {value}")
 
             self.ws = await websockets.connect(
                 self.ws_url,
