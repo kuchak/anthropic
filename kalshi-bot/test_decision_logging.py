@@ -4,7 +4,7 @@ Test decision logging and report generation
 import os
 import json
 import shutil
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 from decision_logger import DecisionLogger, MarketDecision
 from report_generator import ReportGenerator
 
@@ -247,7 +247,7 @@ print("GENERATING DAILY REPORT")
 print("=" * 80)
 print()
 
-report = report_gen.generate_daily_report(target_date=date.today())
+report = report_gen.generate_daily_report(target_date=datetime.now(timezone.utc).date())
 print(report)
 print()
 

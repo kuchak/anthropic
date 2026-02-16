@@ -30,14 +30,17 @@ class ReportGenerator:
         Generate comprehensive daily summary report
 
         Args:
-            target_date: Date to report on (defaults to today)
+            target_date: Date to report on (defaults to today UTC)
 
         Returns:
             Formatted report string
         """
 
         if target_date is None:
-            target_date = date.today()
+            # Use UTC date, not local date!
+            # This prevents timezone bugs where local date != UTC date
+            from datetime import timezone
+            target_date = datetime.now(timezone.utc).date()
 
         logger.info(f"Generating daily report for {target_date}")
 
