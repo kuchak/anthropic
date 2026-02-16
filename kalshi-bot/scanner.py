@@ -33,7 +33,7 @@ class Scanner:
 
         logger.info("Scanner initialized")
 
-        logger.info(f"  FILTERS: (1) is_live=true, (2) mve_filter=exclude (no parlays), (3) price 85-97¢")
+        logger.info(f"  FILTERS: (1) mve_filter=exclude (no parlays), (2) price 85-97¢, (3) status=open/active")
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
         logger.info(f"  Filtering out: MULTIGAME parlays (server-side via mve_filter)")
         logger.info(f"  Volume filter: REMOVED (API doesn't report correctly)")
@@ -65,12 +65,12 @@ class Scanner:
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        # Get live markets - EXCLUDE MULTIGAME parlays server-side using mve_filter
+        # Get active markets - EXCLUDE MULTIGAME parlays server-side using mve_filter
         # This ensures we get 5000 REAL markets, not 5000 markets with 90% parlays
         # Server-side filtering is critical: without it, NCAA basketball is beyond page 5
-        logger.info(f"  Querying live markets (is_live=true, mve_filter=exclude)...")
+        # NOTE: is_live='true' filters out NCAA basketball! Use mve_filter='exclude' only
+        logger.info(f"  Querying markets (mve_filter=exclude)...")
         all_markets = self.client.get_markets(
-            is_live='true',
             mve_filter='exclude',  # Exclude multivariate events (MULTIGAME parlays)
             limit=1000,
             max_total=5000
@@ -384,9 +384,9 @@ class Scanner:
             return False
 
         # REMOVED volume check - API doesn't report volume correctly (always 0)
-        # REMOVED time check - is_live=true already filters for live events
-        # Server-side filters: (1) is_live=true, (2) mve_filter=exclude (no MULTIGAME parlays)
-        # Client-side filters: (3) price 85-97¢, (4) settlement time window, (5) status=open/active
+        # REMOVED is_live filter - it excludes NCAA basketball and other active markets
+        # Server-side filter: (1) mve_filter=exclude (no MULTIGAME parlays)
+        # Client-side filters: (2) price 85-97¢, (3) settlement time window, (4) status=open/active
 
         return True
 
