@@ -446,6 +446,10 @@ def main():
     with open('config.yaml', 'r') as f:
         config = yaml.safe_load(f)
 
+    # Add API credentials from environment
+    config['kalshi_api_key_id'] = os.getenv('KALSHI_API_KEY_ID')
+    config['kalshi_private_key_path'] = os.getenv('KALSHI_PRIVATE_KEY_PATH')
+
     try:
         bot = TradingBotWebSocket(config, dry_run=dry_run)
         bot.run_continuous()

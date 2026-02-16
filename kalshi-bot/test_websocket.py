@@ -6,6 +6,7 @@ and prints first 10 price updates.
 """
 
 import asyncio
+import os
 import yaml
 from websocket_monitor import WebSocketMonitor
 from series_discovery import SeriesDiscovery
@@ -24,6 +25,19 @@ async def test_websocket():
     # Load config
     with open('config.yaml', 'r') as f:
         config = yaml.safe_load(f)
+
+    # Add API credentials from environment
+    config['kalshi_api_key_id'] = os.getenv('KALSHI_API_KEY_ID')
+    config['kalshi_private_key_path'] = os.getenv('KALSHI_PRIVATE_KEY_PATH')
+
+    if not config['kalshi_api_key_id'] or not config['kalshi_private_key_path']:
+        print("\n❌ Error: API credentials not configured")
+        print("\nPlease set environment variables:")
+        print("  export KALSHI_API_KEY_ID='your-key-id'")
+        print("  export KALSHI_PRIVATE_KEY_PATH='/path/to/private_key.pem'")
+        print("\nOr source the .env file:")
+        print("  source .env")
+        return
 
     # Run discovery first (needed for sports series filtering)
     print("\n1. Running series discovery...")
