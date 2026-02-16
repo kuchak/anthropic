@@ -374,6 +374,12 @@ class Scanner:
             filter_stats['wrong_price'] += 1
             return False  # Neither side in target range
 
+        # VERBOSE: Log markets that pass price filter
+        side = "YES" if yes_in_range else "NO"
+        price = market.best_yes_price if yes_in_range else market.best_no_price
+        print(f"✅ PRICE MATCH: {market.ticker} | {side}={price:.2f}¢ | {market.title[:60]}")
+        logger.info(f"✅ Price filter passed: {market.ticker} | {side}={price:.2f}¢")
+
         # Check market is open/active (API returns 'active' status for open markets)
         if market.status not in ['open', 'active']:
             filter_stats['wrong_status'] += 1
