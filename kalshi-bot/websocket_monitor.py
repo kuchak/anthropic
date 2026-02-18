@@ -41,7 +41,7 @@ class WebSocketMonitor:
         self.series_discovery = series_discovery
 
         # WebSocket connection
-        self.ws_url = "wss://api.elections.kalshi.com/trade-api/ws/v2"
+        self.ws_url = "wss://trading-api.kalshi.com/trade-api/ws/v2"
         self.ws = None
         self.connected = False
 

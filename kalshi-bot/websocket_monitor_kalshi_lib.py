@@ -12,6 +12,8 @@ from datetime import datetime, timezone, timedelta
 from typing import Dict, Set, Callable, Optional
 from dateutil.parser import parse as parse_datetime
 
+import websockets
+
 import kalshi.websocket
 import kalshi.auth
 
@@ -39,14 +41,14 @@ class KalshiWebSocketMonitor(kalshi.websocket.Client):
         self.config = config
         self.series_discovery = series_discovery
 
-        # Configure authentication
-        kalshi.auth.auth.set_key(
+        # Configure authentication (kalshi.auth IS the singleton Auth instance)
+        kalshi.auth.set_key(
             access_key=config['kalshi_api_key_id'],
             private_key_path=config['kalshi_private_key_path']
         )
 
-        # WebSocket URL
-        self.ws_url = "wss://api.elections.kalshi.com/trade-api/ws/v2"
+        # WebSocket URL (trading-api.kalshi.com is the current production endpoint)
+        self.ws_url = "wss://trading-api.kalshi.com/trade-api/ws/v2"
 
         # Callbacks
         self.on_market_triggered_callback: Optional[Callable] = None
@@ -62,6 +64,27 @@ class KalshiWebSocketMonitor(kalshi.websocket.Client):
         self.connected = False
 
         logger.info("Kalshi WebSocket monitor initialized (using official library)")
+
+    async def connect(self, url=None):
+        """
+        Override parent connect to fix extra_headers -> additional_headers
+        incompatibility with websockets 12+.
+
+        The kalshi-python-unofficial library uses extra_headers which was
+        removed in websockets 12+. This override uses additional_headers.
+        """
+        if url is None:
+            url = self.ws_url
+
+        logger.info("Connecting to WebSocket: %s", url)
+        async with websockets.connect(
+            url,
+            additional_headers=kalshi.auth.request_headers("GET", url),
+        ) as ws:
+            self.ws = ws
+            logger.info("Connected to WebSocket: %s", url)
+            await self.on_open()
+            await self.handler()
 
     async def on_open(self):
         """Called when WebSocket connection is opened"""
