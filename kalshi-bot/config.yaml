@@ -10,6 +10,7 @@ slow_scan_interval_minutes: 0.5  # Full market scan every 30 seconds (catch flee
 fast_scan_interval_minutes: 0.5  # Watchlist price check every 30 seconds
 max_time_to_settlement_hours: 999999  # No settlement time limit - scan ALL active markets
 min_time_to_settlement_minutes: 0     # No minimum - we'll bet right up to settlement if stable
+series_discovery_pages: 100      # Fetch enough pages to cover all sports series (KXWTACHALLENGERMATCH appears ~page 21+)
 
 # === Market Filtering ===
 # WHITELIST: 28 profitable tickers with 30+ markets in backtest
