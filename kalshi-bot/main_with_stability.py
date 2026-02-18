@@ -16,7 +16,7 @@ import sys
 import time
 import yaml
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone
 from logger_setup import setup_logger
 
 from kalshi_client import KalshiClient
@@ -212,7 +212,7 @@ class TradingBot:
                     category=market.category,
                     yes_price=market.best_yes_price,
                     no_price=market.best_no_price,
-                    time_to_settlement_hours=(market.settlement_time - datetime.utcnow()).total_seconds() / 3600,
+                    time_to_settlement_hours=(market.settlement_time - datetime.now(timezone.utc)).total_seconds() / 3600,
                     skip_reason="score below threshold"
                 )
 
@@ -292,7 +292,7 @@ class TradingBot:
                     category=opp.market.category,
                     yes_price=opp.market.best_yes_price,
                     no_price=opp.market.best_no_price,
-                    time_to_settlement_hours=(opp.market.settlement_time - datetime.utcnow()).total_seconds() / 3600,
+                    time_to_settlement_hours=(opp.market.settlement_time - datetime.now(timezone.utc)).total_seconds() / 3600,
                     skip_reason="insufficient capital",
                     score=opp.expected_roi
                 )
@@ -327,7 +327,7 @@ class TradingBot:
                         category=market.category,
                         yes_price=market.best_yes_price,
                         no_price=market.best_no_price,
-                        time_to_settlement_hours=(market.settlement_time - datetime.utcnow()).total_seconds() / 3600,
+                        time_to_settlement_hours=(market.settlement_time - datetime.now(timezone.utc)).total_seconds() / 3600,
                         side=execution.side,
                         amount=execution.total_cost,
                         contracts=execution.num_contracts,
