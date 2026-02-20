@@ -136,19 +136,19 @@ class TradingBot:
         logger.info(f"Cycle ID: {cycle_id}")
         logger.info("=" * 80)
 
-        # Step 1: Scan for markets
+        # Step 1: Scan for markets (two-tier: full scan every 10 min, hot scan every 30s)
         logger.info("\n📡 Step 1: Market Discovery")
         logger.info("-" * 80)
 
         # Get existing position tickers to avoid duplicates
         existing_tickers = list(self.tracker.positions.keys())
 
-        if self.scanner.should_run_slow_scan():
-            logger.info("Running slow scan (full discovery)...")
-            self.scanner.slow_scan(existing_position_tickers=existing_tickers)
-        elif self.scanner.should_run_fast_scan():
-            logger.info("Running fast scan (price updates)...")
-            self.scanner.fast_scan(existing_position_tickers=existing_tickers)
+        if self.scanner.should_run_full_scan():
+            logger.info("Running FULL SCAN (all series discovery, refreshing hot list)...")
+            self.scanner.full_scan(existing_position_tickers=existing_tickers)
+        elif self.scanner.should_run_hot_scan():
+            logger.info(f"Running HOT SCAN ({len(self.scanner.hot_series)} active series)...")
+            self.scanner.hot_scan(existing_position_tickers=existing_tickers)
         else:
             logger.info("Scan not needed yet, using cached watchlist")
 
@@ -364,10 +364,15 @@ class TradingBot:
             logger.info(f"   Wins: {report['wins']}, Losses: {report['losses']}")
 
     def run_continuous(self) -> None:
-        """Run continuous trading loop"""
+        """Run continuous trading loop with two-tier scanning"""
 
-        logger.info("\n🚀 Starting continuous trading loop WITH STABILITY TRACKING")
-        logger.info("   Markets must hold >= 90¢ for 1-5 minutes before betting")
+        hot_interval = self.config.get('hot_scan_interval_seconds', 30)
+        full_interval = self.config.get('full_scan_interval_seconds', 600)
+
+        logger.info("\n🚀 Starting continuous trading loop (TWO-TIER SCANNING)")
+        logger.info(f"   🔥 Hot scan: every {hot_interval}s (active series only)")
+        logger.info(f"   📡 Full scan: every {full_interval}s (all series discovery)")
+        logger.info("   ⏱️  Stability: markets must hold >= 90¢ for 1-5 minutes")
         logger.info("   Press Ctrl+C to stop\n")
 
         cycle_count = 0

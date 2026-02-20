@@ -183,20 +183,23 @@ class Scorer:
         # Higher score = better opportunity
         # Factors:
         # 1. Expected ROI (primary)
-        # 2. Time to settlement (prefer shorter)
+        # 2. Capital velocity — shorter expiry = capital recycles faster
         # 3. Win probability (prefer higher confidence)
 
         time_to_settlement_hours = market.time_to_settlement_minutes / 60
 
-        # Normalize time factor (prefer 1-3 hours, penalize very short or very long)
-        if time_to_settlement_hours < 1:
-            time_factor = 0.7  # Too risky - not much time to analyze
-        elif time_to_settlement_hours < 3:
-            time_factor = 1.0  # Sweet spot
-        elif time_to_settlement_hours < 6:
-            time_factor = 0.9  # Still good
-        else:
-            time_factor = 0.8  # Capital tied up longer
+        # Capital velocity: shorter expiry = capital recycles faster
+        # A 92¢ bet on a game ending in 30 min is worth more than 92¢ on a 3-hour game
+        # because you can reinvest the returns sooner.
+        #
+        # time_factor = sqrt(reference / time_to_settlement)
+        #   30 min → sqrt(3/0.5) = 2.45x  (capital recycles 6x faster)
+        #   1 hr   → sqrt(3/1)   = 1.73x
+        #   2 hr   → sqrt(3/2)   = 1.22x
+        #   3 hr   → sqrt(3/3)   = 1.00x  (baseline)
+        reference_hours = self.config.get('capital_velocity_reference_hours', 3.0)
+        time_factor = math.sqrt(reference_hours / max(time_to_settlement_hours, 0.1))
+        time_factor = min(time_factor, 4.0)  # Cap for very short expiry
 
         # Confidence boost for high-accuracy ranges
         confidence_factor = 1.0 + (win_probability - self.default_accuracy) * 2

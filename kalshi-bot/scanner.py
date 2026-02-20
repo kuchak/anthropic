@@ -1,12 +1,17 @@
 """
 Market Scanner
 Discovers markets, filters by criteria, and maintains active watchlist
+
+Two-tier scanning system:
+- FULL SCAN (every 10 min): Discover all series, scan each, update hot list
+- HOT SCAN (every 30 sec): Only scan series with active markets (hot list)
 """
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Set
 from datetime import datetime, timedelta, timezone
 from logger_setup import get_logger
 from models import Market
 from kalshi_client import KalshiClient
+from series_discovery import SeriesDiscovery
 
 logger = get_logger("scanner")
 
@@ -15,9 +20,9 @@ class Scanner:
     """
     Scans Kalshi markets and maintains a filtered watchlist
 
-    Two scanning modes:
-    - Slow scan: Full market discovery (every 15 min)
-    - Fast scan: Watchlist price updates (every 3 min)
+    Two-tier scanning:
+    - Full scan: All series discovery + hot list refresh (every 10 min)
+    - Hot scan: Only active series for fast opportunity detection (every 30 sec)
     """
 
     def __init__(self, client: KalshiClient, config: Dict[str, Any]):
@@ -27,12 +32,27 @@ class Scanner:
         # Watchlist of markets that meet our criteria
         self.watchlist: List[Market] = []
 
-        # Tracking
+        # Legacy tracking (kept for backward compat)
         self.last_slow_scan: Optional[datetime] = None
         self.last_fast_scan: Optional[datetime] = None
 
-        logger.info("Scanner initialized")
+        # Two-tier scanning state
+        self.hot_series: Set[str] = set()       # Series with active markets (refreshed on full scan)
+        self.all_series: List[str] = []         # All discovered series
+        self.last_full_scan: Optional[datetime] = None
+        self.last_hot_scan: Optional[datetime] = None
+        self._series_with_live_markets: Set[str] = set()  # Populated during slow_scan
 
+        # Series discovery
+        api_base = config.get('kalshi_api_base', 'https://api.elections.kalshi.com/trade-api/v2')
+        base_url = api_base.replace('/trade-api/v2', '')
+        self.series_discovery = SeriesDiscovery(api_base_url=base_url)
+
+        logger.info("Scanner initialized (two-tier scanning)")
+
+        hot_interval = config.get('hot_scan_interval_seconds', 30)
+        full_interval = config.get('full_scan_interval_seconds', 600)
+        logger.info(f"  Hot scan: every {hot_interval}s | Full scan: every {full_interval}s")
         logger.info(f"  FILTERS: (1) mve_filter=exclude (no parlays), (2) price 85-97¢, (3) status=open/active")
         logger.info(f"  Price range: ${config['min_contract_price']:.2f} - ${config['max_contract_price']:.2f}")
         logger.info(f"  Filtering out: MULTIGAME parlays (server-side via mve_filter)")
@@ -118,6 +138,15 @@ class Scanner:
                     pass
 
         logger.info(f"  {len(markets_expiring_soon)} markets expiring within 3 hours")
+
+        # Track which series have live markets (for hot list refresh)
+        self._series_with_live_markets = set()
+        for m in markets_expiring_soon:
+            ticker = m.get('ticker', '')
+            series_ticker = ticker.split('-')[0] if '-' in ticker else ticker
+            self._series_with_live_markets.add(series_ticker)
+        logger.info(f"  {len(self._series_with_live_markets)} series have live markets")
+
         all_markets = markets_expiring_soon
 
         # Debug counters
@@ -463,17 +492,122 @@ class Scanner:
         }
 
     def should_run_slow_scan(self) -> bool:
-        """Check if it's time for a slow scan"""
+        """Check if it's time for a slow scan (legacy)"""
         if not self.last_slow_scan:
             return True
 
         elapsed = (datetime.utcnow() - self.last_slow_scan).total_seconds() / 60
-        return elapsed >= self.config['slow_scan_interval_minutes']
+        return elapsed >= self.config.get('slow_scan_interval_minutes', 0.5)
 
     def should_run_fast_scan(self) -> bool:
-        """Check if it's time for a fast scan"""
+        """Check if it's time for a fast scan (legacy)"""
         if not self.last_fast_scan:
             return True
 
         elapsed = (datetime.utcnow() - self.last_fast_scan).total_seconds() / 60
-        return elapsed >= self.config['fast_scan_interval_minutes']
+        return elapsed >= self.config.get('fast_scan_interval_minutes', 0.5)
+
+    # ── Two-Tier Scanning ────────────────────────────────────────────
+
+    def full_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
+        """
+        Full scan: discover ALL series, scan each, rebuild hot list.
+        Runs every 10 minutes.
+
+        Steps:
+        1. Discover all series from Kalshi events API
+        2. Query each series for active markets expiring within 3 hours
+        3. Update hot list = series that had at least one live market
+
+        Returns:
+            Number of markets on watchlist
+        """
+        logger.info("=" * 60)
+        logger.info("FULL SCAN: Discovering all series...")
+        logger.info("=" * 60)
+
+        # Step 1: Discover all series from API
+        max_pages = self.config.get('series_discovery_pages', 100)
+        series_by_category = self.series_discovery.discover_series(max_pages=max_pages)
+
+        # Flatten to list of all series tickers
+        all_series_set: Set[str] = set()
+        for cat_series in series_by_category.values():
+            all_series_set.update(cat_series)
+        self.all_series = sorted(all_series_set)
+
+        logger.info(f"Discovered {len(self.all_series)} total series across {len(series_by_category)} categories")
+
+        # Step 2: Scan all series (reuses slow_scan core logic)
+        count = self.slow_scan(
+            existing_position_tickers=existing_position_tickers,
+            series_list=self.all_series
+        )
+
+        # Step 3: Update hot list from scan results
+        # _series_with_live_markets is populated during slow_scan (before price filtering)
+        # so it includes series with active games regardless of current price
+        old_hot = self.hot_series.copy()
+        self.hot_series = self._series_with_live_markets.copy()
+        self.last_full_scan = datetime.utcnow()
+        self.last_hot_scan = self.last_full_scan  # Full scan covers hot scan too
+
+        # Log hot list changes
+        new_hot = self.hot_series - old_hot
+        removed_hot = old_hot - self.hot_series
+
+        logger.info("")
+        logger.info(f"HOT LIST: {len(self.hot_series)} series with active markets (of {len(self.all_series)} total)")
+        for s in sorted(self.hot_series):
+            tag = " [NEW]" if s in new_hot else ""
+            logger.info(f"  {s}{tag}")
+        if removed_hot:
+            logger.info(f"  Cooled off: {sorted(removed_hot)}")
+
+        print(f"\n🔥 HOT LIST: {len(self.hot_series)} series (of {len(self.all_series)} total)")
+        for s in sorted(self.hot_series):
+            print(f"  → {s}")
+        print()
+
+        return count
+
+    def hot_scan(self, existing_position_tickers: Optional[List[str]] = None) -> int:
+        """
+        Hot scan: only query series on the hot list.
+        Runs every 30 seconds for fast market discovery.
+
+        If hot list is empty, falls back to full scan.
+
+        Returns:
+            Number of markets on watchlist
+        """
+        if not self.hot_series:
+            logger.info("No hot series — triggering full scan")
+            return self.full_scan(existing_position_tickers)
+
+        logger.info(f"HOT SCAN: {len(self.hot_series)} series → {sorted(self.hot_series)}")
+
+        count = self.slow_scan(
+            existing_position_tickers=existing_position_tickers,
+            series_list=sorted(self.hot_series)
+        )
+
+        self.last_hot_scan = datetime.utcnow()
+
+        return count
+
+    def should_run_full_scan(self) -> bool:
+        """Check if it's time for a full scan (every 10 minutes)."""
+        if not self.last_full_scan:
+            return True
+        elapsed = (datetime.utcnow() - self.last_full_scan).total_seconds()
+        interval = self.config.get('full_scan_interval_seconds', 600)
+        return elapsed >= interval
+
+    def should_run_hot_scan(self) -> bool:
+        """Check if it's time for a hot scan (every 30 seconds)."""
+        if not self.last_hot_scan:
+            return True  # Will trigger full scan via hot_scan fallback
+        elapsed = (datetime.utcnow() - self.last_hot_scan).total_seconds()
+        interval = self.config.get('hot_scan_interval_seconds', 30)
+        return elapsed >= interval

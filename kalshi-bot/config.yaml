@@ -4,13 +4,19 @@ dry_run: true                    # true = paper trading, false = real money
 # === Kalshi API ===
 kalshi_api_base: "https://api.elections.kalshi.com/trade-api/v2"  # PRODUCTION API
 
-# === Scanning ===
-cycle_interval_seconds: 30       # Run trading cycle every 30 seconds
-slow_scan_interval_minutes: 0.5  # Full market scan every 30 seconds (catch fleeting live event opportunities)
-fast_scan_interval_minutes: 0.5  # Watchlist price check every 30 seconds
-max_time_to_settlement_hours: 999999  # No settlement time limit - scan ALL active markets
-min_time_to_settlement_minutes: 0     # No minimum - we'll bet right up to settlement if stable
-series_discovery_pages: 100      # Fetch enough pages to cover all sports series (KXWTACHALLENGERMATCH appears ~page 21+)
+# === Two-Tier Scanning ===
+# HOT LIST: series with active markets expiring within 3 hours. Scanned every 30s.
+# FULL SCAN: all series discovery. Runs every 10 min to refresh the hot list.
+cycle_interval_seconds: 30              # Main loop sleep (matches hot scan interval)
+hot_scan_interval_seconds: 30           # Hot series scan every 30 seconds
+full_scan_interval_seconds: 600         # Full discovery every 10 minutes (600s)
+max_time_to_settlement_hours: 999999    # No settlement time limit - scan ALL active markets
+min_time_to_settlement_minutes: 0       # No minimum - we'll bet right up to settlement if stable
+series_discovery_pages: 100             # Fetch enough pages to cover all series
+
+# Capital velocity: shorter expiry games score higher (capital recycles faster)
+# 92¢ on 30 min game scores 2.45x vs 92¢ on 3 hr game
+capital_velocity_reference_hours: 3.0   # Baseline: 3-hour game = 1.0x multiplier
 
 # === Market Filtering ===
 # WHITELIST: 28 profitable tickers with 30+ markets in backtest
