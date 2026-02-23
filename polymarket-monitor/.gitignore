@@ -1,0 +1,11 @@
+# Output files
+*.json
+*.txt
+*.csv
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
