@@ -16,8 +16,8 @@ print("Loading config...")
 with open('config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
-# Temporarily reduce pages for faster testing
-config['series_discovery_pages'] = 10
+# Use full 100 pages to test realistic full scan performance
+config['series_discovery_pages'] = 100
 
 print("Initializing API client...")
 client = KalshiClient(config)

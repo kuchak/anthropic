@@ -3,9 +3,10 @@ Market Scanner
 Discovers markets, filters by criteria, and maintains active watchlist
 
 Two-tier scanning system:
-- FULL SCAN (every 10 min): Discover all series, scan each, update hot list
+- FULL SCAN (every 10 min): Bulk fetch 10K markets, filter client-side, update hot list
 - HOT SCAN (every 30 sec): Only scan series with active markets (hot list)
 """
+import time
 from typing import List, Dict, Any, Optional, Set
 from datetime import datetime, timedelta, timezone
 from logger_setup import get_logger
@@ -61,14 +62,14 @@ class Scanner:
     def slow_scan(self, existing_position_tickers: Optional[List[str]] = None,
                   series_list: Optional[List[str]] = None) -> int:
         """
-        Full market discovery scan
+        Full market discovery scan using BULK fetching
 
-        Queries discovered series for active markets expiring within 3 hours.
-        Filters by price range and applies stability tracking criteria.
+        Fetches up to 10,000 markets in bulk, then filters client-side by series and time.
+        This is much faster than querying each series individually.
 
         Args:
             existing_position_tickers: List of tickers we already have positions in
-            series_list: List of series tickers to query (from dynamic discovery)
+            series_list: List of series tickers to filter by (from dynamic discovery)
 
         Returns:
             Number of markets added to watchlist
@@ -80,37 +81,47 @@ class Scanner:
             series_list = []
 
         existing_set = set(existing_position_tickers)
+        series_set = set(series_list)  # For fast lookup
 
-        logger.info("🔍 Starting slow scan (dynamic series discovery)...")
+        logger.info("🔍 Starting slow scan (BULK market fetch)...")
         if existing_set:
             logger.info(f"  Filtering out {len(existing_set)} existing positions")
 
-        logger.info(f"  Querying {len(series_list)} discovered series...")
+        logger.info(f"  Fetching up to 10,000 markets in bulk (mve_filter=exclude)...")
 
+        # BULK FETCH: Get all markets at once (much faster than per-series queries)
+        start_time = time.time()
+        try:
+            all_markets_raw = self.client.get_markets(
+                mve_filter='exclude',  # No parlays
+                limit=1000,            # 1000 per page
+                max_total=10000        # Up to 10K total markets
+            )
+            fetch_time = time.time() - start_time
+            logger.info(f"  ✅ Fetched {len(all_markets_raw)} markets in {fetch_time:.1f}s")
+        except Exception as e:
+            logger.error(f"  ❌ Bulk fetch failed: {e}")
+            return 0
+
+        # CLIENT-SIDE FILTER: Only include markets from discovered series
         all_markets = []
         seen_tickers = set()
 
-        # Query each discovered series
-        for series in series_list:
-            logger.debug(f"  Querying {series}...")
-            try:
-                series_markets = self.client.get_markets(
-                    category=series,
-                    mve_filter='exclude',
-                    limit=1000,
-                    max_total=3000  # Reasonable limit per series
-                )
-                # Deduplicate
-                for m in series_markets:
-                    ticker = m.get('ticker', '')
-                    if ticker not in seen_tickers:
-                        all_markets.append(m)
-                        seen_tickers.add(ticker)
-            except Exception as e:
-                logger.debug(f"  Error querying {series}: {e}")
+        for m in all_markets_raw:
+            ticker = m.get('ticker', '')
+            if not ticker:
                 continue
 
-        logger.info(f"  Retrieved {len(all_markets)} markets total")
+            # Extract series from ticker (e.g., "KXNBAGAME-26FEB19-..." -> "KXNBAGAME")
+            series_ticker = ticker.split('-')[0] if '-' in ticker else ticker
+
+            # Only include if in our series list
+            if series_ticker in series_set:
+                if ticker not in seen_tickers:
+                    all_markets.append(m)
+                    seen_tickers.add(ticker)
+
+        logger.info(f"  Filtered to {len(all_markets)} markets from {len(series_list)} target series")
 
         # Filter for markets expiring within 3 hours (live events)
         from datetime import timezone
