@@ -31,6 +31,7 @@ import re
 import signal
 import socket
 import ssl
+import subprocess
 import sys
 import time
 import traceback
@@ -52,11 +53,13 @@ CLOB_MIN_IMPLIED = 0.40  # fetch CLOB for outcomes >= this
 CLOB_MAX_PER_CYCLE = 300  # max CLOB API calls per cycle
 MISSING_CYCLES_TO_RESOLVE = 3  # consecutive absent cycles before resolution
 HISTORY_MAX_ENTRIES = 60  # ~30 min of history at 30s intervals
+GIT_PUSH_EVERY_N_CYCLES = 50  # auto-push data to GitHub (~25 min)
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 SNAPSHOTS_CSV = os.path.join(DATA_DIR, "market_snapshots.csv")
 RESOLUTIONS_CSV = os.path.join(DATA_DIR, "resolutions.csv")
 STATE_FILE = os.path.join(DATA_DIR, "state.json")
+HEARTBEAT_FILE = os.path.join(DATA_DIR, "heartbeat.txt")
 LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "monitor.log")
 
 SNAPSHOT_FIELDS = [
@@ -164,6 +167,44 @@ def _is_event_finished(event):
     if not markets:
         return True
     return all(_is_market_resolved(m) for m in markets)
+
+
+# ---------------------------------------------------------------------------
+# Heartbeat & auto-push
+# ---------------------------------------------------------------------------
+
+
+def write_heartbeat(cycle):
+    """Append a heartbeat timestamp before each cycle."""
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    with open(HEARTBEAT_FILE, "a") as f:
+        f.write(f"cycle={cycle}  {now}\n")
+
+
+def auto_git_push(cycle):
+    """Push data files to GitHub every N cycles."""
+    if cycle % GIT_PUSH_EVERY_N_CYCLES != 0:
+        return
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    try:
+        subprocess.run(
+            ["git", "add", "polymarket-monitor/data/"],
+            cwd=repo_root, capture_output=True, timeout=30,
+        )
+        result = subprocess.run(
+            ["git", "commit", "-m", f"Auto-push data snapshot (cycle {cycle})"],
+            cwd=repo_root, capture_output=True, timeout=30,
+        )
+        if result.returncode == 0:
+            subprocess.run(
+                ["git", "push"],
+                cwd=repo_root, capture_output=True, timeout=60,
+            )
+            log(f"  Git auto-push: committed and pushed at cycle {cycle}")
+        else:
+            log(f"  Git auto-push: nothing to commit at cycle {cycle}")
+    except Exception as e:
+        log(f"  Git auto-push failed: {e}")
 
 
 # ---------------------------------------------------------------------------
@@ -738,6 +779,7 @@ def main():
     cycle = 0
     while not _shutdown:
         cycle += 1
+        write_heartbeat(cycle)
         log(f"=== Cycle {cycle} ===")
         t0 = time.time()
         try:
@@ -747,6 +789,7 @@ def main():
             traceback.print_exc()
         elapsed = time.time() - t0
         log(f"  Cycle {cycle} done in {elapsed:.1f}s")
+        auto_git_push(cycle)
         log("")
 
         deadline = t0 + CYCLE_INTERVAL
