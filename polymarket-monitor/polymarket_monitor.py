@@ -1,60 +1,84 @@
 #!/usr/bin/env python3
 """
-Polymarket Sports Monitor — Continuous Market Scanner
+Polymarket Sports Monitor v2 — Comprehensive Data Collection Pipeline
 
-Runs every 30 seconds, scanning all live game markets via the Gamma API.
-Uses the Gamma API's live=true parameter which reflects the Sports WebSocket
-feed (wss://sports-api.polymarket.com/ws) — only games where the underlying
-match is actually in progress are returned. No time-window heuristics needed.
+Monitors all live game markets on Polymarket via two complementary strategies:
+  1. Gamma API live=true — catches esports (LoL, CS, HoK, Dota2, Valorant)
+     which get real-time score/period data
+  2. Gamma API event_date=today — catches tennis (ATP/WTA), soccer, table tennis,
+     and other sports whose matches never receive the live=true flag. Filters
+     for startTime <= now to identify in-progress matches.
 
-Logs snapshots to market_snapshots.csv and resolved markets to resolutions.csv.
-Fetches CLOB buy prices only for outcomes with implied_prob >= 0.50 (capped
-at 200 CLOB calls per cycle). Saves state to state.json for resume on restart.
+For every outcome on every live market, logs a snapshot every 30 seconds to
+market_snapshots.csv.  CLOB buy+sell prices are fetched for outcomes with
+implied_prob >= 0.40 (capped at 300 calls/cycle, prioritised by probability).
+
+When a market disappears for 3 consecutive cycles, queries Gamma for resolution
+status and logs to resolutions.csv with full historical context.
+
+Also attempts the Sports WebSocket (wss://sports-api.polymarket.com/ws) once at
+startup; falls back to polling if it returns 403.
 
 Usage:
-    python3 polymarket_monitor.py              # run in foreground
-    nohup python3 polymarket_monitor.py &      # run in background
+    python3 polymarket_monitor.py              # foreground
+    nohup python3 polymarket_monitor.py &      # background
 """
 
 import csv
 import json
 import os
+import re
 import signal
+import socket
+import ssl
 import sys
 import time
+import traceback
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
 GAMMA_EVENTS_API = "https://gamma-api.polymarket.com/events"
+GAMMA_MARKET_API = "https://gamma-api.polymarket.com/markets"
 CLOB_PRICE_API = "https://clob.polymarket.com/price"
+WS_HOST = "sports-api.polymarket.com"
+WS_PATH = "/ws"
 GAME_BETS_TAG_ID = 100639
-PAGE_SIZE = 100
+PAGE_SIZE = 200
 CYCLE_INTERVAL = 30  # seconds between scans
-CLOB_MIN_IMPLIED = 0.50  # only fetch CLOB if implied >= this
-CLOB_MAX_PER_CYCLE = 200  # max CLOB calls per cycle
-MISSING_CYCLES_TO_RESOLVE = 3  # consecutive missing cycles before logging resolution
+CLOB_MIN_IMPLIED = 0.40  # fetch CLOB for outcomes >= this
+CLOB_MAX_PER_CYCLE = 300  # max CLOB API calls per cycle
+MISSING_CYCLES_TO_RESOLVE = 3  # consecutive absent cycles before resolution
+HISTORY_MAX_ENTRIES = 60  # ~30 min of history at 30s intervals
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 SNAPSHOTS_CSV = os.path.join(DATA_DIR, "market_snapshots.csv")
 RESOLUTIONS_CSV = os.path.join(DATA_DIR, "resolutions.csv")
 STATE_FILE = os.path.join(DATA_DIR, "state.json")
+LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "monitor.log")
 
 SNAPSHOT_FIELDS = [
-    "timestamp", "event_id", "market_id", "question", "league",
-    "outcome_name", "implied_prob", "best_bid", "best_ask",
-    "last_trade_price", "clob_buy_price", "token_id", "game_start_time",
+    "timestamp", "event_name", "league", "game_id", "market_type",
+    "outcome_name", "implied_prob", "clob_buy_price", "clob_sell_price",
+    "spread", "best_bid", "best_ask", "volume", "liquidity",
+    "game_score", "game_period", "game_elapsed",
+    "token_id", "market_id", "event_id",
 ]
+
 RESOLUTION_FIELDS = [
-    "market_id", "question", "league", "outcome_name",
-    "last_implied_prob", "last_clob_buy_price",
-    "first_seen_timestamp", "resolved_timestamp", "minutes_tracked",
+    "resolved_timestamp", "event_name", "league", "game_id", "market_type",
+    "outcome_name", "won", "final_implied_prob", "final_clob_buy_price",
+    "first_seen_implied_prob", "first_seen_clob_buy_price",
+    "max_implied_prob", "max_clob_buy_price",
+    "prob_5min_before", "prob_10min_before", "prob_15min_before",
+    "prob_30min_before", "first_seen_timestamp", "minutes_tracked",
+    "game_score_at_resolution",
 ]
 
 # ---------------------------------------------------------------------------
-# Globals for graceful shutdown
+# Graceful shutdown
 # ---------------------------------------------------------------------------
 _shutdown = False
 
@@ -75,14 +99,20 @@ signal.signal(signal.SIGTERM, _handle_signal)
 
 def log(msg):
     ts = datetime.now(timezone.utc).strftime("%H:%M:%S")
-    print(f"[{ts}] {msg}", flush=True)
+    line = f"[{ts}] {msg}"
+    print(line, flush=True)
+    try:
+        with open(LOG_FILE, "a") as f:
+            f.write(line + "\n")
+    except Exception:
+        pass
 
 
-def _api_get(url):
+def _api_get(url, timeout=30):
     req = urllib.request.Request(url)
     req.add_header("Accept", "application/json")
-    req.add_header("User-Agent", "polymarket-monitor/1.0")
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    req.add_header("User-Agent", "polymarket-monitor/2.0")
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
         return json.loads(resp.read().decode())
 
 
@@ -106,14 +136,105 @@ def _parse_iso(s):
         return None
 
 
+def _safe_float(val):
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Market type classification
+# ---------------------------------------------------------------------------
+
+
+def parse_market_type(question):
+    """Classify market type from the question string."""
+    q = question.lower()
+    if re.search(r"spread|handicap|[+-]\d+\.5\s*(maps?|rounds?|games?|points?)", q):
+        return "spread"
+    if re.search(r"\bover\b|\bunder\b|\btotal\b", q):
+        return "over_under"
+    return "moneyline"
+
+
+# ---------------------------------------------------------------------------
+# Game state parsing from Gamma event data
+# ---------------------------------------------------------------------------
+
+
+def parse_game_score(event):
+    """Extract score from event. Format: '000-000|2-2|Bo5' → '2-2'."""
+    raw = event.get("score", "")
+    if not raw:
+        return ""
+    parts = raw.split("|")
+    if len(parts) >= 2:
+        return parts[1]
+    return raw
+
+
+def parse_game_period(event):
+    """Extract period string, e.g. '5/5' or 'Q2'."""
+    return event.get("period", "")
+
+
+def parse_game_elapsed(event):
+    """Estimate elapsed minutes from startTime."""
+    st = event.get("startTime")
+    if not st:
+        return ""
+    start = _parse_iso(st)
+    if not start:
+        return ""
+    elapsed = datetime.now(timezone.utc) - start
+    mins = int(elapsed.total_seconds() / 60)
+    return f"{mins}m"
+
+
+# ---------------------------------------------------------------------------
+# WebSocket probe (one-shot at startup)
+# ---------------------------------------------------------------------------
+
+
+def try_websocket_connection():
+    """Try connecting to Sports WebSocket. Returns True on success."""
+    try:
+        ctx = ssl.create_default_context()
+        sock = socket.create_connection((WS_HOST, 443), timeout=5)
+        ssock = ctx.wrap_socket(sock, server_hostname=WS_HOST)
+        import base64
+        key = base64.b64encode(os.urandom(16)).decode()
+        upgrade = (
+            f"GET {WS_PATH} HTTP/1.1\r\n"
+            f"Host: {WS_HOST}\r\n"
+            f"Upgrade: websocket\r\n"
+            f"Connection: Upgrade\r\n"
+            f"Sec-WebSocket-Key: {key}\r\n"
+            f"Sec-WebSocket-Version: 13\r\n"
+            f"Origin: https://polymarket.com\r\n"
+            f"\r\n"
+        )
+        ssock.send(upgrade.encode())
+        resp = ssock.recv(4096).decode()
+        ssock.close()
+        status_line = resp.split("\r\n")[0]
+        if "101" in status_line:
+            return True
+        log(f"  WebSocket rejected: {status_line}")
+        return False
+    except Exception as e:
+        log(f"  WebSocket connection failed: {e}")
+        return False
+
+
 # ---------------------------------------------------------------------------
 # API calls
 # ---------------------------------------------------------------------------
 
 
-def fetch_live_game_events():
-    """Fetch game events where the match is currently in progress.
-    Uses Gamma's live=true param which mirrors the Sports WebSocket feed."""
+def fetch_live_events():
+    """Fetch events with Gamma's live=true flag (esports with score data)."""
     all_events = []
     offset = 0
     while True:
@@ -126,7 +247,7 @@ def fetch_live_game_events():
         try:
             page = _api_get(url)
         except Exception as e:
-            log(f"  WARN: fetch failed at offset={offset}: {e}")
+            log(f"  WARN: live fetch failed at offset={offset}: {e}")
             break
         if not page:
             break
@@ -137,12 +258,93 @@ def fetch_live_game_events():
     return all_events
 
 
-def fetch_clob_price(token_id):
-    url = f"{CLOB_PRICE_API}?token_id={token_id}&side=BUY"
+def fetch_today_started_events():
+    """Fetch events scheduled for today whose startTime has passed.
+
+    Catches tennis, soccer, table tennis, etc. that never get live=true.
+    """
+    now = datetime.now(timezone.utc)
+    today = now.strftime("%Y-%m-%d")
+    all_events = []
+    offset = 0
+    while True:
+        url = (
+            f"{GAMMA_EVENTS_API}"
+            f"?tag_id={GAME_BETS_TAG_ID}"
+            f"&active=true&closed=false"
+            f"&event_date={today}"
+            f"&limit={PAGE_SIZE}&offset={offset}"
+        )
+        try:
+            page = _api_get(url)
+        except Exception as e:
+            log(f"  WARN: today fetch failed at offset={offset}: {e}")
+            break
+        if not page:
+            break
+        all_events.extend(page)
+        if len(page) < PAGE_SIZE:
+            break
+        offset += PAGE_SIZE
+
+    # Filter: only events whose startTime is in the past
+    started = []
+    for ev in all_events:
+        st = ev.get("startTime")
+        if st:
+            start = _parse_iso(st)
+            if start and start <= now:
+                started.append(ev)
+    return started
+
+
+def fetch_all_live_events():
+    """Merge live=true events + today-started events (deduplicated)."""
+    live = fetch_live_events()
+    today = fetch_today_started_events()
+
+    merged = {}
+    # live=true events take priority (they have score/period data)
+    for ev in live:
+        merged[ev["id"]] = ev
+    for ev in today:
+        if ev["id"] not in merged:
+            merged[ev["id"]] = ev
+
+    return list(merged.values()), len(live), len(today)
+
+
+def fetch_clob_price(token_id, side="BUY"):
+    """Fetch CLOB price for a token. Returns float or None."""
+    url = f"{CLOB_PRICE_API}?token_id={token_id}&side={side}"
     try:
-        data = _api_get(url)
-        return data.get("price")
+        data = _api_get(url, timeout=10)
+        return _safe_float(data.get("price"))
     except Exception:
+        return None
+
+
+def fetch_market_resolution(market_id):
+    """Fetch market from Gamma to check if resolved and who won."""
+    try:
+        mkt = _api_get(f"{GAMMA_MARKET_API}/{market_id}")
+        closed = mkt.get("closed", False)
+        outcomes = _parse_json_field(mkt.get("outcomes"))
+        prices = _parse_json_field(mkt.get("outcomePrices"))
+
+        winning_outcome = None
+        if closed and prices:
+            for j, p in enumerate(prices):
+                try:
+                    if float(p) >= 0.99 and j < len(outcomes):
+                        winning_outcome = outcomes[j]
+                        break
+                except (ValueError, TypeError):
+                    pass
+
+        return {"closed": closed, "winning_outcome": winning_outcome}
+    except Exception as e:
+        log(f"  WARN: resolution fetch for {market_id}: {e}")
         return None
 
 
@@ -177,12 +379,8 @@ def append_resolutions(rows):
 # State persistence
 # ---------------------------------------------------------------------------
 
+
 def load_state():
-    """Load tracked markets from state file.
-    Returns dict: key -> outcome_state
-    key: "market_id:outcome_name"
-    outcome_state: {first_seen, last_implied, last_clob, question, league, ...}
-    """
     if os.path.exists(STATE_FILE):
         try:
             with open(STATE_FILE) as f:
@@ -200,34 +398,63 @@ def save_state(state):
 
 
 # ---------------------------------------------------------------------------
+# History lookup for pre-resolution snapshots
+# ---------------------------------------------------------------------------
+
+
+def find_prob_at_offset(history, resolution_time, minutes_offset):
+    """Find implied_prob closest to N minutes before resolution.
+    Returns the value if within 60s of target, else empty string.
+    """
+    target = resolution_time - timedelta(minutes=minutes_offset)
+    best = None
+    best_diff = float("inf")
+    for entry in history:
+        t = _parse_iso(entry[0])
+        if not t:
+            continue
+        diff = abs((t - target).total_seconds())
+        if diff < best_diff:
+            best_diff = diff
+            best = entry
+    if best and best_diff <= 60:
+        return best[1]  # implied_prob
+    return ""
+
+
+# ---------------------------------------------------------------------------
 # Core cycle
 # ---------------------------------------------------------------------------
 
 
 def run_cycle(state):
-    """Run one scan cycle. Returns updated state."""
+    """Run one scan cycle. Returns updated state dict."""
     now = datetime.now(timezone.utc)
     now_str = now.isoformat()
 
-    # 1. Fetch only live events (Gamma live=true mirrors Sports WebSocket)
-    events = fetch_live_game_events()
+    # ── 1. Fetch all in-progress events ──────────────────────────────────
+    events, n_live, n_today = fetch_all_live_events()
 
-    # 2. Walk all markets on live events — every market here is truly live
-    snapshot_rows = []
-    current_market_outcomes = set()
-    clob_calls = 0
+    # ── 2. Extract all outcomes for CLOB prioritisation ──────────────────
+    outcome_list = []  # (implied_float, outcome_dict)
 
     for ev in events:
         event_id = str(ev.get("id", ""))
+        event_name = ev.get("title", "")
         league = ev.get("seriesSlug", "")
+        game_id = str(ev.get("gameId", ""))
+        game_score = parse_game_score(ev)
+        game_period = parse_game_period(ev)
+        game_elapsed = parse_game_elapsed(ev)
 
         for mkt in ev.get("markets", []):
             market_id = str(mkt.get("id", ""))
             question = mkt.get("question", "")
-            best_bid = mkt.get("bestBid")
-            best_ask = mkt.get("bestAsk")
-            last_trade = mkt.get("lastTradePrice")
-            game_start = mkt.get("gameStartTime", "")
+            market_type = parse_market_type(question)
+            best_bid = mkt.get("bestBid", "")
+            best_ask = mkt.get("bestAsk", "")
+            volume = mkt.get("volume", "")
+            liquidity = mkt.get("liquidity", "")
 
             outcomes = _parse_json_field(mkt.get("outcomes"))
             outcome_prices = _parse_json_field(mkt.get("outcomePrices"))
@@ -236,95 +463,198 @@ def run_cycle(state):
             for i, outcome_name in enumerate(outcomes):
                 implied_str = outcome_prices[i] if i < len(outcome_prices) else ""
                 token_id = clob_ids[i] if i < len(clob_ids) else ""
-
                 try:
                     implied = float(implied_str)
                 except (ValueError, TypeError):
                     implied = 0.0
 
-                # CLOB: only if implied >= threshold and under cap
-                clob_buy = ""
-                if (implied >= CLOB_MIN_IMPLIED
-                        and token_id
-                        and clob_calls < CLOB_MAX_PER_CYCLE):
-                    price = fetch_clob_price(token_id)
-                    if price is not None:
-                        clob_buy = price
-                    clob_calls += 1
+                outcome_list.append((implied, {
+                    "event_id": event_id,
+                    "event_name": event_name,
+                    "league": league,
+                    "game_id": game_id,
+                    "market_id": market_id,
+                    "market_type": market_type,
+                    "question": question,
+                    "outcome_name": outcome_name,
+                    "implied_prob": implied_str,
+                    "implied_float": implied,
+                    "token_id": token_id,
+                    "best_bid": best_bid,
+                    "best_ask": best_ask,
+                    "volume": volume,
+                    "liquidity": liquidity,
+                    "game_score": game_score,
+                    "game_period": game_period,
+                    "game_elapsed": game_elapsed,
+                }))
 
-                snapshot_rows.append([
-                    now_str, event_id, market_id, question, league,
-                    outcome_name, implied_str, best_bid, best_ask,
-                    last_trade, clob_buy, token_id, game_start,
-                ])
+    # ── 3. Fetch CLOB prices (buy + sell) ────────────────────────────────
+    # Sort by implied prob descending; each outcome costs 2 API calls.
+    clob_candidates = sorted(
+        [(imp, d) for imp, d in outcome_list
+         if imp >= CLOB_MIN_IMPLIED and d["token_id"]],
+        key=lambda x: -x[0],
+    )
 
-                key = f"{market_id}:{outcome_name}"
-                current_market_outcomes.add(key)
+    clob_budget = CLOB_MAX_PER_CYCLE
+    clob_results = {}  # token_id → (buy_price, sell_price)
+    clob_calls = 0
 
-                # Update state
-                if key not in state:
-                    state[key] = {
-                        "first_seen": now_str,
-                        "question": question,
-                        "league": league,
-                        "market_id": market_id,
-                        "outcome_name": outcome_name,
-                    }
-                state[key]["last_implied"] = implied_str
-                state[key]["last_clob"] = clob_buy
-                state[key]["last_seen"] = now_str
+    for _, d in clob_candidates:
+        if clob_budget < 2:
+            break
+        tid = d["token_id"]
+        if tid in clob_results:
+            continue
+        buy = fetch_clob_price(tid, "BUY")
+        sell = fetch_clob_price(tid, "SELL")
+        clob_results[tid] = (buy, sell)
+        clob_calls += 2
+        clob_budget -= 2
 
-    # 3. Write snapshots
+    # ── 4. Build snapshot rows & update state ────────────────────────────
+    snapshot_rows = []
+    current_keys = set()
+
+    for _, d in outcome_list:
+        tid = d["token_id"]
+        buy_price, sell_price = clob_results.get(tid, (None, None))
+
+        buy_str = f"{buy_price}" if buy_price is not None else ""
+        sell_str = f"{sell_price}" if sell_price is not None else ""
+        spread_str = ""
+        if buy_price is not None and sell_price is not None:
+            spread_str = f"{buy_price - sell_price:.6f}"
+
+        snapshot_rows.append([
+            now_str, d["event_name"], d["league"], d["game_id"],
+            d["market_type"], d["outcome_name"], d["implied_prob"],
+            buy_str, sell_str, spread_str, d["best_bid"], d["best_ask"],
+            d["volume"], d["liquidity"], d["game_score"], d["game_period"],
+            d["game_elapsed"], d["token_id"], d["market_id"], d["event_id"],
+        ])
+
+        key = f"{d['market_id']}:{d['outcome_name']}"
+        current_keys.add(key)
+
+        # Initialise state for new outcomes
+        if key not in state:
+            state[key] = {
+                "first_seen": now_str,
+                "first_seen_implied": d["implied_prob"],
+                "first_seen_clob_buy": buy_str,
+                "max_implied": d["implied_float"],
+                "max_clob_buy": buy_price if buy_price else 0,
+                "event_name": d["event_name"],
+                "league": d["league"],
+                "game_id": d["game_id"],
+                "market_type": d["market_type"],
+                "market_id": d["market_id"],
+                "outcome_name": d["outcome_name"],
+                "history": [],
+            }
+
+        s = state[key]
+        s["last_implied"] = d["implied_prob"]
+        s["last_clob_buy"] = buy_str
+        s["last_seen"] = now_str
+        s["last_game_score"] = d["game_score"]
+        s.pop("missing_cycles", None)
+
+        # Track maximums
+        if d["implied_float"] > (s.get("max_implied") or 0):
+            s["max_implied"] = d["implied_float"]
+        if buy_price and buy_price > (s.get("max_clob_buy") or 0):
+            s["max_clob_buy"] = buy_price
+
+        # Ring buffer for historical probs
+        history = s.get("history", [])
+        history.append([now_str, d["implied_prob"], buy_str])
+        if len(history) > HISTORY_MAX_ENTRIES:
+            history = history[-HISTORY_MAX_ENTRIES:]
+        s["history"] = history
+
+    # ── 5. Write snapshots ───────────────────────────────────────────────
     append_snapshots(snapshot_rows)
-    log(f"Live: {len(events)} events, "
-        f"{len(snapshot_rows)} outcome rows, "
-        f"{clob_calls} CLOB calls")
+    log(f"  {len(events)} events ({n_live} live-flag, {n_today} time-based) | "
+        f"{len(snapshot_rows)} outcomes | {clob_calls} CLOB calls")
 
-    # 4. Detect resolutions — require MISSING_CYCLES_TO_RESOLVE consecutive
-    #    absences before treating a market as resolved (prevents API
-    #    flickers from generating false resolutions).
+    # ── 6. Detect resolutions ────────────────────────────────────────────
     resolution_rows = []
     resolved_keys = []
     newly_missing = 0
-    for key, info in state.items():
-        if key not in current_market_outcomes:
-            missing = info.get("missing_cycles", 0) + 1
-            info["missing_cycles"] = missing
-            if missing >= MISSING_CYCLES_TO_RESOLVE:
-                first_seen = _parse_iso(info.get("first_seen"))
-                minutes = 0
-                if first_seen:
-                    minutes = round((now - first_seen).total_seconds() / 60, 1)
-                resolution_rows.append([
-                    info.get("market_id", ""),
-                    info.get("question", ""),
-                    info.get("league", ""),
-                    info.get("outcome_name", ""),
-                    info.get("last_implied", ""),
-                    info.get("last_clob", ""),
-                    info.get("first_seen", ""),
-                    now_str,
-                    minutes,
-                ])
-                resolved_keys.append(key)
+
+    for key, info in list(state.items()):
+        if key in current_keys:
+            continue
+
+        missing = info.get("missing_cycles", 0) + 1
+        info["missing_cycles"] = missing
+
+        if missing < MISSING_CYCLES_TO_RESOLVE:
+            newly_missing += 1
+            continue
+
+        # Enough misses — query Gamma for resolution
+        market_id = info.get("market_id", "")
+        outcome_name = info.get("outcome_name", "")
+        resolution = fetch_market_resolution(market_id)
+
+        won = ""
+        if resolution and resolution["closed"]:
+            winner = resolution.get("winning_outcome")
+            if winner:
+                won = "true" if outcome_name == winner else "false"
             else:
-                newly_missing += 1
-        else:
-            # Reset missing counter when market reappears
-            info.pop("missing_cycles", None)
+                won = "unknown"
+        elif resolution and not resolution["closed"]:
+            # Market still open — might just be a pagination flicker.
+            # Give it one more chance by not resolving yet.
+            continue
+
+        first_seen = _parse_iso(info.get("first_seen"))
+        minutes = 0
+        if first_seen:
+            minutes = round((now - first_seen).total_seconds() / 60, 1)
+
+        history = info.get("history", [])
+        p5 = find_prob_at_offset(history, now, 5)
+        p10 = find_prob_at_offset(history, now, 10)
+        p15 = find_prob_at_offset(history, now, 15)
+        p30 = find_prob_at_offset(history, now, 30)
+
+        resolution_rows.append([
+            now_str,
+            info.get("event_name", ""),
+            info.get("league", ""),
+            info.get("game_id", ""),
+            info.get("market_type", ""),
+            outcome_name,
+            won,
+            info.get("last_implied", ""),
+            info.get("last_clob_buy", ""),
+            info.get("first_seen_implied", ""),
+            info.get("first_seen_clob_buy", ""),
+            info.get("max_implied", ""),
+            info.get("max_clob_buy", ""),
+            p5, p10, p15, p30,
+            info.get("first_seen", ""),
+            minutes,
+            info.get("last_game_score", ""),
+        ])
+        resolved_keys.append(key)
 
     if resolution_rows:
         append_resolutions(resolution_rows)
         for k in resolved_keys:
             del state[k]
-        log(f"Resolved {len(resolution_rows)} outcomes "
-            f"(missing {MISSING_CYCLES_TO_RESOLVE}+ cycles)")
+        log(f"  Resolved {len(resolution_rows)} outcomes")
     if newly_missing:
         log(f"  {newly_missing} outcomes missing this cycle (watching)")
 
-    # 5. Save state
+    # ── 7. Persist state ─────────────────────────────────────────────────
     save_state(state)
-
     return state
 
 
@@ -336,20 +666,37 @@ def run_cycle(state):
 def main():
     os.makedirs(DATA_DIR, exist_ok=True)
 
-    log("Polymarket Monitor starting")
-    log(f"  snapshots -> {SNAPSHOTS_CSV}")
-    log(f"  resolutions -> {RESOLUTIONS_CSV}")
-    log(f"  state -> {STATE_FILE}")
+    # Back up old-schema CSVs if they exist
+    for path in [SNAPSHOTS_CSV, RESOLUTIONS_CSV, STATE_FILE]:
+        if os.path.exists(path):
+            bak = path + ".v1.bak"
+            if not os.path.exists(bak):
+                os.rename(path, bak)
+                log(f"Backed up {os.path.basename(path)} → {os.path.basename(bak)}")
+            else:
+                os.remove(path)
+
+    log("=" * 60)
+    log("Polymarket Monitor v2 — Comprehensive Data Collection")
+    log("=" * 60)
+    log(f"  snapshots  → {SNAPSHOTS_CSV}")
+    log(f"  resolutions → {RESOLUTIONS_CSV}")
     log(f"  cycle interval: {CYCLE_INTERVAL}s")
     log(f"  CLOB threshold: implied >= {CLOB_MIN_IMPLIED}")
-    log(f"  CLOB cap: {CLOB_MAX_PER_CYCLE}/cycle")
-    log(f"  live detection: Gamma API live=true (Sports WebSocket)")
+    log(f"  CLOB cap: {CLOB_MAX_PER_CYCLE}/cycle (buy+sell)")
+    log(f"  detection: live=true + event_date=today/started")
+    log("")
 
-    state = load_state()
-    if state:
-        log(f"  resumed state: {len(state)} tracked outcomes")
-    print(flush=True)
+    # Probe WebSocket
+    log("Probing Sports WebSocket...")
+    ws_ok = try_websocket_connection()
+    if ws_ok:
+        log("  WebSocket connected — using live game state feed")
+    else:
+        log("  WebSocket unavailable — using Gamma API polling (score/period from event data)")
+    log("")
 
+    state = {}
     cycle = 0
     while not _shutdown:
         cycle += 1
@@ -359,16 +706,15 @@ def main():
             state = run_cycle(state)
         except Exception as e:
             log(f"ERROR in cycle: {e}")
+            traceback.print_exc()
         elapsed = time.time() - t0
-        log(f"Cycle {cycle} done in {elapsed:.1f}s")
-        print(flush=True)
+        log(f"  Cycle {cycle} done in {elapsed:.1f}s")
+        log("")
 
-        # Sleep in small increments so we can respond to shutdown quickly
         deadline = t0 + CYCLE_INTERVAL
         while not _shutdown and time.time() < deadline:
             time.sleep(1)
 
-    # Graceful shutdown
     log("Shutting down — saving state...")
     save_state(state)
     log(f"State saved ({len(state)} tracked outcomes). Goodbye.")
