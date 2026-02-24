@@ -3,8 +3,10 @@
 Polymarket Sports Monitor — Continuous Market Scanner
 
 Runs every 30 seconds, scanning all live game markets via the Gamma API.
-A game is "live" when its gameStartTime (actual kickoff) is in the past
-but within 8 hours — covers NBA games with late starts and overtimes.
+Uses the Gamma API's live=true parameter which reflects the Sports WebSocket
+feed (wss://sports-api.polymarket.com/ws) — only games where the underlying
+match is actually in progress are returned. No time-window heuristics needed.
+
 Logs snapshots to market_snapshots.csv and resolved markets to resolutions.csv.
 Fetches CLOB buy prices only for outcomes with implied_prob >= 0.50 (capped
 at 200 CLOB calls per cycle). Saves state to state.json for resume on restart.
@@ -33,7 +35,6 @@ PAGE_SIZE = 100
 CYCLE_INTERVAL = 30  # seconds between scans
 CLOB_MIN_IMPLIED = 0.50  # only fetch CLOB if implied >= this
 CLOB_MAX_PER_CYCLE = 200  # max CLOB calls per cycle
-LIVE_WINDOW_HOURS = 8  # max hours since gameStartTime to count as live
 MISSING_CYCLES_TO_RESOLVE = 3  # consecutive missing cycles before logging resolution
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
@@ -105,35 +106,22 @@ def _parse_iso(s):
         return None
 
 
-def _parse_game_start(s):
-    """Parse gameStartTime which uses space separator: '2026-02-24 06:10:00+00'."""
-    if not s:
-        return None
-    try:
-        normed = str(s).replace(" ", "T")
-        if normed.endswith("+00"):
-            normed += ":00"
-        return datetime.fromisoformat(normed.replace("Z", "+00:00"))
-    except (ValueError, TypeError):
-        return None
-
-
 # ---------------------------------------------------------------------------
 # API calls
 # ---------------------------------------------------------------------------
 
 
-def fetch_all_game_events():
-    """Paginate through ALL active game-level events."""
+def fetch_live_game_events():
+    """Fetch game events where the match is currently in progress.
+    Uses Gamma's live=true param which mirrors the Sports WebSocket feed."""
     all_events = []
     offset = 0
     while True:
         url = (
             f"{GAMMA_EVENTS_API}"
             f"?tag_id={GAME_BETS_TAG_ID}"
-            f"&active=true&closed=false"
+            f"&active=true&closed=false&live=true"
             f"&limit={PAGE_SIZE}&offset={offset}"
-            f"&order=startDate&ascending=false"
         )
         try:
             page = _api_get(url)
@@ -191,8 +179,9 @@ def append_resolutions(rows):
 
 def load_state():
     """Load tracked markets from state file.
-    Returns dict: market_id -> {outcome_name -> outcome_state}
-    outcome_state: {first_seen, last_implied, last_clob, question, league}
+    Returns dict: key -> outcome_state
+    key: "market_id:outcome_name"
+    outcome_state: {first_seen, last_implied, last_clob, question, league, ...}
     """
     if os.path.exists(STATE_FILE):
         try:
@@ -215,42 +204,24 @@ def save_state(state):
 # ---------------------------------------------------------------------------
 
 
-def _is_live(mkt, now):
-    """Check if a market's game is currently live.
-    Uses gameStartTime (the actual game kickoff, NOT market creation).
-    A game is live if kickoff was in the past but within LIVE_WINDOW_HOURS."""
-    gst = _parse_game_start(mkt.get("gameStartTime"))
-    if not gst:
-        return False
-    elapsed_h = (now - gst).total_seconds() / 3600
-    return 0 < elapsed_h <= LIVE_WINDOW_HOURS
-
-
 def run_cycle(state):
     """Run one scan cycle. Returns updated state."""
     now = datetime.now(timezone.utc)
     now_str = now.isoformat()
 
-    # 1. Fetch all events
-    events = fetch_all_game_events()
+    # 1. Fetch only live events (Gamma live=true mirrors Sports WebSocket)
+    events = fetch_live_game_events()
 
-    # 2. Walk events/markets, filter to truly live games (gameStartTime-based)
+    # 2. Walk all markets on live events — every market here is truly live
     snapshot_rows = []
     current_market_outcomes = set()
     clob_calls = 0
-    live_event_ids = set()
-    total_markets_checked = 0
 
     for ev in events:
         event_id = str(ev.get("id", ""))
         league = ev.get("seriesSlug", "")
 
         for mkt in ev.get("markets", []):
-            total_markets_checked += 1
-            if not _is_live(mkt, now):
-                continue
-
-            live_event_ids.add(event_id)
             market_id = str(mkt.get("id", ""))
             question = mkt.get("question", "")
             best_bid = mkt.get("bestBid")
@@ -305,13 +276,12 @@ def run_cycle(state):
 
     # 3. Write snapshots
     append_snapshots(snapshot_rows)
-    log(f"Live: {len(live_event_ids)} events, "
+    log(f"Live: {len(events)} events, "
         f"{len(snapshot_rows)} outcome rows, "
-        f"{clob_calls} CLOB calls "
-        f"(scanned {len(events)} events, {total_markets_checked} markets)")
+        f"{clob_calls} CLOB calls")
 
     # 4. Detect resolutions — require MISSING_CYCLES_TO_RESOLVE consecutive
-    #    absences before treating a market as resolved (prevents pagination
+    #    absences before treating a market as resolved (prevents API
     #    flickers from generating false resolutions).
     resolution_rows = []
     resolved_keys = []
@@ -373,7 +343,7 @@ def main():
     log(f"  cycle interval: {CYCLE_INTERVAL}s")
     log(f"  CLOB threshold: implied >= {CLOB_MIN_IMPLIED}")
     log(f"  CLOB cap: {CLOB_MAX_PER_CYCLE}/cycle")
-    log(f"  live window: gameStartTime within {LIVE_WINDOW_HOURS}h")
+    log(f"  live detection: Gamma API live=true (Sports WebSocket)")
 
     state = load_state()
     if state:
