@@ -143,6 +143,29 @@ def _safe_float(val):
         return None
 
 
+def _is_market_resolved(mkt):
+    """Check if a market is already resolved (closed or prices snapped)."""
+    if mkt.get("closed"):
+        return True
+    prices = _parse_json_field(mkt.get("outcomePrices"))
+    if prices:
+        try:
+            vals = [float(p) for p in prices]
+            if all(v <= 0.001 or v >= 0.999 for v in vals):
+                return True
+        except (ValueError, TypeError):
+            pass
+    return False
+
+
+def _is_event_finished(event):
+    """Check if all markets in an event are resolved → match is over."""
+    markets = event.get("markets", [])
+    if not markets:
+        return True
+    return all(_is_market_resolved(m) for m in markets)
+
+
 # ---------------------------------------------------------------------------
 # Market type classification
 # ---------------------------------------------------------------------------
@@ -287,13 +310,14 @@ def fetch_today_started_events():
             break
         offset += PAGE_SIZE
 
-    # Filter: only events whose startTime is in the past
+    # Filter: only events whose startTime is in the past AND still have
+    # open markets (skip matches that finished but event isn't closed yet)
     started = []
     for ev in all_events:
         st = ev.get("startTime")
         if st:
             start = _parse_iso(st)
-            if start and start <= now:
+            if start and start <= now and not _is_event_finished(ev):
                 started.append(ev)
     return started
 
@@ -448,6 +472,10 @@ def run_cycle(state):
         game_elapsed = parse_game_elapsed(ev)
 
         for mkt in ev.get("markets", []):
+            # Skip markets that are already closed
+            if mkt.get("closed"):
+                continue
+
             market_id = str(mkt.get("id", ""))
             question = mkt.get("question", "")
             market_type = parse_market_type(question)
@@ -459,6 +487,16 @@ def run_cycle(state):
             outcomes = _parse_json_field(mkt.get("outcomes"))
             outcome_prices = _parse_json_field(mkt.get("outcomePrices"))
             clob_ids = _parse_json_field(mkt.get("clobTokenIds"))
+
+            # Skip markets where prices have snapped to ~0/1 (resolved
+            # but not yet marked closed by Polymarket)
+            if outcome_prices:
+                try:
+                    price_vals = [float(p) for p in outcome_prices]
+                    if all(p <= 0.001 or p >= 0.999 for p in price_vals):
+                        continue
+                except (ValueError, TypeError):
+                    pass
 
             for i, outcome_name in enumerate(outcomes):
                 implied_str = outcome_prices[i] if i < len(outcome_prices) else ""
