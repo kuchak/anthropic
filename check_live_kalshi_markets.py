@@ -1,13 +1,14 @@
 """
-Fetch all currently active markets from Kalshi and cross-reference with backtest accuracy.
+Fetch LIVE markets from Kalshi (games happening RIGHT NOW) and cross-reference with backtest accuracy.
 
 Shows:
-1. All live series tickers on Kalshi right now
+1. All LIVE series tickers on Kalshi right now (events currently in progress)
 2. Their accuracy from our backtest (90-92¢ range)
-3. Number of active markets per ticker
+3. Number of live markets per ticker
 4. Whether profitable at 91¢ entry
 
-Includes everything - even low accuracy tickers - so user can decide what to trade.
+Uses is_live='true' API filter to get only markets where the event has already started
+and is still ongoing (not future games, not completed games).
 """
 
 import os
@@ -45,15 +46,29 @@ def main():
         print("  - KALSHI_PRIVATE_KEY_PATH environment variable set")
         return
 
-    # Fetch all open markets
-    print("Fetching all open markets...")
+    # Fetch LIVE markets (games happening RIGHT NOW)
+    print("Fetching LIVE markets (games currently in progress)...")
     try:
-        markets = client.get_markets(status='open', limit=5000)
-        print(f"✅ Found {len(markets)} open markets")
+        markets = client.get_markets(is_live='true', limit=5000)
+        print(f"✅ Found {len(markets)} LIVE markets (games happening RIGHT NOW)")
         print()
     except Exception as e:
         print(f"❌ Error fetching markets: {e}")
         return
+
+    # Also show sample timestamps to verify
+    if len(markets) > 0:
+        print("Sample market timestamps (verifying live status):")
+        for market in markets[:3]:
+            print(f"  Market: {market.get('title', 'N/A')[:60]}")
+            print(f"    close_time: {market.get('close_time', 'N/A')}")
+            if 'event' in market:
+                event = market['event']
+                for key in event.keys():
+                    if 'time' in key.lower() or 'date' in key.lower():
+                        print(f"    event.{key}: {event[key]}")
+            print()
+        print()
 
     # Extract series tickers
     series_tickers = {}
@@ -162,10 +177,10 @@ def main():
     )
 
     # Save full results
-    results_df.to_csv('live_kalshi_markets_with_accuracy.csv', index=False)
+    results_df.to_csv('truly_live_kalshi_markets_with_accuracy.csv', index=False)
 
     print("=" * 140)
-    print("LIVE KALSHI MARKETS - CROSS-REFERENCED WITH BACKTEST ACCURACY")
+    print("TRULY LIVE KALSHI MARKETS (Games Happening RIGHT NOW) - CROSS-REFERENCED WITH BACKTEST ACCURACY")
     print("=" * 140)
     print()
 
@@ -305,7 +320,7 @@ def main():
 
     print()
 
-    print("✅ Saved to: live_kalshi_markets_with_accuracy.csv")
+    print("✅ Saved to: truly_live_kalshi_markets_with_accuracy.csv")
     print()
 
 if __name__ == "__main__":
