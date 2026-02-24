@@ -4,7 +4,7 @@ Polymarket Sports Monitor — Continuous Market Scanner
 
 Runs every 30 seconds, scanning all live game markets via the Gamma API.
 A game is "live" when its gameStartTime (actual kickoff) is in the past
-but within 6 hours — no basketball/soccer/tennis/esports match lasts longer.
+but within 8 hours — covers NBA games with late starts and overtimes.
 Logs snapshots to market_snapshots.csv and resolved markets to resolutions.csv.
 Fetches CLOB buy prices only for outcomes with implied_prob >= 0.50 (capped
 at 200 CLOB calls per cycle). Saves state to state.json for resume on restart.
@@ -33,7 +33,8 @@ PAGE_SIZE = 100
 CYCLE_INTERVAL = 30  # seconds between scans
 CLOB_MIN_IMPLIED = 0.50  # only fetch CLOB if implied >= this
 CLOB_MAX_PER_CYCLE = 200  # max CLOB calls per cycle
-LIVE_WINDOW_HOURS = 6  # max hours since gameStartTime to count as live
+LIVE_WINDOW_HOURS = 8  # max hours since gameStartTime to count as live
+MISSING_CYCLES_TO_RESOLVE = 3  # consecutive missing cycles before logging resolution
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 SNAPSHOTS_CSV = os.path.join(DATA_DIR, "market_snapshots.csv")
@@ -309,34 +310,47 @@ def run_cycle(state):
         f"{clob_calls} CLOB calls "
         f"(scanned {len(events)} events, {total_markets_checked} markets)")
 
-    # 4. Detect resolutions — markets in state but not in current set
+    # 4. Detect resolutions — require MISSING_CYCLES_TO_RESOLVE consecutive
+    #    absences before treating a market as resolved (prevents pagination
+    #    flickers from generating false resolutions).
     resolution_rows = []
     resolved_keys = []
+    newly_missing = 0
     for key, info in state.items():
         if key not in current_market_outcomes:
-            first_seen = _parse_iso(info.get("first_seen"))
-            minutes = 0
-            if first_seen:
-                minutes = round((now - first_seen).total_seconds() / 60, 1)
-            resolution_rows.append([
-                info.get("market_id", ""),
-                info.get("question", ""),
-                info.get("league", ""),
-                info.get("outcome_name", ""),
-                info.get("last_implied", ""),
-                info.get("last_clob", ""),
-                info.get("first_seen", ""),
-                now_str,
-                minutes,
-            ])
-            resolved_keys.append(key)
+            missing = info.get("missing_cycles", 0) + 1
+            info["missing_cycles"] = missing
+            if missing >= MISSING_CYCLES_TO_RESOLVE:
+                first_seen = _parse_iso(info.get("first_seen"))
+                minutes = 0
+                if first_seen:
+                    minutes = round((now - first_seen).total_seconds() / 60, 1)
+                resolution_rows.append([
+                    info.get("market_id", ""),
+                    info.get("question", ""),
+                    info.get("league", ""),
+                    info.get("outcome_name", ""),
+                    info.get("last_implied", ""),
+                    info.get("last_clob", ""),
+                    info.get("first_seen", ""),
+                    now_str,
+                    minutes,
+                ])
+                resolved_keys.append(key)
+            else:
+                newly_missing += 1
+        else:
+            # Reset missing counter when market reappears
+            info.pop("missing_cycles", None)
 
     if resolution_rows:
         append_resolutions(resolution_rows)
         for k in resolved_keys:
             del state[k]
         log(f"Resolved {len(resolution_rows)} outcomes "
-            f"(no longer active)")
+            f"(missing {MISSING_CYCLES_TO_RESOLVE}+ cycles)")
+    if newly_missing:
+        log(f"  {newly_missing} outcomes missing this cycle (watching)")
 
     # 5. Save state
     save_state(state)
