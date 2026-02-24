@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+polymarket-monitor/data/
+polymarket-monitor/monitor.log
+polymarket-monitor/nohup.out
