@@ -3,6 +3,8 @@
 Polymarket Sports Monitor — Continuous Market Scanner
 
 Runs every 30 seconds, scanning all live game markets via the Gamma API.
+A game is "live" when its gameStartTime (actual kickoff) is in the past
+but within 6 hours — no basketball/soccer/tennis/esports match lasts longer.
 Logs snapshots to market_snapshots.csv and resolved markets to resolutions.csv.
 Fetches CLOB buy prices only for outcomes with implied_prob >= 0.50 (capped
 at 200 CLOB calls per cycle). Saves state to state.json for resume on restart.
@@ -31,6 +33,7 @@ PAGE_SIZE = 100
 CYCLE_INTERVAL = 30  # seconds between scans
 CLOB_MIN_IMPLIED = 0.50  # only fetch CLOB if implied >= this
 CLOB_MAX_PER_CYCLE = 200  # max CLOB calls per cycle
+LIVE_WINDOW_HOURS = 6  # max hours since gameStartTime to count as live
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 SNAPSHOTS_CSV = os.path.join(DATA_DIR, "market_snapshots.csv")
@@ -97,6 +100,19 @@ def _parse_iso(s):
         return None
     try:
         return datetime.fromisoformat(s.replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return None
+
+
+def _parse_game_start(s):
+    """Parse gameStartTime which uses space separator: '2026-02-24 06:10:00+00'."""
+    if not s:
+        return None
+    try:
+        normed = str(s).replace(" ", "T")
+        if normed.endswith("+00"):
+            normed += ":00"
+        return datetime.fromisoformat(normed.replace("Z", "+00:00"))
     except (ValueError, TypeError):
         return None
 
@@ -198,36 +214,48 @@ def save_state(state):
 # ---------------------------------------------------------------------------
 
 
+def _is_live(mkt, now):
+    """Check if a market's game is currently live.
+    Uses gameStartTime (the actual game kickoff, NOT market creation).
+    A game is live if kickoff was in the past but within LIVE_WINDOW_HOURS."""
+    gst = _parse_game_start(mkt.get("gameStartTime"))
+    if not gst:
+        return False
+    elapsed_h = (now - gst).total_seconds() / 3600
+    return 0 < elapsed_h <= LIVE_WINDOW_HOURS
+
+
 def run_cycle(state):
     """Run one scan cycle. Returns updated state."""
     now = datetime.now(timezone.utc)
     now_str = now.isoformat()
 
-    # 1. Fetch all events, filter to started
+    # 1. Fetch all events
     events = fetch_all_game_events()
-    started = []
-    for ev in events:
-        sd = _parse_iso(ev.get("startDate"))
-        if sd and sd <= now:
-            started.append(ev)
-    log(f"Fetched {len(events)} events, {len(started)} started")
 
-    # 2. Build current market set and snapshot rows
+    # 2. Walk events/markets, filter to truly live games (gameStartTime-based)
     snapshot_rows = []
-    current_market_outcomes = set()  # (market_id, outcome_name) tuples
+    current_market_outcomes = set()
     clob_calls = 0
+    live_event_ids = set()
+    total_markets_checked = 0
 
-    for ev in started:
+    for ev in events:
         event_id = str(ev.get("id", ""))
         league = ev.get("seriesSlug", "")
-        game_start = ev.get("startDate", "")
 
         for mkt in ev.get("markets", []):
+            total_markets_checked += 1
+            if not _is_live(mkt, now):
+                continue
+
+            live_event_ids.add(event_id)
             market_id = str(mkt.get("id", ""))
             question = mkt.get("question", "")
             best_bid = mkt.get("bestBid")
             best_ask = mkt.get("bestAsk")
             last_trade = mkt.get("lastTradePrice")
+            game_start = mkt.get("gameStartTime", "")
 
             outcomes = _parse_json_field(mkt.get("outcomes"))
             outcome_prices = _parse_json_field(mkt.get("outcomePrices"))
@@ -244,7 +272,9 @@ def run_cycle(state):
 
                 # CLOB: only if implied >= threshold and under cap
                 clob_buy = ""
-                if implied >= CLOB_MIN_IMPLIED and token_id and clob_calls < CLOB_MAX_PER_CYCLE:
+                if (implied >= CLOB_MIN_IMPLIED
+                        and token_id
+                        and clob_calls < CLOB_MAX_PER_CYCLE):
                     price = fetch_clob_price(token_id)
                     if price is not None:
                         clob_buy = price
@@ -274,7 +304,10 @@ def run_cycle(state):
 
     # 3. Write snapshots
     append_snapshots(snapshot_rows)
-    log(f"Wrote {len(snapshot_rows)} snapshot rows, {clob_calls} CLOB calls")
+    log(f"Live: {len(live_event_ids)} events, "
+        f"{len(snapshot_rows)} outcome rows, "
+        f"{clob_calls} CLOB calls "
+        f"(scanned {len(events)} events, {total_markets_checked} markets)")
 
     # 4. Detect resolutions — markets in state but not in current set
     resolution_rows = []
@@ -326,6 +359,7 @@ def main():
     log(f"  cycle interval: {CYCLE_INTERVAL}s")
     log(f"  CLOB threshold: implied >= {CLOB_MIN_IMPLIED}")
     log(f"  CLOB cap: {CLOB_MAX_PER_CYCLE}/cycle")
+    log(f"  live window: gameStartTime within {LIVE_WINDOW_HOURS}h")
 
     state = load_state()
     if state:
