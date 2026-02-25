@@ -72,12 +72,8 @@ SNAPSHOT_FIELDS = [
 
 RESOLUTION_FIELDS = [
     "resolved_timestamp", "event_name", "league", "game_id", "market_type",
-    "outcome_name", "won", "final_implied_prob", "final_clob_buy_price",
-    "first_seen_implied_prob", "first_seen_clob_buy_price",
-    "max_implied_prob", "max_clob_buy_price",
-    "prob_5min_before", "prob_10min_before", "prob_15min_before",
-    "prob_30min_before", "first_seen_timestamp", "minutes_tracked",
-    "game_score_at_resolution",
+    "outcome_name", "won", "max_implied_prob", "max_clob_buy_price",
+    "first_seen_timestamp", "last_seen_timestamp", "minutes_tracked",
 ]
 
 # ---------------------------------------------------------------------------
@@ -404,29 +400,6 @@ def fetch_clob_price(token_id, side="BUY"):
         return None
 
 
-def fetch_market_resolution(market_id):
-    """Fetch market from Gamma to check if resolved and who won."""
-    try:
-        mkt = _api_get(f"{GAMMA_MARKET_API}/{market_id}")
-        closed = mkt.get("closed", False)
-        outcomes = _parse_json_field(mkt.get("outcomes"))
-        prices = _parse_json_field(mkt.get("outcomePrices"))
-
-        winning_outcome = None
-        if closed and prices:
-            for j, p in enumerate(prices):
-                try:
-                    if float(p) >= 0.99 and j < len(outcomes):
-                        winning_outcome = outcomes[j]
-                        break
-                except (ValueError, TypeError):
-                    pass
-
-        return {"closed": closed, "winning_outcome": winning_outcome}
-    except Exception as e:
-        log(f"  WARN: resolution fetch for {market_id}: {e}")
-        return None
-
 
 # ---------------------------------------------------------------------------
 # CSV writers
@@ -477,30 +450,6 @@ def save_state(state):
     os.replace(tmp, STATE_FILE)
 
 
-# ---------------------------------------------------------------------------
-# History lookup for pre-resolution snapshots
-# ---------------------------------------------------------------------------
-
-
-def find_prob_at_offset(history, resolution_time, minutes_offset):
-    """Find implied_prob closest to N minutes before resolution.
-    Returns the value if within 60s of target, else empty string.
-    """
-    target = resolution_time - timedelta(minutes=minutes_offset)
-    best = None
-    best_diff = float("inf")
-    for entry in history:
-        t = _parse_iso(entry[0])
-        if not t:
-            continue
-        diff = abs((t - target).total_seconds())
-        if diff < best_diff:
-            best_diff = diff
-            best = entry
-    if best and best_diff <= 60:
-        return best[1]  # implied_prob
-    return ""
-
 
 # ---------------------------------------------------------------------------
 # Core cycle
@@ -515,7 +464,9 @@ def run_cycle(state):
     # ── 1. Fetch all in-progress events ──────────────────────────────────
     events, n_live, n_started, n_total = fetch_all_live_events()
 
-    # ── 2. Extract all outcomes for CLOB prioritisation ──────────────────
+    # ── 2. Extract outcomes ─────────────────────────────────────────────
+    # Log snapshots for ALL outcomes between 0.01 and 0.99.
+    # Only skip true 0/1 (< 0.01 or > 0.99).
     outcome_list = []  # (implied_float, outcome_dict)
 
     for ev in events:
@@ -528,7 +479,6 @@ def run_cycle(state):
         game_elapsed = parse_game_elapsed(ev)
 
         for mkt in ev.get("markets", []):
-            # Skip markets that are already closed
             if mkt.get("closed"):
                 continue
 
@@ -544,16 +494,6 @@ def run_cycle(state):
             outcome_prices = _parse_json_field(mkt.get("outcomePrices"))
             clob_ids = _parse_json_field(mkt.get("clobTokenIds"))
 
-            # Skip markets where prices have snapped to ~0/1 (resolved
-            # but not yet marked closed by Polymarket)
-            if outcome_prices:
-                try:
-                    price_vals = [float(p) for p in outcome_prices]
-                    if all(p <= 0.001 or p >= 0.999 for p in price_vals):
-                        continue
-                except (ValueError, TypeError):
-                    pass
-
             for i, outcome_name in enumerate(outcomes):
                 implied_str = outcome_prices[i] if i < len(outcome_prices) else ""
                 token_id = clob_ids[i] if i < len(clob_ids) else ""
@@ -561,6 +501,10 @@ def run_cycle(state):
                     implied = float(implied_str)
                 except (ValueError, TypeError):
                     implied = 0.0
+
+                # Skip true 0/1 prices only
+                if implied < 0.01 or implied > 0.99:
+                    continue
 
                 outcome_list.append((implied, {
                     "event_id": event_id,
@@ -584,9 +528,8 @@ def run_cycle(state):
                 }))
 
     # ── 3. Fetch CLOB prices (buy + sell) ────────────────────────────────
-    # Only fetch CLOB for competitive outcomes (0.40–0.95 implied prob).
-    # Skip >0.95 (already decided) and illiquid books (bid<0.05 & ask>0.95).
-    # Sort by implied prob descending; each outcome costs 2 API calls.
+    # CLOB only for competitive outcomes: 0.40 <= implied <= 0.95.
+    # Skip illiquid books (bid<0.05 & ask>0.95).
     def _clob_eligible(imp, d):
         if not d["token_id"]:
             return False
@@ -621,7 +564,7 @@ def run_cycle(state):
 
     # ── 4. Build snapshot rows & update state ────────────────────────────
     snapshot_rows = []
-    current_keys = set()
+    current_keys = set()  # outcomes present this cycle
 
     for _, d in outcome_list:
         tid = d["token_id"]
@@ -648,8 +591,6 @@ def run_cycle(state):
         if key not in state:
             state[key] = {
                 "first_seen": now_str,
-                "first_seen_implied": d["implied_prob"],
-                "first_seen_clob_buy": buy_str,
                 "max_implied": d["implied_float"],
                 "max_clob_buy": buy_price if buy_price else 0,
                 "event_name": d["event_name"],
@@ -658,14 +599,10 @@ def run_cycle(state):
                 "market_type": d["market_type"],
                 "market_id": d["market_id"],
                 "outcome_name": d["outcome_name"],
-                "history": [],
             }
 
         s = state[key]
-        s["last_implied"] = d["implied_prob"]
-        s["last_clob_buy"] = buy_str
         s["last_seen"] = now_str
-        s["last_game_score"] = d["game_score"]
         s.pop("missing_cycles", None)
 
         # Track maximums
@@ -674,21 +611,20 @@ def run_cycle(state):
         if buy_price and buy_price > (s.get("max_clob_buy") or 0):
             s["max_clob_buy"] = buy_price
 
-        # Ring buffer for historical probs
-        history = s.get("history", [])
-        history.append([now_str, d["implied_prob"], buy_str])
-        if len(history) > HISTORY_MAX_ENTRIES:
-            history = history[-HISTORY_MAX_ENTRIES:]
-        s["history"] = history
-
     # ── 5. Write snapshots ───────────────────────────────────────────────
     append_snapshots(snapshot_rows)
     log(f"  {len(events)} events ({n_live} live-flag, {n_started} started) "
         f"from {n_total} total | {len(snapshot_rows)} outcomes | {clob_calls} CLOB calls")
 
     # ── 6. Detect resolutions ────────────────────────────────────────────
+    # An outcome is "resolved" when:
+    #   (a) max_implied >= 0.99 at any point during tracking, AND
+    #   (b) it has been absent from the live feed for 3 consecutive cycles.
+    # "won" = max_implied >= 0.99 (always true for resolved outcomes).
+    # Outcomes that disappear without ever hitting 0.99 are silently dropped.
     resolution_rows = []
     resolved_keys = []
+    dropped_keys = []
     newly_missing = 0
 
     for key, info in list(state.items()):
@@ -702,60 +638,41 @@ def run_cycle(state):
             newly_missing += 1
             continue
 
-        # Enough misses — query Gamma for resolution
-        market_id = info.get("market_id", "")
-        outcome_name = info.get("outcome_name", "")
-        resolution = fetch_market_resolution(market_id)
+        max_imp = info.get("max_implied", 0)
+        if max_imp >= 0.99:
+            # This outcome hit 0.99+ → it won. Log resolution.
+            first_seen = _parse_iso(info.get("first_seen"))
+            last_seen = _parse_iso(info.get("last_seen"))
+            minutes = 0
+            if first_seen and last_seen:
+                minutes = round((last_seen - first_seen).total_seconds() / 60, 1)
 
-        won = ""
-        if resolution and resolution["closed"]:
-            winner = resolution.get("winning_outcome")
-            if winner:
-                won = "true" if outcome_name == winner else "false"
-            else:
-                won = "unknown"
-        elif resolution and not resolution["closed"]:
-            # Market still open — might just be a pagination flicker.
-            # Give it one more chance by not resolving yet.
-            continue
-
-        first_seen = _parse_iso(info.get("first_seen"))
-        minutes = 0
-        if first_seen:
-            minutes = round((now - first_seen).total_seconds() / 60, 1)
-
-        history = info.get("history", [])
-        p5 = find_prob_at_offset(history, now, 5)
-        p10 = find_prob_at_offset(history, now, 10)
-        p15 = find_prob_at_offset(history, now, 15)
-        p30 = find_prob_at_offset(history, now, 30)
-
-        resolution_rows.append([
-            now_str,
-            info.get("event_name", ""),
-            info.get("league", ""),
-            info.get("game_id", ""),
-            info.get("market_type", ""),
-            outcome_name,
-            won,
-            info.get("last_implied", ""),
-            info.get("last_clob_buy", ""),
-            info.get("first_seen_implied", ""),
-            info.get("first_seen_clob_buy", ""),
-            info.get("max_implied", ""),
-            info.get("max_clob_buy", ""),
-            p5, p10, p15, p30,
-            info.get("first_seen", ""),
-            minutes,
-            info.get("last_game_score", ""),
-        ])
-        resolved_keys.append(key)
+            resolution_rows.append([
+                now_str,
+                info.get("event_name", ""),
+                info.get("league", ""),
+                info.get("game_id", ""),
+                info.get("market_type", ""),
+                info.get("outcome_name", ""),
+                "true",
+                max_imp,
+                info.get("max_clob_buy", ""),
+                info.get("first_seen", ""),
+                info.get("last_seen", ""),
+                minutes,
+            ])
+            resolved_keys.append(key)
+        else:
+            # Never hit 0.99 — silently drop (market removed/restructured)
+            dropped_keys.append(key)
 
     if resolution_rows:
         append_resolutions(resolution_rows)
-        for k in resolved_keys:
-            del state[k]
         log(f"  Resolved {len(resolution_rows)} outcomes")
+    for k in resolved_keys + dropped_keys:
+        del state[k]
+    if dropped_keys:
+        log(f"  Dropped {len(dropped_keys)} outcomes (never hit 0.99)")
     if newly_missing:
         log(f"  {newly_missing} outcomes missing this cycle (watching)")
 
