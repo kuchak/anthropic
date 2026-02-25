@@ -1,0 +1,2 @@
+resolved_timestamp,event_name,league,game_id,market_type,outcome_name,won,max_implied_prob,max_clob_buy_price,first_seen_timestamp,last_seen_timestamp,minutes_tracked
+2026-02-25T05:20:08.086506+00:00,T20 Thailand Open: Thailand vs Japan,international-cricket,,moneyline,Japan,true,0.99,0,2026-02-25T05:04:06.044672+00:00,2026-02-25T05:17:57.430782+00:00,13.9
