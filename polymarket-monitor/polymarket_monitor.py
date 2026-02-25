@@ -49,6 +49,7 @@ GAME_BETS_TAG_ID = 100639
 PAGE_SIZE = 200
 CYCLE_INTERVAL = 30  # seconds between scans
 CLOB_MIN_IMPLIED = 0.40  # fetch CLOB for outcomes >= this
+CLOB_MAX_IMPLIED = 0.95  # skip outcomes above this (already decided)
 CLOB_MAX_PER_CYCLE = 300  # max CLOB API calls per cycle
 MISSING_CYCLES_TO_RESOLVE = 3  # consecutive absent cycles before resolution
 HISTORY_MAX_ENTRIES = 60  # ~30 min of history at 30s intervals
@@ -583,10 +584,22 @@ def run_cycle(state):
                 }))
 
     # ── 3. Fetch CLOB prices (buy + sell) ────────────────────────────────
+    # Only fetch CLOB for competitive outcomes (0.40–0.95 implied prob).
+    # Skip >0.95 (already decided) and illiquid books (bid<0.05 & ask>0.95).
     # Sort by implied prob descending; each outcome costs 2 API calls.
+    def _clob_eligible(imp, d):
+        if not d["token_id"]:
+            return False
+        if imp < CLOB_MIN_IMPLIED or imp > CLOB_MAX_IMPLIED:
+            return False
+        bid = _safe_float(d["best_bid"])
+        ask = _safe_float(d["best_ask"])
+        if bid is not None and ask is not None and bid < 0.05 and ask > 0.95:
+            return False
+        return True
+
     clob_candidates = sorted(
-        [(imp, d) for imp, d in outcome_list
-         if imp >= CLOB_MIN_IMPLIED and d["token_id"]],
+        [(imp, d) for imp, d in outcome_list if _clob_eligible(imp, d)],
         key=lambda x: -x[0],
     )
 
