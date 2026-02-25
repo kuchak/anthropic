@@ -2,22 +2,21 @@
 """
 Polymarket Sports Monitor v2 — Comprehensive Data Collection Pipeline
 
-Monitors all live game markets on Polymarket via two complementary strategies:
-  1. Gamma API live=true — catches esports (LoL, CS, HoK, Dota2, Valorant)
-     which get real-time score/period data
-  2. Gamma API event_date=today — catches tennis (ATP/WTA), soccer, table tennis,
-     and other sports whose matches never receive the live=true flag. Filters
-     for startTime <= now to identify in-progress matches.
+Discovers in-progress game-bet events via three Gamma API queries:
+  1. live=true — esports with real-time score/period data
+  2. event_date=today (US Eastern) — today's matches
+  3. event_date=yesterday (US Eastern) — catches late-night US matches
+     that span the UTC midnight boundary
 
-For every outcome on every live market, logs a snapshot every 30 seconds to
-market_snapshots.csv.  CLOB buy+sell prices are fetched for outcomes with
+Then client-side filters: live=true OR startTime <= now. This catches
+tennis, soccer, table tennis, etc. that never get the live=true flag.
+
+For every outcome on every in-progress market, logs a snapshot every 30 seconds
+to market_snapshots.csv.  CLOB buy+sell prices are fetched for outcomes with
 implied_prob >= 0.40 (capped at 300 calls/cycle, prioritised by probability).
 
 When a market disappears for 3 consecutive cycles, queries Gamma for resolution
 status and logs to resolutions.csv with full historical context.
-
-Also attempts the Sports WebSocket (wss://sports-api.polymarket.com/ws) once at
-startup; falls back to polling if it returns 403.
 
 Usage:
     python3 polymarket_monitor.py              # foreground
@@ -297,21 +296,51 @@ def try_websocket_connection():
 # ---------------------------------------------------------------------------
 
 
-def fetch_live_events():
-    """Fetch events with Gamma's live=true flag (esports with score data)."""
+def _get_et_dates():
+    """Return (today_ET, yesterday_ET) as 'YYYY-MM-DD' strings.
+
+    Polymarket uses US Eastern time for eventDate. We compute the current
+    ET date and also yesterday's ET date to catch matches that span the
+    midnight boundary.
+    """
+    now_utc = datetime.now(timezone.utc)
+    # US Eastern = UTC-5 (EST) or UTC-4 (EDT).
+    # Approximate: March second Sunday to November first Sunday is EDT.
+    year = now_utc.year
+    # Second Sunday of March
+    mar1 = datetime(year, 3, 1, tzinfo=timezone.utc)
+    dst_start = mar1 + timedelta(days=(6 - mar1.weekday()) % 7 + 7)
+    dst_start = dst_start.replace(hour=7)  # 2 AM ET = 7 AM UTC
+    # First Sunday of November
+    nov1 = datetime(year, 11, 1, tzinfo=timezone.utc)
+    dst_end = nov1 + timedelta(days=(6 - nov1.weekday()) % 7)
+    dst_end = dst_end.replace(hour=6)  # 2 AM ET = 6 AM UTC
+    if dst_start <= now_utc < dst_end:
+        et_offset = timedelta(hours=-4)
+    else:
+        et_offset = timedelta(hours=-5)
+    now_et = now_utc + et_offset
+    today_et = now_et.strftime("%Y-%m-%d")
+    yesterday_et = (now_et - timedelta(days=1)).strftime("%Y-%m-%d")
+    return today_et, yesterday_et
+
+
+def _fetch_events_page(extra_params, label=""):
+    """Fetch paginated events with given extra query params."""
     all_events = []
     offset = 0
     while True:
         url = (
             f"{GAMMA_EVENTS_API}"
             f"?tag_id={GAME_BETS_TAG_ID}"
-            f"&active=true&closed=false&live=true"
+            f"&active=true&closed=false"
+            f"{extra_params}"
             f"&limit={PAGE_SIZE}&offset={offset}"
         )
         try:
             page = _api_get(url)
         except Exception as e:
-            log(f"  WARN: live fetch failed at offset={offset}: {e}")
+            log(f"  WARN: {label} fetch failed at offset={offset}: {e}")
             break
         if not page:
             break
@@ -322,61 +351,46 @@ def fetch_live_events():
     return all_events
 
 
-def fetch_today_started_events():
-    """Fetch events scheduled for today whose startTime has passed.
+def fetch_all_live_events():
+    """Fetch in-progress game-bet events via three targeted queries:
 
-    Catches tennis, soccer, table tennis, etc. that never get live=true.
+      1. live=true — esports with score data
+      2. event_date=today (ET) — today's matches
+      3. event_date=yesterday (ET) — catches late-night US matches
+
+    Then client-side filter: include if live=true OR startTime <= now.
+    Deduplicates by event ID (live=true takes priority).
     """
     now = datetime.now(timezone.utc)
-    today = now.strftime("%Y-%m-%d")
-    all_events = []
-    offset = 0
-    while True:
-        url = (
-            f"{GAMMA_EVENTS_API}"
-            f"?tag_id={GAME_BETS_TAG_ID}"
-            f"&active=true&closed=false"
-            f"&event_date={today}"
-            f"&limit={PAGE_SIZE}&offset={offset}"
-        )
-        try:
-            page = _api_get(url)
-        except Exception as e:
-            log(f"  WARN: today fetch failed at offset={offset}: {e}")
-            break
-        if not page:
-            break
-        all_events.extend(page)
-        if len(page) < PAGE_SIZE:
-            break
-        offset += PAGE_SIZE
+    today_et, yesterday_et = _get_et_dates()
 
-    # Filter: only events whose startTime is in the past AND still have
-    # open markets (skip matches that finished but event isn't closed yet)
+    live_events = _fetch_events_page("&live=true", "live")
+    today_events = _fetch_events_page(f"&event_date={today_et}", f"date={today_et}")
+    yesterday_events = _fetch_events_page(f"&event_date={yesterday_et}", f"date={yesterday_et}")
+
+    # Deduplicate: live=true events take priority (have score/period data)
+    merged = {}
+    for ev in live_events:
+        merged[ev["id"]] = ev
+    for ev in today_events + yesterday_events:
+        if ev["id"] not in merged:
+            merged[ev["id"]] = ev
+
+    # Client-side filter: live=true OR (startTime in past AND not finished)
+    live_flag = []
     started = []
-    for ev in all_events:
+    for ev in merged.values():
+        if ev.get("live"):
+            live_flag.append(ev)
+            continue
         st = ev.get("startTime")
         if st:
             start = _parse_iso(st)
             if start and start <= now and not _is_event_finished(ev):
                 started.append(ev)
-    return started
 
-
-def fetch_all_live_events():
-    """Merge live=true events + today-started events (deduplicated)."""
-    live = fetch_live_events()
-    today = fetch_today_started_events()
-
-    merged = {}
-    # live=true events take priority (they have score/period data)
-    for ev in live:
-        merged[ev["id"]] = ev
-    for ev in today:
-        if ev["id"] not in merged:
-            merged[ev["id"]] = ev
-
-    return list(merged.values()), len(live), len(today)
+    events = live_flag + started
+    return events, len(live_flag), len(started), len(merged)
 
 
 def fetch_clob_price(token_id, side="BUY"):
@@ -498,7 +512,7 @@ def run_cycle(state):
     now_str = now.isoformat()
 
     # ── 1. Fetch all in-progress events ──────────────────────────────────
-    events, n_live, n_today = fetch_all_live_events()
+    events, n_live, n_started, n_total = fetch_all_live_events()
 
     # ── 2. Extract all outcomes for CLOB prioritisation ──────────────────
     outcome_list = []  # (implied_float, outcome_dict)
@@ -656,8 +670,8 @@ def run_cycle(state):
 
     # ── 5. Write snapshots ───────────────────────────────────────────────
     append_snapshots(snapshot_rows)
-    log(f"  {len(events)} events ({n_live} live-flag, {n_today} time-based) | "
-        f"{len(snapshot_rows)} outcomes | {clob_calls} CLOB calls")
+    log(f"  {len(events)} events ({n_live} live-flag, {n_started} started) "
+        f"from {n_total} total | {len(snapshot_rows)} outcomes | {clob_calls} CLOB calls")
 
     # ── 6. Detect resolutions ────────────────────────────────────────────
     resolution_rows = []
@@ -763,7 +777,7 @@ def main():
     log(f"  cycle interval: {CYCLE_INTERVAL}s")
     log(f"  CLOB threshold: implied >= {CLOB_MIN_IMPLIED}")
     log(f"  CLOB cap: {CLOB_MAX_PER_CYCLE}/cycle (buy+sell)")
-    log(f"  detection: live=true + event_date=today/started")
+    log(f"  detection: live=true + event_date today/yesterday ET")
     log("")
 
     # Probe WebSocket
